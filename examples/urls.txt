@@ -1,0 +1,6 @@
+# W3C WAI "Before and After Demonstration" (BAD): a deliberately inaccessible demo and its fixed version.
+# One URL per line; '#' starts a comment line. URL fragments are kept.
+https://www.w3.org/WAI/demos/bad/before/home.html
+https://www.w3.org/WAI/demos/bad/before/news.html
+https://www.w3.org/WAI/demos/bad/before/tickets.html
+https://www.w3.org/WAI/demos/bad/after/home.html
