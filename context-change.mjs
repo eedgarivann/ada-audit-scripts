@@ -54,7 +54,7 @@ for (const url of urls) {
   let removed = 0;
   for (let i = 0; i < Math.min(n, max); i++) {
     const before = g.navs.length + g.popups.length;
-    const r = await page.evaluate(i => { const e = window.__cc[i]; if (!e || !e.isConnected) return null; e.focus(); return { kept: document.activeElement === e, desc: `${e.tagName.toLowerCase()} "${(e.innerText || e.getAttribute('aria-label') || e.querySelector('img')?.getAttribute('alt') || e.value || '').trim().replace(/\s+/g, ' ').slice(0, 40)}"` }; }, i).catch(() => null);
+    const r = await page.evaluate(i => { const e = window.__cc[i]; if (!e || !e.isConnected) return null; let got = false; const h = () => { got = true; }; e.addEventListener('focus', h, { once: true, capture: true }); e.focus(); e.removeEventListener('focus', h, { capture: true }); return { kept: document.activeElement === e || !got, refused: !got, desc: `${e.tagName.toLowerCase()} "${(e.innerText || e.getAttribute('aria-label') || e.querySelector('img')?.getAttribute('alt') || e.value || '').trim().replace(/\s+/g, ' ').slice(0, 40)}"` }; }, i).catch(() => null);
     await sleep(60);
     if (!r) continue;
     if (!r.kept) { removed++; if (removed <= 25) flags.push(`FOCUS-REMOVED\t${r.desc}\t(F55: 2.1.1, 2.4.7, 3.2.1)`); }
@@ -63,14 +63,14 @@ for (const url of urls) {
   if (removed > 25) flags.push(`FOCUS-REMOVED\t…${removed} elements in total`);
   // 3. Selects: ArrowDown on each; text fields: type one character. Navigation/submit = change of context on input.
   const selects = await page.$$('select'); for (const [i, s] of selects.entries()) {
-    const before = g.navs.length + g.popups.length + page.blockedWrites.length;
+    const before = g.navs.length + g.popups.length + (page.blockedWrites.nav || 0);
     const label = await s.evaluate(e => (e.labels?.[0]?.innerText || e.getAttribute('aria-label') || e.name || e.id || '').trim().slice(0, 40)).catch(() => '');
     await s.focus().catch(() => {}); await page.keyboard.press('ArrowDown'); await sleep(800);
-    const after = g.navs.length + g.popups.length + page.blockedWrites.length;
+    const after = g.navs.length + g.popups.length + (page.blockedWrites.nav || 0);
     flags.push(after > before ? `CHANGE-ON-INPUT\tselect ${i} "${label}" ArrowDown -> ${[...g.navs, ...g.popups, ...page.blockedWrites].slice(-1)[0]} (3.2.2; aborted, not followed)` : `ok\tselect ${i} "${label}" ArrowDown: no change of context`);
   }
   const texts = await page.$$('input[type=text],input:not([type]),input[type=email],input[type=search],input[type=tel],textarea');
-  for (const t of texts.slice(0, 30)) { const before = g.navs.length + page.blockedWrites.length; await t.focus().catch(() => {}); await page.keyboard.type('a').catch(() => {}); await sleep(300); if (g.navs.length + page.blockedWrites.length > before) flags.push(`CHANGE-ON-INPUT\ttext field ${await t.evaluate(e => e.name || e.id)} typing -> ${[...g.navs, ...page.blockedWrites].slice(-1)[0]} (3.2.2)`); await page.keyboard.press('Backspace').catch(() => {}); }
+  for (const t of texts.slice(0, 30)) { const before = g.navs.length + (page.blockedWrites.nav || 0); await t.focus().catch(() => {}); await page.keyboard.type('a').catch(() => {}); await sleep(300); if (g.navs.length + (page.blockedWrites.nav || 0) > before) flags.push(`CHANGE-ON-INPUT\ttext field ${await t.evaluate(e => e.name || e.id)} typing -> ${[...g.navs, ...page.blockedWrites].slice(-1)[0]} (3.2.2)`); await page.keyboard.press('Backspace').catch(() => {}); }
   // 4. Optional idle watch for session timeouts (2.2.1)
   if (idle) {
     await page.evaluate(() => { window.__dlg = []; new MutationObserver(() => { for (const d of document.querySelectorAll('[role=alertdialog],[role=dialog],dialog[open],[role=alert]')) if ((d.offsetWidth || d.offsetHeight) && !window.__dlg.includes(d)) { window.__dlg.push(d); window.__dlgT = window.__dlgT || []; window.__dlgT.push([Math.round(performance.now() / 1000), (d.innerText || '').trim().slice(0, 80)]); } }).observe(document.body, { subtree: true, childList: true, attributes: true }); });

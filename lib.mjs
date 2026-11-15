@@ -43,7 +43,7 @@ export async function safePage(args = {}, vp = VIEWPORTS.desktop, ctxOpts = {}) 
   await context.route('**/*', route => {
     const req = route.request();
     const m = req.method().toUpperCase();
-    if (!ALLOWED.has(m)) { blockedWrites.push(`${m} ${req.url()}`); return route.abort('blockedbyclient'); }
+    if (!ALLOWED.has(m)) { blockedWrites.push(`${m} ${req.url()}`); if (req.isNavigationRequest()) blockedWrites.nav = (blockedWrites.nav || 0) + 1; return route.abort('blockedbyclient'); }
     return route.fallback();
   });
   const page = await context.newPage();
@@ -56,6 +56,9 @@ export async function open(page, url, { settle = 1500 } = {}) {
   try { await page.goto(url, { waitUntil: 'networkidle', timeout: 90000 }); }
   catch (e) { await page.goto(url, { waitUntil: 'load', timeout: 90000 }).catch(() => {}); }
   await sleep(settle);
+  // bot-challenge / CDN block pages are not the site: warn so the output is discarded, never reported
+  const blocked = await page.evaluate(() => /request could not be satisfied|just a moment|attention required|access denied|verify you are (a )?human|are you a robot|checking your browser/i.test(document.title + ' ' + (document.body?.innerText || '').slice(0, 400))).catch(() => false);
+  if (blocked) { page.botChallenge = true; console.warn(`WARNING: ${url} looks like a bot-challenge or block page; discard this output (do not report it)`); }
 }
 
 export async function scrollThrough(page) {
@@ -125,7 +128,7 @@ export const DESCRIBE_FOCUS = `(() => {
 export function writeJSON(file, data) { fs.writeFileSync(file, JSON.stringify(data, null, 2)); }
 import { createRequire as __cr } from 'node:module';
 const PW_VERSION = (() => { try { return __cr(import.meta.url)('playwright/package.json').version; } catch { return '?'; } })();
-export const TOOL_VERSION = '4.0.0';
+export const TOOL_VERSION = '4.1.0';
 export function header(tool, extra = '') { return `# ${tool} — ada-audit-scripts ${TOOL_VERSION} — ${new Date().toISOString()} — playwright ${PW_VERSION} ${extra}\n# Outputs are candidates: confirm in DOM + screenshot.\n`; }
 export const BODY_STATE = `(() => { const t=[...document.querySelectorAll('a[href],button,input:not([type=hidden]),select,textarea,iframe,[tabindex]:not([tabindex="-1"])')].filter(e=>!e.disabled&&(e.offsetWidth||e.offsetHeight||e.getClientRects().length)); const lf=window.__lf; return { endOfOrder: !!lf && t.indexOf(lf)===t.length-1, lastTag: lf? lf.tagName.toLowerCase():null, lastBlurredByScript: !!(lf && /blur\\(/.test(lf.getAttribute('onfocus')||'')) }; })()`;
 export async function trackFocus(page){ await page.evaluate(()=>{ if(!window.__lfInit){ window.__lfInit=1; document.addEventListener('focus',e=>{ window.__lf=e.target; },true);} }); }

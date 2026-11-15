@@ -1,16 +1,40 @@
 {
   "name": "ada-audit-scripts",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Read-only accessibility audit helpers (WCAG 2.2 AA candidates) built on Playwright, axe-core and the Guidepup Virtual Screen Reader. Not a compliance certification.",
   "license": "MIT",
   "type": "module",
-  "engines": { "node": ">=20" },
-  "repository": { "type": "git", "url": "https://github.com/eedgarivann/ada-audit-scripts" },
-  "keywords": ["accessibility", "a11y", "wcag", "wcag22", "axe-core", "playwright", "audit", "screen-reader"],
-  "files": ["*.mjs", "examples/", "README.md", "LICENSE"],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eedgarivann/ada-audit-scripts"
+  },
+  "keywords": [
+    "accessibility",
+    "a11y",
+    "wcag",
+    "wcag22",
+    "axe-core",
+    "playwright",
+    "audit",
+    "screen-reader",
+    "reading-order",
+    "personas"
+  ],
+  "files": [
+    "*.mjs",
+    "examples/",
+    "test/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "browsers": "playwright install chromium",
-    "smoke": "node inventory.mjs --urls examples/urls.txt --out ./audit-output && node axe-scan.mjs --urls examples/urls.txt --widths 390 --out ./audit-output && node context-change.mjs --urls examples/urls.txt --out ./audit-output && node sample-compare.mjs --urls examples/urls.txt --out ./audit-output"
+    "test": "bash test/run-fixtures.sh",
+    "smoke": "bash test/run-fixtures.sh",
+    "smoke:live": "node inventory.mjs --urls examples/urls.txt --out ./audit-output && node axe-scan.mjs --urls examples/urls.txt --widths 390 --out ./audit-output && node bypass-order.mjs --urls examples/urls.txt --widths 390 --out ./audit-output && node journeys.mjs --urls examples/urls.txt --personas keyboard,sr --budget 30 --out ./audit-output"
   },
   "dependencies": {
     "@axe-core/playwright": "4.14.0",

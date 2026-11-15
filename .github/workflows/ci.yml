@@ -6,7 +6,9 @@ on:
 permissions:
   contents: read
 jobs:
-  smoke:
+  fixtures:
+    # Offline-safe: every tool runs against the static pages in test/fixtures,
+    # served GET-only on 127.0.0.1. No third-party site is contacted.
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -17,28 +19,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Run every tool against the W3C BAD demo (read-only)
-        run: |
-          set -e
-          B=https://www.w3.org/WAI/demos/bad
-          U=$B/before/home.html,$B/after/home.html
-          node inventory.mjs --urls "$U"
-          node axe-scan.mjs --urls "$U" --widths 390
-          node tab-walk.mjs --urls "$U" --width 390 --max 30 --settle 300
-          node focus-state.mjs --urls "$U" --selector "a"
-          node menu-modal.mjs --urls "$B/after/home.html" --trigger "select" 
-          node forms.mjs --urls "$U" --try-empty-submit
-          node reflow.mjs --urls "$U"
-          node motion.mjs --urls "$U"
-          node sr-transcript.mjs --urls "$U" --max 300
-          node context-change.mjs --urls "$U"
-          node sample-compare.mjs --urls "$B/before/home.html,$B/before/news.html,$B/before/tickets.html" --title-strip '\s*\[(In)?accessible [^\]]*\]$'
-      - name: Expected detections on the "before" page
-        run: |
-          grep -q "CHANGE-ON-INPUT" audit-output/context-change/*before_home*.txt
-          grep -q "FOCUS-REMOVED" audit-output/context-change/*before_home*.txt
-          grep -q "DUP-TITLE" audit-output/sample-compare/sample-compare.txt
-          grep -q "Simulated screen reader output" audit-output/sr-transcript/*before_home*.txt
+      - name: Run all tools on local fixtures and check planted defects + clean controls
+        run: OUT=audit-output/fixtures npm test
       - uses: actions/upload-artifact@v4
         if: always()
         with:
