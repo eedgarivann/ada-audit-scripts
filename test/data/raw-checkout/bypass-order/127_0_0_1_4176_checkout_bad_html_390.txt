@@ -1,0 +1,9 @@
+# bypass-order — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:29.634Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html width=390
+# Outputs are candidates: confirm in DOM + screenshot.
+
+bypass facts: focusables=14 before-content=unknown (no main/heading) main=false headings=0 h1=false nav=1 skip-links-in-DOM=0
+
+## Candidates (needs human confirmation)
+NO-MAIN-LANDMARK(2.4.1/1.3.1 advisory,low)	no <main> or role=main
+NO-HEADINGS(2.4.1/1.3.1,medium)	no headings to navigate by
+BYPASS-NONE(2.4.1,high)	14 focusable(s) before the content and no working skip link, main landmark or headings

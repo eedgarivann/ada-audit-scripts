@@ -1,70 +1,84 @@
 # ada-audit-scripts
 
-Read-only command-line helpers for **WCAG 2.2 AA** accessibility audits, built on [Playwright](https://playwright.dev), [axe-core](https://github.com/dequelabs/axe-core) and the [Guidepup Virtual Screen Reader](https://github.com/guidepup/virtual-screen-reader). They are the script layer of the *ADA Compliance Master* audit skill, published so anyone can run and improve them.
+[![CI](https://github.com/eedgarivann/ada-audit-scripts/actions/workflows/ci.yml/badge.svg)](https://github.com/eedgarivann/ada-audit-scripts/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-> **Not a compliance certification.** Every output is a *candidate* for a human to confirm in the DOM and on screen. Automated tools find only part of the barriers on a site; a clean run does not mean a site "conforms" or is "ADA compliant", and it does not prevent complaints or lawsuits. Nothing here is legal advice.
+Read-only accessibility audit toolkit for **WCAG 2.2 AA**. One command runs 13 checks (axe-core, real keyboard walks, forms, reflow, motion, a simulated screen reader, reading order and bypass, simulated persona journeys…) in parallel on a shared browser, merges what they find into one deduplicated, prioritized list, and writes a report that tells you **what is wrong, who it hurts, where it is, and exactly how to fix and re-test it**, with code and platform-specific steps.
 
-## What it does
-| Tool | Checks (main WCAG SCs) |
+It is the script layer of the *ADA Compliance Master* audit skill, published so anyone can run and improve it.
+
+> **Not a compliance certification.** Every result is a *candidate* for a human to confirm. Automated checks find only part of the barriers on a site; a clean run does not mean a site "conforms" or is "ADA compliant", and it does not prevent complaints or lawsuits. Nothing here is legal advice.
+
+## Quick start
+Node 20.11 or newer.
+```sh
+git clone https://github.com/eedgarivann/ada-audit-scripts && cd ada-audit-scripts
+npm ci
+npx playwright install chromium            # add --with-deps on a fresh Linux machine
+
+# Audit 3+ pages of one site (home, a content page, every step of a key journey):
+npx ada-audit https://example.org/ https://example.org/about https://example.org/contact \
+  --journey "Contact=https://example.org/contact" --journeys --goal contact \
+  --platform wordpress --format json,md,html,sarif,csv
+```
+Open `audit-output/report.html` (or `report.md`). See a full [sample report](docs/sample-report/report.md) ([HTML](docs/sample-report/report.html), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
+
+## What you get
+| File | For |
 |---|---|
-| `inventory.mjs` | title, `lang` (3.1.1), headings, landmarks, skip link, images and alt quality (1.1.1), CSS background images (1.1.1, F3), fake/generic headings and labels (1.3.1, 2.4.6), links told apart by colour only (1.4.1), images of text (1.4.5), overlay widgets, demo/placeholder pages, dead `#` links, third-party hosts; `--site` reads sitemaps + WordPress REST. Writes an `*_images.html` contact sheet for the alt-vs-pixels review. |
-| `axe-scan.mjs` | axe-core at 390 and 1440 px (tags `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa`, `wcag22aa`, `best-practice`); JSON, screenshot and `summary.tsv`. |
-| `tab-walk.mjs` | real Tab / Shift+Tab walk: missing focus ring (2.4.7), focus covered (2.4.11), off-screen, focus lost to `<body>` (F55), traps (2.1.2). |
-| `focus-state.mjs` | settled hover/focus colours and contrast of chosen elements. |
-| `menu-modal.mjs` | menus, dialogs, drawers: trigger focusable and opens by Enter/Space (2.1.1, 4.1.2), focus inside, Tab containment, Esc, focus return, `aria-expanded`. |
-| `forms.mjs` | labels (3.3.2, 4.1.2), placeholder-only, required cue (incl. colour-only), `autocomplete` for personal data (1.3.5), paste blocking (3.3.8), split one-time-code boxes, CAPTCHA without alternative (1.1.1, 3.3.8), controls outside `<form>`; `--try-empty-submit` checks client-side errors: colour-only (1.4.1, 3.3.1), not announced (4.1.3), not linked to fields, focus not moved. |
-| `reflow.mjs` | 320/640 px horizontal overflow (1.4.10) and text-spacing clipping (1.4.12). |
-| `motion.mjs` | movement with `prefers-reduced-motion` on/off, autoplay video, infinite animations, pause controls (2.2.2, 2.3.3). |
-| `sr-transcript.mjs` | **simulated** screen-reader transcript: linear read, heading/landmark lists, Tab pass; flags unnamed controls, vague/duplicate links, layout tables, heading skips. |
-| `context-change.mjs` | focus that is removed or changes context (3.2.1, F55), select/typing that navigates (3.2.2), mouse-only click handlers (2.1.1), session timeouts with `--idle` (2.2.1). |
-| `sample-compare.mjs` | needs ≥2 (ideally ≥3) pages of one site: duplicate titles (2.4.2), navigation order (3.2.3), unnamed or inconsistently named repeated components (3.2.4), help-link order (3.2.6), fields asked again across steps (3.3.7 cue). |
-| `bypass-order.mjs` | **needs-human-confirmation** candidates for reading order (1.3.2: CSS `order`, `*-reverse`, absolute/float/grid placement that shows later DOM text above or left of earlier text; header-less layout tables read cell by cell), positive-`tabindex` focus jumps (2.4.3), and bypass (2.4.1): real Tab to the skip link, Enter, target exists, focus moves, next Tab lands inside; no main/headings with a repeated block. `--widths 390,1440`, `--scope "css"`. |
-| `journeys.mjs` | **simulated** persona journeys toward a goal (`--goal buy\|checkout\|contact\|donate\|book\|<words>`, `--target "product"`): keyboard-only (skip link first, Tab, Escape/Shift+Tab, overlay escape), screen reader (headings, landmarks, links list, read-down; Guidepup), low vision (320 px + 200 % text), tremor (Monte Carlo taps, 2.5.8 spacing, hover-only menus), hurried (auto-advance, timeouts, focus moved by itself). Memory and frustration model (loops, traps, lost/covered/off-screen focus, gives up at `--budget`), cost vs an efficient path, seeded realism (`--seed`). Stops before the final submit/pay/login and reports "reached". Output: narrative, step log, screenshots, WCAG candidates with confidence. |
-| `lib.mjs` | shared helpers, including `safePage`. |
+| `report.html` / `report.md` | people: executive summary, **fix plan** (quick wins → fix now → fix next → monitor), a findings table, then one card per finding: what is wrong, who it hurts and how badly, WCAG criteria, how it was found and how sure we are, every location with evidence and screenshots, **numbered fix steps, before/after code, your platform's steps, how to verify the fix**, references; simulated journey results; non-WCAG items kept separate; a manual-testing checklist; scope, methods and the evaluation statement to use |
+| `findings.json` | machines: [schema v1](docs/findings-schema.md) (`npx ada-audit validate`) |
+| `findings.sarif` | GitHub code scanning and IDEs (SARIF 2.1.0) |
+| `findings.csv` | trackers and spreadsheets: one row per location, with a status column |
+| `run.json`, `logs/` | timing per job, versions, tool logs |
+| `axe/`, `tab-walk/`, … | the raw tool output (screenshots, transcripts) the findings point to |
+
+How to read and act on the report, step by step: **[docs/report-guide.md](docs/report-guide.md)**.
+
+## How findings are prioritized
+Each candidate from each tool is mapped by a rule catalog (`npx ada-audit rules`) to a barrier type, WCAG success criteria, a **kind** (A/AA failure, AAA, best practice, advisory — only failures count against AA), **severity** (blocker → minor: impact on users) and **confidence** (`automated-certain` deterministic rule; `needs-review` heuristic, confirm in DOM and on screen; `inferred` cue). Candidates for the same barrier from different tools and pages are merged; something found by two tools is marked *corroborated*; something on many pages is a template issue you fix once. Findings are then ordered by a score (severity × confidence × reach × critical-journey × corroboration × priority rung ÷ effort) and put in a plan: **Fix now** (blocks a critical journey), **Fix next**, **Monitor**. Priority ladder: 1 forms/checkout/booking/login → 2 keyboard and focus → 3 contrast and alt text → 4 structure, names, language → 5 the rest. Details: [docs/findings-schema.md](docs/findings-schema.md#scoring-and-plan).
+
+## CLI
+```
+ada-audit [run] <url...> [options]      run the audit and write reports
+ada-audit report <dir>                  rebuild reports from existing raw output (also v4 output folders)
+ada-audit validate <findings.json>      check a findings file against schema v1
+ada-audit tools | rules [--json]        list tools / the rule catalog
+```
+Key options: `--urls file|a,b`, `-c config.json`, `-o dir`, `--journey "Name=url,url"` (repeat), `--journeys --goal buy|checkout|contact|donate|book --target "text"`, `--widths 390,1440`, `--tools` / `--skip`, `--platform wordpress|shopify|webflow|framer|squarespace|wix|react`, `--format json,md,html,sarif,csv`, `--concurrency n`, `--timeout ms`, `--job-timeout ms`, `--retries n`, `--fail-on serious` (CI gate). All options, the config file and exit codes: [docs/configuration.md](docs/configuration.md).
+
+Use it in CI to stop regressions on a staging build:
+```sh
+npx ada-audit -c ada-audit.config.json --format json,sarif --fail-on serious   # exit 1 if a serious+ candidate failure is found
+```
+
+## The tools
+`inventory`, `axe`, `tab-walk`, `forms`, `reflow`, `motion`, `sr-transcript`, `context-change`, `bypass-order`, `sample-compare` run by default; `journeys` (`--journeys`), `focus-state` (`--focus-selector`) and `menu-modal` (`--trigger`) on request. What each checks and how to run it on its own (the v4 commands such as `node axe-scan.mjs` still work unchanged): [docs/tools.md](docs/tools.md).
 
 ## Read-only safety (`safePage`)
-Every tool opens pages through `safePage` in `lib.mjs`. It blocks service workers and **aborts every request whose method is not GET, HEAD or OPTIONS** (form posts, `fetch` POST/PUT/DELETE, popups included) and logs them as "blocked writes". `--click` preparation refuses submit buttons. `forms.mjs --try-empty-submit` submits forms **empty**; a POST is blocked, so server-side validation is reported as *NOT TESTED*. `context-change.mjs` and `forms.mjs` also abort page navigations they trigger and log them instead of following them.
+Every tool opens pages through `safePage` in `src/core/lib.mjs`, also when it shares the run's browser. It blocks service workers and **aborts every request whose method is not GET, HEAD or OPTIONS** (form posts, `fetch` POST/PUT/DELETE, popups included) and logs them as "blocked writes". `--click` preparation refuses submit buttons. `forms.mjs --try-empty-submit` submits forms **empty**; a POST is blocked, so server-side validation is reported as *NOT TESTED*. `context-change.mjs` and `forms.mjs` also abort page navigations they trigger and log them instead of following them.
 Do not remove `safePage`. GET links can still have side effects (logout, unsubscribe, add-to-cart): do not pass them to `--click`. Logins, real submissions and payments are out of scope for these tools; test those by hand on a staging site or test account the owner approves.
 
-## Install
-Node 20 or newer.
-```
-npm ci
-npx playwright install chromium     # add --with-deps on a fresh Linux machine
-```
-Versions are pinned: playwright 1.65.1, axe-core 4.14.0, @axe-core/playwright 4.14.0, @guidepup/virtual-screen-reader 0.33.0. Record them in your report (each output header includes them).
+## Performance
+One browser per run (Playwright browser server; each tool job connects to it and still gets fresh, isolated, read-only contexts), a bounded job pool (default: half the CPU cores, max 6), per-URL sharding, longest jobs first, navigation retries with backoff, per-job timeouts and one retry for crashed jobs. A fixed Tab-walk wrap bug also stopped runs from walking 60 stops on pages that had already wrapped.
 
-## Usage
-Common flags: `--urls file.txt` (one URL per line, `#` comment lines) or `--urls a,b`; `--out dir` (default `./audit-output`); `--channel chrome` (use installed Chrome); `--click "sel;sel"` (open a menu/tab first; submit controls are refused).
-```
-node inventory.mjs --urls examples/urls.txt            # or --site https://example.org
-node axe-scan.mjs --urls examples/urls.txt --widths 390,1440
-node tab-walk.mjs --urls examples/urls.txt --width 390 [--shift] [--max 60] [--settle 1000]
-node focus-state.mjs --urls examples/urls.txt --selector "a.button;button"
-node menu-modal.mjs --urls https://example.org --trigger ".menu-toggle" --container "#menu" [--modal]
-node forms.mjs --urls https://example.org/contact --try-empty-submit
-node reflow.mjs --urls examples/urls.txt
-node motion.mjs --urls examples/urls.txt
-node sr-transcript.mjs --urls examples/urls.txt [--desktop] [--max 1500] [--tabs 60]
-node context-change.mjs --urls examples/urls.txt [--idle 70]
-node sample-compare.mjs --urls https://example.org/,https://example.org/about,https://example.org/contact [--title-strip "regex"]
-node bypass-order.mjs --urls examples/urls.txt [--widths 390,1440] [--scope "#page"]
-node journeys.mjs --urls https://example.org/ --goal buy --target "lantern" [--personas keyboard,sr,zoom,tremor,hurried] [--seed 7] [--budget 60] [--max-pages 4]
-```
-`npm test` (same as `npm run smoke`) is offline: it serves `test/fixtures/` (fictional pages with planted barriers and fixed twins) GET-only on 127.0.0.1, runs every tool, and checks that planted defects are found and the clean controls stay clean. CI runs only this. `npm run smoke:live` runs a few tools on `examples/urls.txt` (needs network).
+Measured on the offline fixture suite (same 32 checks, same machine, 8 vCPU, 15 Nov 2026): **451 s** serial with v4.1.0 → **116 s** with v4.2.0 at concurrency 4 (**3.9× faster**). Total tool work was about the same (≈450 s), so the gain is from safe parallelism; expect less on a single slow site, where network time dominates.
 
-## Simulated screen reader disclaimer
-`sr-transcript.mjs` output starts with: *"Simulated screen reader output (Guidepup Virtual Screen Reader). Not JAWS, NVDA or VoiceOver; confirm with a real screen reader."* It reads the accessibility tree the way a screen reader might; it is **not** a screen-reader test. Report it as "Simulated SR", never as "tested with a screen reader".
-
-## Simulated persona journeys disclaimer
-`journeys.mjs` output starts with *"SIMULATED persona journeys"*. The personas are scripted models of how some disabled people browse, not people and not assistive technology; timings and errors are seeded estimates. A "reached" result is not proof a real user can finish, and a "gave up" result needs a human check. Never report it as user testing. It never submits, pays or logs in; a route guard blocks navigations it did not intend.
+## Development
+```sh
+npm run check          # eslint + prettier + unit tests (fast, no browser)
+npm test               # unit + end-to-end: serves test/fixtures on 127.0.0.1, runs every tool and the CLI
+npm run sample-report  # regenerate docs/sample-report from test/data (no network)
+```
+`test/fixtures/` holds fictional pages with planted barriers and fixed twins; the end-to-end suite checks that planted defects are found and the clean twins stay clean. Architecture, pipeline and how to add a rule: [docs/architecture.md](docs/architecture.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md). Security reports: [SECURITY.md](SECURITY.md). Changes: [CHANGELOG.md](CHANGELOG.md).
 
 ## Limits
-- Outputs are candidates. Confirm each in the DOM and on a screenshot; heuristics (fake headings, images of text, colour-only links, CSS backgrounds, timeouts) produce false positives and misses.
-- No real assistive technology, no human judgement of alt quality, meaningful sequence, captions or plain language (`bypass-order.mjs` flags reading-order *candidates* only); no native apps, PDFs or canvas content.
+- Outputs are candidates. Confirm each in the DOM and on a screenshot; heuristics (fake headings, images of text, colour-only links, CSS backgrounds, timeouts, reading order) produce false positives and misses.
+- `sr-transcript` and `journeys` are **simulations**: the Guidepup Virtual Screen Reader is not JAWS, NVDA, VoiceOver or TalkBack, and scripted personas are not disabled people. Report them as "Simulated SR" and "simulated persona journeys", never as screen-reader or user testing.
+- No real assistive technology, no human judgement of alt quality, meaningful sequence, captions or plain language; no native apps, PDFs or canvas content.
 - Server-side validation, logins, checkouts and payments are not exercised (read-only by design).
-- Pages behind bot protection or that need JavaScript from blocked origins may render differently in headless Chromium. Tools print `WARNING: … bot-challenge or block page` when a page looks like one; discard that output.
+- Pages behind bot protection may render differently in headless Chromium. Tools print `WARNING: … bot-challenge or block page`; discard that output.
 - Multi-page checks are only as good as the sample: pick ≥3 pages per template and every step of a process (WCAG-EM).
+- Platform fix hints describe common settings and patterns; themes, apps and plans differ, so check them against your own setup.
 
 ## Accuracy notes (15 Nov 2026; estimates, not guarantees)
 **W3C BAD demo.** Script-only recall against W3C's published failure lists for the four "before" pages (home, news, tickets, survey; WCAG 2.0 A/AA, 4.1.1 excluded; 73 page/criterion pairs): **67/73 (92%)** with 4.1.0, up from 59/73 (81%) in 4.0.0 and 31/73 (42%) in 3.x. New in 4.1.0: 1.3.2 and 2.4.1 found on all four pages (`bypass-order`, run with `--scope "#page"` to skip the demo's wrapper). Still missed: some 1.4.1, 1.4.3, 2.4.3, 2.4.6 cases. The four "after" pages raise no WCAG 2.0 A/AA candidates (only advisories such as "no `<main>`").
@@ -76,4 +90,4 @@ node journeys.mjs --urls https://example.org/ --goal buy --target "lantern" [--p
 Caveats: tuning was done with the W3C answers visible, and the fixtures were written by the same authors. Recall is per page/criterion, not per instance. None of this means the scripts find a fixed share of issues on any site; a clean run is not conformance.
 
 ## License
-MIT © ADA Compliance Master contributors. See `LICENSE`.
+MIT. See [LICENSE](LICENSE).

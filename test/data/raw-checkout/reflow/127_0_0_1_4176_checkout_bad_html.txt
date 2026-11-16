@@ -1,0 +1,10 @@
+# reflow — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:24.788Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html
+# Outputs are candidates: confirm in DOM + screenshot.
+
+320px: scrollWidth=916 H-OVERFLOW (1.4.10 candidate at 320) offenders=3
+   nav right=359
+   a right=347
+   div.wide right=916
+640px: scrollWidth=916 H-OVERFLOW (1.4.10 candidate at 320) offenders=1
+   div.wide right=916
+1.4.12 spacing @1280: 0 clipped candidates

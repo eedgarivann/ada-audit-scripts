@@ -1,0 +1,75 @@
+// Assemble the versioned findings document (schema/findings.schema.json) from an output directory.
+import fs from 'node:fs';
+import path from 'node:path';
+import { collectRaw } from './adapters.mjs';
+import { buildFindings, summarize, SCHEMA_VERSION, normUrl } from './model.mjs';
+import { conformanceStatement, manualChecklist } from '../report/guidance.mjs';
+
+const PERSONA = {
+  keyboard: 'Keyboard-only user',
+  sr: 'Screen-reader user (simulated)',
+  zoom: 'Low-vision user (320 px + 200% text)',
+  tremor: 'Tremor/motor user',
+  hurried: 'Hurried/cognitive user',
+};
+
+export function journeyOutcomes(dir) {
+  const f = path.join(dir, 'journeys', 'summary.tsv');
+  if (!fs.existsSync(f)) return [];
+  const rows = fs
+    .readFileSync(f, 'utf8')
+    .split(/\r?\n/)
+    .filter((l) => l && !l.startsWith('#') && !l.startsWith('url\t'));
+  const seen = new Set();
+  return rows
+    .map((l) => {
+      const [url, persona, outcome, steps, , simSeconds, , friction] = l.split('\t');
+      return {
+        url: normUrl(url),
+        persona,
+        personaLabel: PERSONA[persona] || persona,
+        outcome,
+        steps: Number(steps) || null,
+        simSeconds: Number(simSeconds) || null,
+        friction: friction && friction !== '-' ? friction : null,
+      };
+    })
+    .filter((r) => {
+      const k = `${r.url}|${r.persona}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .sort((a, b) => `${a.url}|${a.persona}`.localeCompare(`${b.url}|${b.persona}`));
+}
+
+/**
+ * @param {string} dir output directory with raw tool folders
+ * @param {{run?:object, journeys?:object[]}} opts
+ */
+export function buildDocument(dir, opts = {}) {
+  const raws = collectRaw(dir);
+  const run = { ...(opts.run || {}) };
+  run.pages = run.pages?.length
+    ? [...new Set(run.pages.map(normUrl))].sort()
+    : [...new Set(raws.map((r) => normUrl(r.url)).filter(Boolean))].sort();
+  run.tools = run.tools?.length ? run.tools : [...new Set(raws.map((r) => r.tool))].sort();
+  run.versions = run.versions || {};
+  const { findings, suppressed, errors } = buildFindings(raws, { journeys: opts.journeys, versions: run.versions });
+  const doc = {
+    $schema: 'https://raw.githubusercontent.com/eedgarivann/ada-audit-scripts/main/schema/findings.schema.json',
+    schemaVersion: SCHEMA_VERSION,
+    generator: { name: 'ada-audit-scripts', version: run.versions.tool || null, url: 'https://github.com/eedgarivann/ada-audit-scripts' },
+    run,
+    criticalJourneys: (opts.journeys || []).map((j) => ({ name: j.name, goal: j.goal || null, urls: (j.urls || []).map(normUrl) })),
+    journeysAssumed: !(opts.journeys && opts.journeys.length),
+    summary: summarize(findings, suppressed),
+    journeys: journeyOutcomes(dir),
+    findings,
+    suppressed,
+    errors: [...(opts.errors || []), ...errors],
+  };
+  doc.conformance = { target: 'WCAG 2.2 Level AA', statement: conformanceStatement(doc), claim: false };
+  doc.manualChecklist = manualChecklist(doc);
+  return doc;
+}

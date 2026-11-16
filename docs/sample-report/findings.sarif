@@ -1,0 +1,2392 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ada-audit-scripts",
+          "version": "4.2.0",
+          "informationUri": "https://github.com/eedgarivann/ada-audit-scripts",
+          "rules": [
+            {
+              "id": "form-label",
+              "name": "FormFieldsWithoutAVisibleProgrammaticLabel",
+              "shortDescription": {
+                "text": "Form fields without a visible, programmatic label"
+              },
+              "fullDescription": {
+                "text": "Form fields without a visible, programmatic label. Screen-reader users hear only \"edit text\"; voice-control users cannot say the field name; everyone loses the hint once a placeholder disappears."
+              },
+              "helpUri": "https://www.w3.org/WAI/tutorials/forms/labels/",
+              "help": {
+                "text": "Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label). If the design hides the label, keep it in the DOM with a visually-hidden class, never display:none. Group related controls (radio sets, date parts) in <fieldset> with a <legend>. Verify: Click the label text: focus must move into the field. In DevTools > Accessibility the field's Name equals the visible label.",
+                "markdown": "1. Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label).\n2. If the design hides the label, keep it in the DOM with a visually-hidden class, never display:none.\n3. Group related controls (radio sets, date parts) in <fieldset> with a <legend>.\n\n**Verify:** Click the label text: focus must move into the field. In DevTools > Accessibility the field's Name equals the visible label."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.3.1",
+                  "WCAG3.3.2",
+                  "WCAG4.1.2",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.3.1",
+                  "3.3.2",
+                  "4.1.2"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "alt-missing",
+              "name": "ImagesMissingAUsefulTextAlternative",
+              "shortDescription": {
+                "text": "Images missing a useful text alternative"
+              },
+              "fullDescription": {
+                "text": "Images missing a useful text alternative. Blind users hear a file name or nothing at all, and miss product details, prices or link destinations."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/image-alt",
+              "help": {
+                "text": "Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\"). Decorative image: alt=\"\" (empty), never missing. Linked image: alt names the destination (\"Trail lantern details\"). Images of text: use real text, or put all the text in the alt. Verify: Open the images review sheet (inventory *_images.html) and compare each alt to the picture; screen reader reads a meaningful phrase.",
+                "markdown": "1. Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\").\n2. Decorative image: alt=\"\" (empty), never missing.\n3. Linked image: alt names the destination (\"Trail lantern details\").\n4. Images of text: use real text, or put all the text in the alt.\n\n**Verify:** Open the images review sheet (inventory *_images.html) and compare each alt to the picture; screen reader reads a meaningful phrase."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.1.1",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.1.1"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "change-on-input",
+              "name": "PageChangesOnFocusOrInputWithoutWarning",
+              "shortDescription": {
+                "text": "Page changes on focus or input without warning"
+              },
+              "fullDescription": {
+                "text": "Page changes on focus or input without warning. Keyboard and screen-reader users are sent to a new page while just moving through a list or typing."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/on-input.html",
+              "help": {
+                "text": "Do not navigate on select change or on focus; add a \"Go\"/\"Apply\" button. If a change must happen, explain it before the control. Verify: Arrow through each select and Tab across fields: nothing navigates or opens until you press the button.",
+                "markdown": "1. Do not navigate on select change or on focus; add a \"Go\"/\"Apply\" button.\n2. If a change must happen, explain it before the control.\n\n**Verify:** Arrow through each select and Tab across fields: nothing navigates or opens until you press the button."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG3.2.2",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "3.2.2"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "unnamed-control",
+              "name": "ButtonsLinksOrIconsWithNoAccessibleName",
+              "shortDescription": {
+                "text": "Buttons, links or icons with no accessible name"
+              },
+              "fullDescription": {
+                "text": "Buttons, links or icons with no accessible name. Screen-reader and voice-control users hear \"button\" or \"link\" and must guess what it does."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/button-name",
+              "help": {
+                "text": "Give icon-only controls a name: visible text, aria-label, or visually-hidden text. Make the accessible name start with the visible label (2.5.3 Label in Name). For SVG icons inside a named control, add aria-hidden=\"true\" to the SVG. Verify: DevTools > Accessibility: each control has a Name; voice control \"click Cart\" works.",
+                "markdown": "1. Give icon-only controls a name: visible text, aria-label, or visually-hidden text.\n2. Make the accessible name start with the visible label (2.5.3 Label in Name).\n3. For SVG icons inside a named control, add aria-hidden=\"true\" to the SVG.\n\n**Verify:** DevTools > Accessibility: each control has a Name; voice control \"click Cart\" works."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG4.1.2",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "4.1.2"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "contrast:1.4.3:failure",
+              "name": "TextContrastTooLow",
+              "shortDescription": {
+                "text": "Text contrast too low"
+              },
+              "fullDescription": {
+                "text": "Text contrast too low. Low-vision users, older users and anyone on a phone in sunlight cannot read the text."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/color-contrast",
+              "help": {
+                "text": "Raise text contrast to at least 4.5:1 (3:1 for 24px+ or 18.66px+ bold text). Fix the design token (brand colour) once rather than per element. Check hover, focus and disabled-looking states too. Verify: Measure with a contrast checker on the rendered pixels (not just CSS): 4.5:1 or better; re-run axe color-contrast.",
+                "markdown": "1. Raise text contrast to at least 4.5:1 (3:1 for 24px+ or 18.66px+ bold text).\n2. Fix the design token (brand colour) once rather than per element.\n3. Check hover, focus and disabled-looking states too.\n\n**Verify:** Measure with a contrast checker on the rendered pixels (not just CSS): 4.5:1 or better; re-run axe color-contrast."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.4.3",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.4.3"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "page-language",
+              "name": "PageLanguageNotDeclared",
+              "shortDescription": {
+                "text": "Page language not declared"
+              },
+              "fullDescription": {
+                "text": "Page language not declared. Screen readers read the text with the wrong voice and pronunciation."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/html-has-lang",
+              "help": {
+                "text": "Set <html lang=\"en\"> (or the page language); mark foreign-language passages with lang on the element. Verify: View source: <html lang> matches the content language.",
+                "markdown": "1. Set <html lang=\"en\"> (or the page language); mark foreign-language passages with lang on the element.\n\n**Verify:** View source: <html lang> matches the content language."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG3.1.1",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "3.1.1"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "bypass-none",
+              "name": "NoWayToSkipRepeatedBlocks",
+              "shortDescription": {
+                "text": "No way to skip repeated blocks"
+              },
+              "fullDescription": {
+                "text": "No working way to skip repeated navigation. Keyboard and switch users must press Tab through every menu link on every page before reaching the content."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html",
+              "help": {
+                "text": "Make the first focusable element a \"Skip to main content\" link. Point it at the main content: <main id=\"main\" tabindex=\"-1\">. Keep it visible when focused (do not hide it with display:none). Verify: Load the page, press Tab once: the skip link appears; press Enter, then Tab: focus lands on the first item inside the main content.",
+                "markdown": "1. Make the first focusable element a \"Skip to main content\" link.\n2. Point it at the main content: <main id=\"main\" tabindex=\"-1\">.\n3. Keep it visible when focused (do not hide it with display:none).\n\n**Verify:** Load the page, press Tab once: the skip link appears; press Enter, then Tab: focus lands on the first item inside the main content."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG2.4.1",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "2.4.1"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "focus-visible:2.4.7:failure",
+              "name": "NoVisibleFocusIndicator",
+              "shortDescription": {
+                "text": "No visible focus indicator"
+              },
+              "fullDescription": {
+                "text": "Keyboard focus is invisible. Sighted keyboard users (motor disabilities, power users, low vision) cannot see where they are on the page."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+              "help": {
+                "text": "Remove outline:none / outline:0 rules that have no replacement. Add a clear :focus-visible style (2px+ outline with 3:1 contrast against the background). Verify: Tab through the page: every focused item shows a visible ring.",
+                "markdown": "1. Remove outline:none / outline:0 rules that have no replacement.\n2. Add a clear :focus-visible style (2px+ outline with 3:1 contrast against the background).\n\n**Verify:** Tab through the page: every focused item shows a visible ring."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG2.4.7",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "2.4.7"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "no-headings",
+              "name": "PageRegionsNotMarkedUpNoMainHeadingsMissing",
+              "shortDescription": {
+                "text": "Page regions not marked up (no <main>, headings missing)"
+              },
+              "fullDescription": {
+                "text": "Page regions not marked up (no <main>, headings missing). Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+              "help": {
+                "text": "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text). Verify: Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+                "markdown": "1. Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.\n2. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text).\n\n**Verify:** Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.3.1",
+                  "WCAG2.4.1",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.3.1",
+                  "2.4.1"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "autocomplete:1.3.5:failure",
+              "name": "PersonalDataFieldMissingAutocomplete",
+              "shortDescription": {
+                "text": "Personal-data field missing autocomplete"
+              },
+              "fullDescription": {
+                "text": "Personal-data fields missing autocomplete. People with memory, dexterity or cognitive disabilities must retype details that the browser could fill; slow, error-prone on mobile."
+              },
+              "helpUri": "https://www.w3.org/TR/WCAG22/#input-purposes",
+              "help": {
+                "text": "Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...). Do not set autocomplete=\"off\" on those fields. Verify: Open the form in Chrome or Safari with a saved address/profile: each field offers autofill with the right value.",
+                "markdown": "1. Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...).\n2. Do not set autocomplete=\"off\" on those fields.\n\n**Verify:** Open the form in Chrome or Safari with a saved address/profile: each field offers autofill with the right value."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.3.5",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.3.5"
+                ],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "required-cue:3.3.2:failure",
+              "name": "RequiredFieldHasNoVisibleCue",
+              "shortDescription": {
+                "text": "Required field has no visible cue"
+              },
+              "fullDescription": {
+                "text": "Required fields shown by colour only (or not at all). Colour-blind and screen-reader users cannot tell which fields are required until they get errors."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html",
+              "help": {
+                "text": "Mark required fields in text: \"(required)\" in the label, or an asterisk explained at the top of the form. Add the required attribute (or aria-required=\"true\") so assistive technology announces it. Verify: Grayscale the page (DevTools > Rendering > Emulate vision deficiency: achromatopsia): every required field is still identifiable; screen reader says \"required\".",
+                "markdown": "1. Mark required fields in text: \"(required)\" in the label, or an asterisk explained at the top of the form.\n2. Add the required attribute (or aria-required=\"true\") so assistive technology announces it.\n\n**Verify:** Grayscale the page (DevTools > Rendering > Emulate vision deficiency: achromatopsia): every required field is still identifiable; screen reader says \"required\"."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG3.3.2",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "3.3.2"
+                ],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "mouse-only",
+              "name": "ClickHandlerOnAnElementKeyboardUsersCannotReach",
+              "shortDescription": {
+                "text": "Click handler on an element keyboard users cannot reach"
+              },
+              "fullDescription": {
+                "text": "Controls that only work with a mouse. Keyboard, switch and voice users cannot open the menu, accept the banner or press the button; the journey stops."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html",
+              "help": {
+                "text": "Use native <button> for actions and <a href> for navigation; avoid clickable <div>/<span>. If a custom control is unavoidable: tabindex=\"0\", role, and Enter/Space handlers. Menus must open on Enter/Space (and click), not only on hover. Verify: Unplug the mouse: complete the journey with Tab, Shift+Tab, Enter, Space, arrows and Esc only.",
+                "markdown": "1. Use native <button> for actions and <a href> for navigation; avoid clickable <div>/<span>.\n2. If a custom control is unavoidable: tabindex=\"0\", role, and Enter/Space handlers.\n3. Menus must open on Enter/Space (and click), not only on hover.\n\n**Verify:** Unplug the mouse: complete the journey with Tab, Shift+Tab, Enter, Space, arrows and Esc only."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG2.1.1",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "2.1.1"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "focus-obscured:2.4.7:failure",
+              "name": "FocusMovesToAnOffScreenItem",
+              "shortDescription": {
+                "text": "Focus moves to an off-screen item"
+              },
+              "fullDescription": {
+                "text": "Focused item hidden behind a sticky header, banner or overlay. Keyboard users tab to a link they cannot see, and may activate the wrong thing."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+              "help": {
+                "text": "Add scroll-padding-top equal to the sticky header height. Do not let cookie or chat banners cover content while it has focus; make them dismissible. Verify: Tab through the whole page at 390 px and 1440 px: no focused item is entirely covered (2.4.11 AA; partly covered = 2.4.12 AAA).",
+                "markdown": "1. Add scroll-padding-top equal to the sticky header height.\n2. Do not let cookie or chat banners cover content while it has focus; make them dismissible.\n\n**Verify:** Tab through the whole page at 390 px and 1440 px: no focused item is entirely covered (2.4.11 AA; partly covered = 2.4.12 AAA)."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG2.4.7",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "2.4.7"
+                ],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "headings-labels:1.3.1:failure",
+              "name": "TextStyledAsAHeadingButNotAHeading",
+              "shortDescription": {
+                "text": "Text styled as a heading but not a heading"
+              },
+              "fullDescription": {
+                "text": "Headings or labels that do not describe their section. Screen-reader users skimming the headings list cannot find the section they need."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+              "help": {
+                "text": "Turn styled \"fake\" headings into real headings; make heading text describe the section. Remove empty headings; make repeated labels unique (e.g. \"Billing address – City\"). Verify: Headings list reads as a meaningful outline; no empty or duplicate entries.",
+                "markdown": "1. Turn styled \"fake\" headings into real headings; make heading text describe the section.\n2. Remove empty headings; make repeated labels unique (e.g. \"Billing address – City\").\n\n**Verify:** Headings list reads as a meaningful outline; no empty or duplicate entries."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.3.1",
+                  "WCAG2.4.6",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.3.1",
+                  "2.4.6"
+                ],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "vague-link",
+              "name": "VagueLinkText",
+              "shortDescription": {
+                "text": "Vague link text"
+              },
+              "fullDescription": {
+                "text": "Vague link text (\"click here\", \"read more\"). Screen-reader users listing links hear several identical \"Read more\" links with no destination."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html",
+              "help": {
+                "text": "Write link text that names the destination (\"Read the lantern care guide\"). If the design needs short text, add visually-hidden context or aria-describedby. Verify: Screen reader links list (NVDA Insert+F7 / VoiceOver rotor): each link makes sense alone.",
+                "markdown": "1. Write link text that names the destination (\"Read the lantern care guide\").\n2. If the design needs short text, add visually-hidden context or aria-describedby.\n\n**Verify:** Screen reader links list (NVDA Insert+F7 / VoiceOver rotor): each link makes sense alone."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG2.4.4",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "2.4.4"
+                ],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              }
+            },
+            {
+              "id": "reflow",
+              "name": "PageScrollsSidewaysAt320Px",
+              "shortDescription": {
+                "text": "Page scrolls sideways at 320 px"
+              },
+              "fullDescription": {
+                "text": "Content does not reflow on small screens or zoom. Low-vision users who zoom to 400% (≈320 px wide) must scroll sideways on every line."
+              },
+              "helpUri": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html",
+              "help": {
+                "text": "Find the element wider than the viewport (fixed widths, wide tables, long words). Use max-width:100%, flexible grids, overflow-wrap:anywhere; scroll only data tables inside their own container. Verify: Set the browser to 1280 px wide and zoom to 400% (or DevTools 320 px): no horizontal scrollbar for the page.",
+                "markdown": "1. Find the element wider than the viewport (fixed widths, wide tables, long words).\n2. Use max-width:100%, flexible grids, overflow-wrap:anywhere; scroll only data tables inside their own container.\n\n**Verify:** Set the browser to 1280 px wide and zoom to 400% (or DevTools 320 px): no horizontal scrollbar for the page."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "WCAG1.4.10",
+                  "failure"
+                ],
+                "kind": "failure",
+                "wcag": [
+                  "1.4.10"
+                ],
+                "problem.severity": "error"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              }
+            },
+            {
+              "id": "landmarks:page-has-heading-one:best-practice",
+              "name": "PageShouldContainALevelOneHeading",
+              "shortDescription": {
+                "text": "Page should contain a level-one heading"
+              },
+              "fullDescription": {
+                "text": "Page regions not marked up (no <main>, headings missing). Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one",
+              "help": {
+                "text": "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text). Verify: Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+                "markdown": "1. Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.\n2. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text).\n\n**Verify:** Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "best-practice"
+                ],
+                "kind": "best-practice",
+                "wcag": [],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              }
+            },
+            {
+              "id": "no-main",
+              "name": "NoMainLandmark",
+              "shortDescription": {
+                "text": "No main landmark"
+              },
+              "fullDescription": {
+                "text": "Page regions not marked up (no <main>, headings missing). Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page."
+              },
+              "helpUri": "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main",
+              "help": {
+                "text": "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text). Verify: Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+                "markdown": "1. Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.\n2. Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text).\n\n**Verify:** Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page."
+              },
+              "properties": {
+                "tags": [
+                  "accessibility",
+                  "best-practice"
+                ],
+                "kind": "best-practice",
+                "wcag": [],
+                "problem.severity": "warning"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "form-label",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "F-001 Form fields without a visible, programmatic label at #name. Fix: Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#name",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "dc52d386dd177a5f"
+          },
+          "properties": {
+            "findingId": "F-001",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "form-label",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "F-001 Form fields without a visible, programmatic label at #phone. Fix: Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#phone",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "ee4daa7ed46ecbbd"
+          },
+          "properties": {
+            "findingId": "F-001",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "form-label",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "F-001 Form fields without a visible, programmatic label at input#email. Fix: Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#email",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "d6363c1d419e3491"
+          },
+          "properties": {
+            "findingId": "F-001",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "alt-missing",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "F-002 Images missing a useful text alternative at img. Fix: Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\")."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "img",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "4400d6bbaea0bda7"
+          },
+          "properties": {
+            "findingId": "F-002",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "alt-missing",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "F-002 Images missing a useful text alternative at img svg%3E alt=(none). Fix: Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\")."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "img svg%3E alt=(none)",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "7a0d886f5841c2c8"
+          },
+          "properties": {
+            "findingId": "F-002",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": []
+          }
+        },
+        {
+          "ruleId": "alt-missing",
+          "ruleIndex": 1,
+          "level": "error",
+          "message": {
+            "text": "F-002 Images missing a useful text alternative. Fix: Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\")."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "c5b49d1f87b0285c"
+          },
+          "properties": {
+            "findingId": "F-002",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "change-on-input",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "F-003 Page changes on focus or input without warning at select \"Shipping speed\". Fix: Do not navigate on select change or on focus; add a \"Go\"/\"Apply\" button."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "select \"Shipping speed\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "7c5c231cc715634b"
+          },
+          "properties": {
+            "findingId": "F-003",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "medium",
+            "widths": [
+              1440
+            ]
+          }
+        },
+        {
+          "ruleId": "change-on-input",
+          "ruleIndex": 2,
+          "level": "error",
+          "message": {
+            "text": "F-003 Page changes on focus or input without warning at select#ship. Fix: Do not navigate on select change or on focus; add a \"Go\"/\"Apply\" button."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "select#ship",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "a0cc3078154d396b"
+          },
+          "properties": {
+            "findingId": "F-003",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-now",
+            "effort": "medium",
+            "widths": [
+              1440
+            ]
+          }
+        },
+        {
+          "ruleId": "unnamed-control",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "F-004 Buttons, links or icons with no accessible name at button. Fix: Give icon-only controls a name: visible text, aria-label, or visually-hidden text."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "button",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "8cdc30f38e4bd6d1"
+          },
+          "properties": {
+            "findingId": "F-004",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "unnamed-control",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "F-004 Buttons, links or icons with no accessible name at button[onclick=\"location.href='cart.html'\"]. Fix: Give icon-only controls a name: visible text, aria-label, or visually-hidden text."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "button[onclick=\"location.href='cart.html'\"]",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "3d30e3058ad4d217"
+          },
+          "properties": {
+            "findingId": "F-004",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "unnamed-control",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "F-004 Buttons, links or icons with no accessible name at image. Fix: Give icon-only controls a name: visible text, aria-label, or visually-hidden text."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "image",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "c24dd214ed8eda18"
+          },
+          "properties": {
+            "findingId": "F-004",
+            "severity": "critical",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "contrast:1.4.3:failure",
+          "ruleIndex": 4,
+          "level": "error",
+          "message": {
+            "text": "F-005 Text contrast too low at .muted. Fix: Raise text contrast to at least 4.5:1 (3:1 for 24px+ or 18.66px+ bold text)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": ".muted",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "3f7a89d9ba36293d"
+          },
+          "properties": {
+            "findingId": "F-005",
+            "severity": "serious",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "page-language",
+          "ruleIndex": 5,
+          "level": "error",
+          "message": {
+            "text": "F-006 Page language not declared at html. Fix: Set <html lang=\"en\"> (or the page language); mark foreign-language passages with lang on the element."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "html",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "11ace1186b9af02b"
+          },
+          "properties": {
+            "findingId": "F-006",
+            "severity": "serious",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "page-language",
+          "ruleIndex": 5,
+          "level": "error",
+          "message": {
+            "text": "F-006 Page language not declared. Fix: Set <html lang=\"en\"> (or the page language); mark foreign-language passages with lang on the element."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "ea5d711c54ce23b7"
+          },
+          "properties": {
+            "findingId": "F-006",
+            "severity": "serious",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": []
+          }
+        },
+        {
+          "ruleId": "bypass-none",
+          "ruleIndex": 6,
+          "level": "error",
+          "message": {
+            "text": "F-007 No way to skip repeated blocks. Needs human confirmation. Fix: Make the first focusable element a \"Skip to main content\" link."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "272c274000f246cf"
+          },
+          "properties": {
+            "findingId": "F-007",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"About\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"About\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "0d021af7484de86b"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Help\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Help\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "f091c57433ddfa60"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Home\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Home\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "dba91e92197041fc"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Journal\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Journal\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "a8e762e9cc99280f"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Privacy\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Privacy\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "55945fceb4f180e0"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Read more\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Read more\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "b5128b82afe4cca6"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at a \"Stores\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "a \"Stores\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "e474ca19685bcc96"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at button \"\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "button \"\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "512968e12909ff79"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-visible:2.4.7:failure",
+          "ruleIndex": 7,
+          "level": "error",
+          "message": {
+            "text": "F-008 No visible focus indicator at button \"Place order\". Needs human confirmation. Fix: Remove outline:none / outline:0 rules that have no replacement."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "button \"Place order\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "54ff3b9f16beb8ae"
+          },
+          "properties": {
+            "findingId": "F-008",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-headings",
+          "ruleIndex": 8,
+          "level": "error",
+          "message": {
+            "text": "F-009 Page regions not marked up (no <main>, headings missing) at content sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\"). Needs human confirmation. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "content sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "998d49ddae60c064"
+          },
+          "properties": {
+            "findingId": "F-009",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": []
+          }
+        },
+        {
+          "ruleId": "no-headings",
+          "ruleIndex": 8,
+          "level": "error",
+          "message": {
+            "text": "F-009 Page regions not marked up (no <main>, headings missing). Needs human confirmation. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "efddea3d90f193ce"
+          },
+          "properties": {
+            "findingId": "F-009",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "autocomplete:1.3.5:failure",
+          "ruleIndex": 9,
+          "level": "warning",
+          "message": {
+            "text": "F-010 Personal-data field missing autocomplete at input#email. Fix: Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#email",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "592a76ef3d07e7a8"
+          },
+          "properties": {
+            "findingId": "F-010",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "autocomplete:1.3.5:failure",
+          "ruleIndex": 9,
+          "level": "warning",
+          "message": {
+            "text": "F-010 Personal-data field missing autocomplete at input#name. Fix: Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#name",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "3c0928875893b80b"
+          },
+          "properties": {
+            "findingId": "F-010",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "autocomplete:1.3.5:failure",
+          "ruleIndex": 9,
+          "level": "warning",
+          "message": {
+            "text": "F-010 Personal-data field missing autocomplete at input#phone. Fix: Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#phone",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "8997cd6bdec775b4"
+          },
+          "properties": {
+            "findingId": "F-010",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "autocomplete:1.3.5:failure",
+          "ruleIndex": 9,
+          "level": "warning",
+          "message": {
+            "text": "F-010 Personal-data field missing autocomplete at input#zip. Fix: Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#zip",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "13d02a9a09d7dfc9"
+          },
+          "properties": {
+            "findingId": "F-010",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "required-cue:3.3.2:failure",
+          "ruleIndex": 10,
+          "level": "warning",
+          "message": {
+            "text": "F-011 Required field has no visible cue at input#email. Needs human confirmation. Fix: Mark required fields in text: \"(required)\" in the label, or an asterisk explained at the top of the form."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#email",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "aeb7fc25ade4056f"
+          },
+          "properties": {
+            "findingId": "F-011",
+            "severity": "moderate",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "required-cue:3.3.2:failure",
+          "ruleIndex": 10,
+          "level": "warning",
+          "message": {
+            "text": "F-011 Required field has no visible cue at input#name. Needs human confirmation. Fix: Mark required fields in text: \"(required)\" in the label, or an asterisk explained at the top of the form."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "input#name",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "eacc77dc8bd3a710"
+          },
+          "properties": {
+            "findingId": "F-011",
+            "severity": "moderate",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "mouse-only",
+          "ruleIndex": 11,
+          "level": "error",
+          "message": {
+            "text": "F-012 Click handler on an element keyboard users cannot reach at div.icon. Needs human confirmation. Fix: Use native <button> for actions and <a href> for navigation; avoid clickable <div>/<span>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "div.icon",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "9c2e9419e35a9e4d"
+          },
+          "properties": {
+            "findingId": "F-012",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "medium",
+            "widths": [
+              1440
+            ]
+          }
+        },
+        {
+          "ruleId": "focus-obscured:2.4.7:failure",
+          "ruleIndex": 12,
+          "level": "warning",
+          "message": {
+            "text": "F-013 Focus moves to an off-screen item at button \"\". Needs human confirmation. Fix: Add scroll-padding-top equal to the sticky header height."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "button \"\"",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "fa195e83bebd3b46"
+          },
+          "properties": {
+            "findingId": "F-013",
+            "severity": "moderate",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "headings-labels:1.3.1:failure",
+          "ruleIndex": 13,
+          "level": "warning",
+          "message": {
+            "text": "F-014 Text styled as a heading but not a heading at div \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one). Needs human confirmation. Fix: Turn styled \"fake\" headings into real headings; make heading text describe the section."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "div \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "bc57a134bcf72635"
+          },
+          "properties": {
+            "findingId": "F-014",
+            "severity": "moderate",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": []
+          }
+        },
+        {
+          "ruleId": "vague-link",
+          "ruleIndex": 14,
+          "level": "warning",
+          "message": {
+            "text": "F-015 Vague link text at link, Read more. Needs human confirmation. Fix: Write link text that names the destination (\"Read the lantern care guide\")."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "link, Read more",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "5cb139769609ced1"
+          },
+          "properties": {
+            "findingId": "F-015",
+            "severity": "moderate",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "reflow",
+          "ruleIndex": 15,
+          "level": "error",
+          "message": {
+            "text": "F-016 Page scrolls sideways at 320 px. Needs human confirmation. Fix: Find the element wider than the viewport (fixed widths, wide tables, long words)."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "d1a6cd1ba1c0806f"
+          },
+          "properties": {
+            "findingId": "F-016",
+            "severity": "serious",
+            "confidence": "needs-review",
+            "plan": "fix-next",
+            "effort": "medium",
+            "widths": [
+              320
+            ]
+          }
+        },
+        {
+          "ruleId": "landmarks:page-has-heading-one:best-practice",
+          "ruleIndex": 16,
+          "level": "note",
+          "message": {
+            "text": "F-017 Page should contain a level-one heading at html. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "html",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "bd2ad8f11c6a5882"
+          },
+          "properties": {
+            "findingId": "F-017",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at .muted. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": ".muted",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "abfcd9957d589862"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at .req. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": ".req",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "4f54960908fda603"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at .title. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": ".title",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "519e7589797126a7"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at .wide. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": ".wide",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "4b233838fe110314"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at #email. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#email",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "ecbcb1e580232101"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at #name. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#name",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "a6876bf163603a9b"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at #phone. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#phone",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "1d29d36ca2902ef6"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at #ship. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#ship",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "72b9fdbbb5965dfc"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at #zip. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "#zip",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "d5f2088747014d80"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at html. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "html",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "57653544e8d38d8a"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at label[for=\"ship\"]. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "label[for=\"ship\"]",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "9aa3cb7999939bb5"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at label[for=\"zip\"]. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "label[for=\"zip\"]",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "a2cfc96908f37834"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark. Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "1383fdec5635c698"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        },
+        {
+          "ruleId": "no-main",
+          "ruleIndex": 17,
+          "level": "note",
+          "message": {
+            "text": "F-018 No main landmark at p:nth-child(5). Fix: Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "p:nth-child(5)",
+                  "kind": "element"
+                }
+              ]
+            }
+          ],
+          "partialFingerprints": {
+            "adaAudit/v1": "a01c5f399639d323"
+          },
+          "properties": {
+            "findingId": "F-018",
+            "severity": "moderate",
+            "confidence": "automated-certain",
+            "plan": "monitor",
+            "effort": "low",
+            "widths": [
+              390
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "conformance": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks, in headless Chromium (Playwright 1.65.1) at 390 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\"."
+      }
+    }
+  ]
+}

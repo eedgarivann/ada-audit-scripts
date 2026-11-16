@@ -1,0 +1,19 @@
+# tab-walk — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:21.552Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html width=390 Tab
+# Outputs are candidates: confirm in DOM + screenshot.
+
+1	a	"Home"	index-good.html	ring=NONE	NO-RING?
+2	a	"About"	about.html	ring=NONE	NO-RING?
+3	a	"Stores"	stores.html	ring=NONE	NO-RING?
+4	a	"Journal"	blog.html	ring=NONE	NO-RING?
+5	a	"Help"	help.html	ring=NONE	NO-RING?
+6	button	""		ring=NONE	NO-RING? OFFSCREEN TEXT 1.66:1
+7	input	""		ring=outline 1px rgb(16, 16, 16)	
+8	input	""		ring=outline 1px rgb(16, 16, 16)	
+9	input	""		ring=outline 1px rgb(16, 16, 16)	
+10	input	""		ring=outline 1px rgb(16, 16, 16)	
+11	select	"Standard Express Overnight"		ring=outline 1px rgb(16, 16, 16)	
+12	button	"Place order"		ring=NONE	NO-RING?
+13	a	"Read more"	about.html#returns	ring=NONE	NO-RING?
+14	a	"Privacy"	privacy.html	ring=NONE	NO-RING?
+15	(body)	END-OF-TAB-ORDER (wraps; not a finding)
+16	WRAPPED to first stop: walk complete

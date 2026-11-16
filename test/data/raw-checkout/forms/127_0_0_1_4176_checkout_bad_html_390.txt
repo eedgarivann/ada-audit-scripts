@@ -1,0 +1,24 @@
+# forms — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:21.529Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html width=390
+# Outputs are candidates: confirm in DOM + screenshot.
+
+FORM 0 method=post action=cart.html
+  input[text] id=name name=name label="" placeholder="" required=true autocomplete="" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)
+  input[email] id=email name=email label="" placeholder="Email" required=true autocomplete="" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)
+  input[tel] id=phone name=phone label="" placeholder="" required=false autocomplete="" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)
+  input[text] id=zip name=zip label="ZIP code" placeholder="" required=false autocomplete="off" NO-AUTOCOMPLETE(postal-code; 1.3.5)
+  select[select-one] id=ship name=ship label="Shipping speed" placeholder="" required=false autocomplete="" 
+  button[submit] id= name= label="Place order" placeholder="" required=false autocomplete="" 
+ariaSnapshot(form 0):
+- text: Full name
+- textbox
+- textbox "Email"
+- textbox
+- text: ZIP code
+- textbox "ZIP code"
+- text: Shipping speed
+- combobox "Shipping speed":
+  - option "Standard" [selected]
+  - option "Express"
+  - option "Overnight"
+- button "Place order"
+SUMMARY NO-LABEL name || NO-AUTOCOMPLETE(name; 1.3.5) name || REQUIRED-NOT-SHOWN?(3.3.2: check visible cue) name || PLACEHOLDER-ONLY email || NO-AUTOCOMPLETE(email; 1.3.5) email || REQUIRED-NOT-SHOWN?(3.3.2: check visible cue) email || NO-LABEL phone || NO-AUTOCOMPLETE(tel; 1.3.5) phone || NO-AUTOCOMPLETE(postal-code; 1.3.5) zip

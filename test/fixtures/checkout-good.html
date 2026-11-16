@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout – Riverbend Supply</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;color:#222}
+.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:#fff;padding:.5rem}
+header{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;padding:.75rem 1rem;background:#f4f4f4}
+nav a{margin-right:.75rem;color:#0645ad}
+:focus-visible{outline:3px solid #1a5fb4;outline-offset:2px}
+.muted{color:#595959}
+form{padding:1rem;max-width:32rem}
+input,select{display:block;margin:.25rem 0 1rem;padding:.4rem;border:1px solid #767676;max-width:100%}
+.icon-btn{min-width:44px;min-height:44px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header>
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23234'/%3E%3C/svg%3E" width="40" height="40" alt="Riverbend Supply">
+  <nav aria-label="Main"><a href="index-good.html">Home</a><a href="about.html">About</a><a href="stores.html">Stores</a><a href="blog.html">Journal</a><a href="help.html">Help</a></nav>
+  <a class="icon-btn" href="cart.html">Cart<span class="sr">, 1 item</span></a>
+</header>
+<main id="main" tabindex="-1">
+  <h1>Checkout</h1>
+  <p class="muted">Free shipping on orders over $50. Prices include tax.</p>
+  <p>Order summary: 1 × Trail Lantern — $39.00</p>
+  <form action="cart.html" method="post">
+    <p>Fields marked (required) must be filled in.</p>
+    <label for="name">Full name (required)</label>
+    <input id="name" name="name" autocomplete="name" required>
+    <label for="email">Email (required)</label>
+    <input id="email" name="email" type="email" autocomplete="email" required>
+    <label for="phone">Phone</label>
+    <input id="phone" name="phone" type="tel" autocomplete="tel">
+    <label for="zip">ZIP code</label>
+    <input id="zip" name="zip" autocomplete="postal-code" inputmode="numeric">
+    <label for="ship">Shipping speed</label>
+    <select id="ship" name="ship">
+      <option value="std">Standard</option><option value="exp">Express</option><option value="ovn">Overnight</option>
+    </select>
+    <button type="submit">Place order</button>
+  </form>
+  <p><a href="about.html#returns">Read more about returns</a></p>
+</main>
+<footer><a href="privacy.html">Privacy</a></footer>
+</body>
+</html>

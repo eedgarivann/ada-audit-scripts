@@ -1,15 +1,19 @@
 {
   "name": "ada-audit-scripts",
-  "version": "4.1.0",
-  "description": "Read-only accessibility audit helpers (WCAG 2.2 AA candidates) built on Playwright, axe-core and the Guidepup Virtual Screen Reader. Not a compliance certification.",
+  "version": "4.2.0",
+  "description": "Read-only accessibility audit toolkit (WCAG 2.2 AA candidates): one CLI, parallel Playwright + axe-core + simulated screen reader + persona journeys, a versioned findings schema and prioritized fix reports (Markdown, HTML, SARIF, CSV). Not a compliance certification.",
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=20.11"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/eedgarivann/ada-audit-scripts"
+  },
+  "homepage": "https://github.com/eedgarivann/ada-audit-scripts#readme",
+  "bugs": {
+    "url": "https://github.com/eedgarivann/ada-audit-scripts/issues"
   },
   "keywords": [
     "accessibility",
@@ -21,25 +25,64 @@
     "audit",
     "screen-reader",
     "reading-order",
-    "personas"
+    "personas",
+    "sarif",
+    "report",
+    "cli"
   ],
+  "bin": {
+    "ada-audit": "bin/ada-audit.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.mjs"
+    },
+    "./lib": "./src/core/lib.mjs",
+    "./schema": "./schema/findings.schema.json",
+    "./package.json": "./package.json"
+  },
+  "types": "types/index.d.ts",
   "files": [
+    "bin/",
+    "src/",
+    "schema/",
+    "types/",
     "*.mjs",
     "examples/",
-    "test/",
+    "docs/",
     "README.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "CONTRIBUTING.md",
     "LICENSE"
   ],
   "scripts": {
     "browsers": "playwright install chromium",
-    "test": "bash test/run-fixtures.sh",
-    "smoke": "bash test/run-fixtures.sh",
-    "smoke:live": "node inventory.mjs --urls examples/urls.txt --out ./audit-output && node axe-scan.mjs --urls examples/urls.txt --widths 390 --out ./audit-output && node bypass-order.mjs --urls examples/urls.txt --widths 390 --out ./audit-output && node journeys.mjs --urls examples/urls.txt --personas keyboard,sr --budget 30 --out ./audit-output"
+    "audit": "node bin/ada-audit.mjs",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test test/unit/*.test.mjs",
+    "test:e2e": "node --test --test-concurrency=1 test/e2e/*.test.mjs",
+    "test:serial": "bash test/run-fixtures.sh",
+    "smoke": "npm run test:e2e",
+    "smoke:live": "node bin/ada-audit.mjs --urls examples/urls.txt --out ./audit-output/live --journeys --personas keyboard,sr",
+    "sample-report": "node scripts/sample-report.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run lint && npm run format:check && npm run test:unit"
   },
   "dependencies": {
     "@axe-core/playwright": "4.14.0",
     "@guidepup/virtual-screen-reader": "0.33.0",
     "axe-core": "4.14.0",
     "playwright": "1.65.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "ajv": "8.20.0",
+    "eslint": "9.39.5",
+    "globals": "17.14.0",
+    "prettier": "3.10.1"
   }
 }

@@ -1,0 +1,6 @@
+node_modules/
+audit-output/
+test/fixtures/
+docs/sample-report/
+package-lock.json
+*.md

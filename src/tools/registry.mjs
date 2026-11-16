@@ -1,0 +1,138 @@
+// Tool registry: how the unified CLI runs each v4 tool. `shard: 'url'` = one job per URL (parallel-safe; outputs merged).
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const s = (f) => path.join(here, f);
+
+/** @typedef {{name:string, dir:string, script:string, shard:'url'|'none', default:boolean, needs?:string, minUrls?:number, describe:string, argsFor:(o:object)=>string[][]}} ToolSpec */
+/** @type {ToolSpec[]} */
+export const TOOLS = [
+  {
+    name: 'inventory',
+    dir: 'inventory',
+    script: s('inventory.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'title, language, headings, landmarks, images/alt, overlays, demo pages',
+    argsFor: () => [[]],
+  },
+  {
+    name: 'axe',
+    dir: 'axe',
+    script: s('axe-scan.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'axe-core WCAG 2.x A/AA rules at each width',
+    argsFor: (o) => [['--widths', o.widths.join(',')]],
+  },
+  {
+    name: 'tab-walk',
+    dir: 'tab-walk',
+    script: s('tab-walk.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'keyboard Tab walk: focus ring, covered/off-screen focus, traps',
+    argsFor: (o) => o.widths.map((w) => ['--width', String(w)]),
+  },
+  {
+    name: 'forms',
+    dir: 'forms',
+    script: s('forms.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'labels, autocomplete, required cues, paste, CAPTCHA, client-side errors',
+    argsFor: (o) => [['--width', String(o.widths[0]), ...(o.tryEmptySubmit ? ['--try-empty-submit'] : [])]],
+  },
+  {
+    name: 'reflow',
+    dir: 'reflow',
+    script: s('reflow.mjs'),
+    shard: 'url',
+    default: true,
+    describe: '320/640 px reflow and 1.4.12 text spacing',
+    argsFor: () => [[]],
+  },
+  {
+    name: 'motion',
+    dir: 'motion',
+    script: s('motion.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'moving content, reduced motion, pause controls',
+    argsFor: (o) => [['--width', String(o.widths[0])]],
+  },
+  {
+    name: 'sr-transcript',
+    dir: 'sr-transcript',
+    script: s('sr-transcript.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'simulated screen reader transcript + flags (not a real screen reader)',
+    argsFor: () => [[]],
+  },
+  {
+    name: 'context-change',
+    dir: 'context-change',
+    script: s('context-change.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'change of context on focus/input, mouse-only handlers, timeouts',
+    argsFor: () => [[]],
+  },
+  {
+    name: 'bypass-order',
+    dir: 'bypass-order',
+    script: s('bypass-order.mjs'),
+    shard: 'url',
+    default: true,
+    describe: 'skip link, landmarks/headings bypass, reading and focus order',
+    argsFor: (o) => [['--widths', o.widths.join(',')]],
+  },
+  {
+    name: 'sample-compare',
+    dir: 'sample-compare',
+    script: s('sample-compare.mjs'),
+    shard: 'none',
+    default: true,
+    minUrls: 2,
+    describe: 'titles, consistent navigation/identification/help across pages',
+    argsFor: () => [[]],
+  },
+  {
+    name: 'journeys',
+    dir: 'journeys',
+    script: s('journeys.mjs'),
+    shard: 'url',
+    default: false,
+    needs: '--journeys',
+    describe: 'simulated persona journeys toward a goal (keyboard, SR, zoom, tremor, hurried)',
+    argsFor: (o) => [
+      [
+        ...(o.goal ? ['--goal', o.goal] : []),
+        ...(o.target ? ['--target', o.target] : []),
+        ...(o.personas ? ['--personas', o.personas] : []),
+      ],
+    ],
+  },
+  {
+    name: 'focus-state',
+    dir: 'focus-state',
+    script: s('focus-state.mjs'),
+    shard: 'url',
+    default: false,
+    needs: '--focus-selector',
+    describe: 'settled hover/focus colours for given selectors',
+    argsFor: (o) => [['--selector', o.focusSelector, '--width', String(o.widths.at(-1))]],
+  },
+  {
+    name: 'menu-modal',
+    dir: 'menu-modal',
+    script: s('menu-modal.mjs'),
+    shard: 'url',
+    default: false,
+    needs: '--trigger',
+    describe: 'menu/dialog keyboard model for a trigger selector',
+    argsFor: (o) => o.widths.map((w) => ['--trigger', o.trigger, '--width', String(w)]),
+  },
+];
+export const toolByName = (n) => TOOLS.find((t) => t.name === n || t.dir === n || path.basename(t.script, '.mjs') === n);

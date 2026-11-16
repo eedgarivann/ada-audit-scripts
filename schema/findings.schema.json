@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/eedgarivann/ada-audit-scripts/main/schema/findings.schema.json",
+  "title": "ada-audit findings document",
+  "description": "Versioned output of ada-audit-scripts. Findings are candidates for human confirmation, never a conformance claim. See docs/findings-schema.md.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "generator",
+    "run",
+    "summary",
+    "findings",
+    "conformance",
+    "manualChecklist",
+    "journeysAssumed",
+    "suppressed",
+    "errors"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "string", "pattern": "^1\\.\\d+\\.\\d+$" },
+    "generator": {
+      "type": "object",
+      "required": ["name"],
+      "properties": { "name": { "const": "ada-audit-scripts" }, "version": { "type": ["string", "null"] }, "url": { "type": "string" } }
+    },
+    "run": {
+      "type": "object",
+      "required": ["pages", "tools"],
+      "properties": {
+        "startedAt": { "type": "string" },
+        "finishedAt": { "type": "string" },
+        "pages": { "type": "array", "items": { "type": "string" } },
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "widths": { "type": "array", "items": { "type": "integer" } },
+        "versions": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+        "readOnly": { "type": "boolean" },
+        "platform": { "type": ["string", "null"] }
+      }
+    },
+    "criticalJourneys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "urls"],
+        "properties": {
+          "name": { "type": "string" },
+          "goal": { "type": ["string", "null"] },
+          "urls": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "journeysAssumed": { "type": "boolean" },
+    "summary": {
+      "type": "object",
+      "required": [
+        "total",
+        "failures",
+        "failuresConfirmedByRules",
+        "byKind",
+        "bySeverity",
+        "byConfidence",
+        "byPlan",
+        "quickWins",
+        "pagesWithFindings"
+      ],
+      "properties": {
+        "total": { "type": "integer" },
+        "failures": { "type": "integer" },
+        "failuresConfirmedByRules": { "type": "integer" },
+        "quickWins": { "type": "integer" },
+        "pagesWithFindings": { "type": "integer" },
+        "suppressedCandidates": { "type": "integer" },
+        "byKind": { "type": "object" },
+        "bySeverity": { "type": "object" },
+        "byConfidence": { "type": "object" },
+        "byPlan": { "type": "object" }
+      }
+    },
+    "journeys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["url", "persona", "outcome"],
+        "properties": {
+          "url": { "type": ["string", "null"] },
+          "persona": { "type": "string" },
+          "personaLabel": { "type": "string" },
+          "outcome": { "type": "string" },
+          "steps": { "type": ["integer", "null"] },
+          "simSeconds": { "type": ["number", "null"] },
+          "friction": { "type": ["string", "null"] }
+        }
+      }
+    },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "suppressed": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["ruleId", "reason"],
+        "properties": { "ruleId": { "type": "string" }, "url": { "type": ["string", "null"] }, "reason": { "type": "string" } }
+      }
+    },
+    "errors": { "type": "array", "items": { "type": "string" } },
+    "conformance": {
+      "type": "object",
+      "required": ["target", "statement", "claim"],
+      "properties": { "target": { "type": "string" }, "statement": { "type": "string" }, "claim": { "const": false } }
+    },
+    "manualChecklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["sc", "check"],
+        "properties": { "sc": { "type": "string" }, "check": { "type": "string" }, "priority": { "type": "boolean" } }
+      }
+    }
+  },
+  "$defs": {
+    "severity": { "enum": ["blocker", "critical", "serious", "moderate", "minor"] },
+    "finding": {
+      "type": "object",
+      "required": [
+        "id",
+        "fingerprint",
+        "group",
+        "title",
+        "kind",
+        "wcag",
+        "severity",
+        "confidence",
+        "priority",
+        "effort",
+        "onCriticalJourney",
+        "pages",
+        "occurrences",
+        "impact",
+        "howFound",
+        "rules",
+        "tools",
+        "locations",
+        "remediation"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^F-\\d{3,}$" },
+        "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "group": { "type": "string" },
+        "title": { "type": "string", "minLength": 3 },
+        "kind": { "enum": ["failure", "best-practice", "aaa", "advisory", "not-tested", "other-risk"] },
+        "wcag": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["sc", "name", "level", "url"],
+            "properties": {
+              "sc": { "type": "string", "pattern": "^[1-4]\\.\\d+\\.\\d+$" },
+              "name": { "type": "string" },
+              "level": { "enum": ["A", "AA", "AAA"] },
+              "since": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "severity": { "$ref": "#/$defs/severity" },
+        "confidence": { "enum": ["automated-certain", "needs-review", "inferred"] },
+        "corroborated": { "type": "boolean" },
+        "priority": {
+          "type": "object",
+          "required": ["plan", "rung", "score", "quickWin"],
+          "properties": {
+            "plan": { "enum": ["fix-now", "fix-next", "monitor"] },
+            "rung": { "type": "integer", "minimum": 1, "maximum": 5 },
+            "score": { "type": "number", "minimum": 0 },
+            "quickWin": { "type": "boolean" }
+          }
+        },
+        "effort": { "enum": ["low", "medium", "high"] },
+        "onCriticalJourney": { "type": "boolean" },
+        "journeyAssumed": { "type": "boolean" },
+        "scope": { "enum": ["single-page", "multi-page"] },
+        "pages": { "type": "integer", "minimum": 0 },
+        "occurrences": { "type": "integer", "minimum": 1 },
+        "impact": {
+          "type": "object",
+          "required": ["who"],
+          "properties": {
+            "who": { "type": "string" },
+            "personas": { "type": "array", "items": { "type": "string" } },
+            "simulatedOutcomes": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "howFound": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "rules": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "tools": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "locations": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["url", "target", "widths", "fingerprint", "evidence"],
+            "properties": {
+              "url": { "type": ["string", "null"] },
+              "target": { "type": ["string", "null"] },
+              "widths": { "type": "array", "items": { "type": "integer" } },
+              "journey": { "type": ["string", "null"] },
+              "screenshots": { "type": "array", "items": { "type": "string" } },
+              "fingerprint": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+              "evidence": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["tool", "rule", "detail"],
+                  "properties": {
+                    "tool": { "type": "string" },
+                    "rule": { "type": "string" },
+                    "detail": { "type": "string" },
+                    "file": { "type": "string" },
+                    "line": { "type": ["integer", "null"] },
+                    "html": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "remediation": {
+          "type": "object",
+          "required": ["concept", "summary", "steps", "verify", "platforms", "references"],
+          "properties": {
+            "concept": { "type": "string" },
+            "summary": { "type": "string" },
+            "steps": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+            "before": { "type": ["string", "null"] },
+            "after": { "type": ["string", "null"] },
+            "platforms": { "type": "object", "additionalProperties": { "type": "string" } },
+            "verify": { "type": "string" },
+            "references": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

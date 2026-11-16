@@ -1,0 +1,182 @@
+[
+  {
+    "persona": "keyboard",
+    "outcome": "stuck",
+    "reasons": ["keyboard trapped in div#cb: Tab only cycles 1 control(s)"],
+    "steps": 20,
+    "keys": 20,
+    "simSeconds": 26,
+    "baseline": null,
+    "pages": ["http://127.0.0.1:4176/cookie-bad.html"],
+    "issues": [
+      {
+        "code": "OVERLAY-NO-KEYBOARD-EXIT",
+        "sc": "2.1.1/2.1.2",
+        "conf": "high",
+        "detail": "div#cb covers 49% and neither Escape nor any keyboard-reachable control closes it (visible: div \"Accept\" (not focusable), div \"Reject\" (not focusable))",
+        "shot": "keyboard_01_overlay-no-keyboard-exit.png"
+      },
+      {
+        "code": "KEYBOARD-TRAP",
+        "sc": "2.1.2",
+        "conf": "high",
+        "detail": "a full Tab round reaches only 1 control(s) out of 11 — stuck in div#cb (49% of screen, \"We use cookies. Privacy policy Accept Re\")",
+        "shot": "keyboard_02_trapped.png"
+      }
+    ],
+    "shots": ["keyboard_01_overlay-no-keyboard-exit.png", "keyboard_02_trapped.png"],
+    "frustration": 2,
+    "log": [
+      "  0 |    0.0s | page 1: Home – Riverbend Supply | sighted scan: \"Trail Lantern details\", \"Shop ▾\"",
+      "  0 |   16.8s | sees div#cb covering 49% (\"We use cookies. Privacy policy Accept Re\"); tries Escape",
+      " 16 |   22.8s | frustration +2 (2/10): div#cb stays on screen",
+      " 17 |   23.7s | Tab → link \"Privacy policy\"",
+      " 18 |   24.2s | end of Tab order (wraps to browser UI)",
+      " 19 |   25.0s | Tab → link \"Privacy policy\"",
+      " 20 |   25.6s | end of Tab order (wraps to browser UI)",
+      " 20 |   25.6s | STUCK: keyboard trapped in div#cb: Tab only cycles 1 control(s)"
+    ]
+  },
+  {
+    "persona": "sr",
+    "outcome": "reached",
+    "reasons": [
+      "found \"button, Add to cart\" via reading down from heading \"Trail Lantern\" after 15 SR commands (not activated: read-only)"
+    ],
+    "steps": 15,
+    "keys": 15,
+    "simSeconds": 19,
+    "baseline": 11,
+    "pages": ["http://127.0.0.1:4176/cookie-bad.html", "http://127.0.0.1:4176/lantern.html"],
+    "issues": [
+      {
+        "code": "VISUAL-OVERLAY-NOT-EXPOSED",
+        "sc": "4.1.2/1.3.1",
+        "conf": "medium",
+        "detail": "div#cb covers 49% of the screen (\"We use cookies. Privacy policy\n\nAccept Reject\") but is not a dialog: a screen-reader user is not told it is there"
+      }
+    ],
+    "shots": ["sr_01_reached.png"],
+    "frustration": 0,
+    "log": [
+      "  0 |    0.0s | page 1: hears title \"Home – Riverbend Supply\"",
+      "  0 |    1.7s | H x40: \"Riverbend Supply\", \"Featured\", \"Trail Lantern\", \"Riverbend Supply\", \"Featured\", \"Trail Lantern\"",
+      "  3 |    5.3s | heading \"Trail Lantern\" sounds right; reading down from it",
+      "  7 |    9.1s | reading down from heading \"Trail Lantern\": picks \"link, Trail Lantern details\" and activates it",
+      "  7 |    9.1s | page 2: hears title \"Trail Lantern – Riverbend Supply\"",
+      "  7 |   11.1s | H x1: \"Trail Lantern\"",
+      "  8 |   12.3s | heading \"Trail Lantern\" sounds right; reading down from it",
+      " 15 |   19.0s | REACHED: found \"button, Add to cart\" via reading down from heading \"Trail Lantern\" after 15 SR commands (not activated: read-only)"
+    ]
+  },
+  {
+    "persona": "zoom",
+    "outcome": "reached",
+    "reasons": ["final control \"Add to cart\" visible on zoomed screen 2 (not activated)"],
+    "steps": 5,
+    "keys": 4,
+    "simSeconds": 12,
+    "baseline": 2,
+    "pages": ["http://127.0.0.1:4176/cookie-bad.html", "http://127.0.0.1:4176/lantern.html"],
+    "issues": [
+      {
+        "code": "ZOOM-HSCROLL-BIGTEXT",
+        "sc": "beyond 1.4.4/1.4.10 minimum (advisory)",
+        "conf": "low",
+        "detail": "fits at 320px, but with text also at 200% the page is 341px wide"
+      },
+      {
+        "code": "ZOOM-OVERLAY",
+        "sc": "1.4.10/2.4.11",
+        "conf": "high",
+        "detail": "div#cb covers 50% of the zoomed screen (\"We use cookies. Privacy policy\n\nAccept Reject\")",
+        "shot": "zoom_01_overlay.png"
+      }
+    ],
+    "shots": ["zoom_01_overlay.png", "zoom_02_overlay.png", "zoom_03_reached.png"],
+    "frustration": 3,
+    "log": [
+      "  0 |    0.0s | frustration +0.5 (0.5/10): some sideways scrolling with big text",
+      "  0 |    0.0s | frustration +1 (1.5/10): div#cb hides most of the screen",
+      "  1 |    2.5s | sees \"Shop ▾\" on screen 1",
+      "  2 |    2.5s | taps \"Shop ▾\" (opens it)",
+      "  2 |    2.5s | frustration +0.5 (2/10): some sideways scrolling with big text",
+      "  2 |    2.5s | frustration +1 (3/10): div#cb hides most of the screen",
+      "  3 |    5.0s | sees \"Lanterns\" on screen 1",
+      "  3 |    5.0s | taps \"Lanterns\" → http://127.0.0.1:4176/lantern.html",
+      "  5 |   11.5s | sees \"Add to cart\" on screen 2",
+      "  5 |   11.5s | REACHED: final control \"Add to cart\" visible on zoomed screen 2 (not activated)"
+    ]
+  },
+  {
+    "persona": "tremor",
+    "outcome": "ok",
+    "reasons": ["4 motor-access candidate(s) on the path"],
+    "steps": 12,
+    "keys": 0,
+    "simSeconds": 0,
+    "baseline": null,
+    "pages": ["http://127.0.0.1:4176/cookie-bad.html"],
+    "issues": [
+      {
+        "code": "TARGET-COVERED",
+        "sc": "2.4.11/2.5.8",
+        "conf": "medium",
+        "detail": "mobile: \"Trail Lantern details\" is covered by div"
+      },
+      {
+        "code": "TARGET-SMALL-SPACED",
+        "sc": "2.5.8 (spacing exception?) / 2.5.5 AAA",
+        "conf": "low",
+        "detail": "mobile: \"Home\" is 46×22px but spaced from neighbours"
+      },
+      {
+        "code": "TARGET-SMALL-SPACED",
+        "sc": "2.5.8 (spacing exception?) / 2.5.5 AAA",
+        "conf": "low",
+        "detail": "mobile: \"About\" is 45×22px but spaced from neighbours"
+      },
+      {
+        "code": "TARGET-SMALL-SPACED",
+        "sc": "2.5.8 (spacing exception?) / 2.5.5 AAA",
+        "conf": "low",
+        "detail": "desktop: \"Help\" is 35×22px but spaced from neighbours"
+      }
+    ],
+    "shots": [],
+    "frustration": 0,
+    "log": [
+      "  0 |    0.0s | mobile: \"Shop ▾\" 62×26px: lands on target 98%, on a neighbour 0%, on nothing 2% (σ=6px)",
+      "  1 |    0.0s | mobile: \"Trail Lantern details\" is under div; a tap would hit that instead",
+      "  1 |    0.0s | mobile: \"Trail Lantern details\" 148×22px: lands on target 0%, on a neighbour 99% (mostly \"Reject\"), on nothing 1% (σ=6px)",
+      "  2 |    0.0s | mobile: \"Trail Lantern details\" is a link inside a sentence (2.5.8 inline exception)",
+      "  2 |    0.0s | mobile: \"Home\" 46×22px: lands on target 95%, on a neighbour 0%, on nothing 5% (σ=6px)",
+      "  3 |    0.0s | mobile: \"About\" 45×22px: lands on target 96%, on a neighbour 0%, on nothing 4% (σ=6px)",
+      "  4 |    0.0s | mobile: \"Cart, 1 item\" 24×30px: lands on target 95%, on a neighbour 0%, on nothing 5% (σ=6px)",
+      "  5 |    0.0s | mobile: \"Privacy policy\" 101×22px: lands on target 95%, on a neighbour 0%, on nothing 5% (σ=6px)",
+      "  6 |    0.0s | mobile: \"Privacy policy\" is a link inside a sentence (2.5.8 inline exception)",
+      "  6 |    0.0s | mobile: \"Accept\" 66×40px: lands on target 100%, on a neighbour 0%, on nothing 0% (σ=6px)",
+      "  7 |    0.0s | mobile: \"Reject\" 62×40px: lands on target 100%, on a neighbour 0%, on nothing 0% (σ=6px)",
+      "  8 |    0.0s | desktop: \"Shop ▾\" 62×26px: lands on target 98%, on a neighbour 0%, on nothing 2% (σ=6px)",
+      "  9 |    0.0s | desktop: \"Trail Lantern details\" 148×22px: lands on target 96%, on a neighbour 0%, on nothing 4% (σ=6px)",
+      " 10 |    0.0s | desktop: \"Trail Lantern details\" is a link inside a sentence (2.5.8 inline exception)",
+      " 10 |    0.0s | desktop: \"Help\" 35×22px: lands on target 93%, on a neighbour 0%, on nothing 7% (σ=6px)",
+      " 11 |    0.0s | desktop: \"Cart, 1 item\" 24×30px: lands on target 95%, on a neighbour 0%, on nothing 5% (σ=6px)",
+      " 12 |    0.0s | OK: 4 motor-access candidate(s) on the path"
+    ]
+  },
+  {
+    "persona": "hurried",
+    "outcome": "ok",
+    "reasons": ["0 time/attention candidate(s)"],
+    "steps": 8,
+    "keys": 0,
+    "simSeconds": 16,
+    "baseline": null,
+    "pages": ["http://127.0.0.1:4176/cookie-bad.html"],
+    "issues": [],
+    "shots": [],
+    "frustration": 0,
+    "log": ["  0 |    0.0s | first screen: spots \"Trail Lantern details\" within ~2s", "  8 |   16.0s | OK: 0 time/attention candidate(s)"]
+  }
+]

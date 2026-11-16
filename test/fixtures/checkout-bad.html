@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout – Riverbend Supply</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:0;color:#222}
+header{display:flex;gap:1rem;align-items:center;padding:.75rem 1rem;background:#f4f4f4}
+nav a{margin-right:.75rem;color:#0645ad}
+button,a{outline:none}
+.muted{color:#b0b0b0}
+.req{color:#c00}
+.title{font-size:1.6rem;font-weight:700;margin:1rem 0}
+.icon{display:inline-block;width:18px;height:18px;background:#333;border-radius:3px;border:0;padding:0}
+.wide{width:900px;background:#eef;padding:.5rem}
+form{padding:1rem;max-width:32rem}
+input,select{display:block;margin:.25rem 0 1rem;padding:.4rem;border:1px solid #ccc}
+</style></head>
+<body>
+<header>
+  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23234'/%3E%3C/svg%3E" width="40" height="40">
+  <nav><a href="index-good.html">Home</a><a href="about.html">About</a><a href="stores.html">Stores</a><a href="blog.html">Journal</a><a href="help.html">Help</a></nav>
+  <button class="icon" onclick="location.href='cart.html'"></button>
+</header>
+<div class="content">
+  <div class="title">Checkout</div>
+  <p class="muted">Free shipping on orders over $50. Prices include tax.</p>
+  <div class="wide">Order summary: 1 × Trail Lantern — $39.00</div>
+  <form action="cart.html" method="post">
+    <label class="req">Full name</label>
+    <input id="name" name="name" required>
+    <input id="email" name="email" type="email" placeholder="Email" required>
+    <input id="phone" name="phone" type="tel">
+    <label for="zip">ZIP code</label>
+    <input id="zip" name="zip" autocomplete="off">
+    <label for="ship">Shipping speed</label>
+    <select id="ship" name="ship" onchange="location.href='checkout-bad.html?ship='+this.value">
+      <option value="std">Standard</option><option value="exp">Express</option><option value="ovn">Overnight</option>
+    </select>
+    <div class="icon" role="presentation" onclick="document.getElementById('zip').value=''"></div>
+    <button type="submit">Place order</button>
+  </form>
+  <p><a href="about.html#returns">Read more</a> about returns.</p>
+</div>
+<footer><a href="privacy.html">Privacy</a></footer>
+</body>
+</html>

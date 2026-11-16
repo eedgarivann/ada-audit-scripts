@@ -1,28 +1,38 @@
-name: ci
+name: CI
 on:
   push:
   pull_request:
-  workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  fixtures:
-    # Offline-safe: every tool runs against the static pages in test/fixtures,
-    # served GET-only on 127.0.0.1. No third-party site is contacted.
+  test:
+    name: Node ${{ matrix.node }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Run all tools on local fixtures and check planted defects + clean controls
-        run: OUT=audit-output/fixtures npm test
+      - run: npm run check
+      - run: npm test
+        env:
+          CONCURRENCY: 4
+      - name: Validate packaged API and CLI
+        run: |
+          node -e "import('./src/index.mjs').then(m => { if (!m.buildDocument) process.exit(1) })"
+          node bin/ada-audit.mjs validate docs/sample-report/findings.json
+          npm pack --dry-run
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: audit-output
-          path: audit-output/
+          name: audit-fixtures-node-${{ matrix.node }}
+          path: audit-output/fixtures/
+          retention-days: 7

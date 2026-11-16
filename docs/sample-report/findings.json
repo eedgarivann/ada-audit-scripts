@@ -1,0 +1,2460 @@
+{
+  "$schema": "https://raw.githubusercontent.com/eedgarivann/ada-audit-scripts/main/schema/findings.schema.json",
+  "schemaVersion": "1.0.0",
+  "generator": {
+    "name": "ada-audit-scripts",
+    "version": "4.2.0",
+    "url": "https://github.com/eedgarivann/ada-audit-scripts"
+  },
+  "run": {
+    "startedAt": "2026-11-15T12:00:00.000Z",
+    "finishedAt": "2026-11-15T12:01:00.000Z",
+    "widths": [
+      390
+    ],
+    "tools": [
+      "inventory",
+      "axe",
+      "tab-walk",
+      "forms",
+      "reflow",
+      "motion",
+      "sr-transcript",
+      "context-change",
+      "bypass-order"
+    ],
+    "versions": {
+      "tool": "4.2.0",
+      "playwright": "1.65.1",
+      "axe": "4.14.0",
+      "vsr": "0.33.0"
+    },
+    "readOnly": true,
+    "platform": "shopify",
+    "pages": [
+      "http://127.0.0.1:4176/checkout-bad.html"
+    ]
+  },
+  "criticalJourneys": [
+    {
+      "name": "Checkout (assumed)",
+      "goal": "checkout",
+      "urls": [
+        "http://127.0.0.1:4176/checkout-bad.html"
+      ]
+    }
+  ],
+  "journeysAssumed": false,
+  "summary": {
+    "total": 18,
+    "failures": 16,
+    "failuresConfirmedByRules": 7,
+    "byKind": {
+      "failure": 16,
+      "not-tested": 0,
+      "best-practice": 2,
+      "aaa": 0,
+      "advisory": 0,
+      "other-risk": 0
+    },
+    "bySeverity": {
+      "blocker": 0,
+      "critical": 4,
+      "serious": 7,
+      "moderate": 5,
+      "minor": 0
+    },
+    "byConfidence": {
+      "automated-certain": 7,
+      "needs-review": 9,
+      "inferred": 0
+    },
+    "byPlan": {
+      "fix-now": 3,
+      "fix-next": 13,
+      "monitor": 0
+    },
+    "quickWins": 13,
+    "pagesWithFindings": 1,
+    "suppressedCandidates": 0
+  },
+  "journeys": [],
+  "findings": [
+    {
+      "id": "F-001",
+      "fingerprint": "78ada4e26b575dbf",
+      "group": "form-label",
+      "title": "Form fields without a visible, programmatic label",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html"
+        },
+        {
+          "sc": "3.3.2",
+          "name": "Labels or Instructions",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html"
+        },
+        {
+          "sc": "4.1.2",
+          "name": "Name, Role, Value",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
+        }
+      ],
+      "severity": "critical",
+      "confidence": "automated-certain",
+      "corroborated": true,
+      "priority": {
+        "plan": "fix-now",
+        "rung": 1,
+        "score": 108,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 3,
+      "impact": {
+        "who": "Screen-reader users hear only \"edit text\"; voice-control users cannot say the field name; everyone loses the hint once a placeholder disappears.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)",
+        "Accessibility tree + DOM inspection (scripted)"
+      ],
+      "rules": [
+        "axe/label",
+        "forms/no-label",
+        "forms/placeholder-only"
+      ],
+      "tools": [
+        "axe",
+        "forms"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#name",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/label",
+              "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"name\" name=\"name\" required=\"\">"
+            },
+            {
+              "tool": "forms",
+              "rule": "forms/no-label",
+              "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "dc52d386dd177a5f"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#phone",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/label",
+              "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"phone\" name=\"phone\" type=\"tel\">"
+            },
+            {
+              "tool": "forms",
+              "rule": "forms/no-label",
+              "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 7
+            }
+          ],
+          "fingerprint": "ee4daa7ed46ecbbd"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#email",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/placeholder-only",
+              "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 6
+            }
+          ],
+          "fingerprint": "d6363c1d419e3491"
+        }
+      ],
+      "remediation": {
+        "concept": "form-label",
+        "summary": "Form fields without a visible, programmatic label",
+        "steps": [
+          "Give every input, select and textarea a visible <label for=\"id\"> (placeholder text is not a label).",
+          "If the design hides the label, keep it in the DOM with a visually-hidden class, never display:none.",
+          "Group related controls (radio sets, date parts) in <fieldset> with a <legend>."
+        ],
+        "before": "<input type=\"email\" placeholder=\"Email\">",
+        "after": "<label for=\"email\">Email</label>\n<input id=\"email\" type=\"email\" autocomplete=\"email\">",
+        "platforms": {
+          "wordpress": "Form plugin field settings: turn on \"Show label\" (Gravity Forms: Field label visibility; Contact Form 7: wrap the tag in <label>).",
+          "shopify": "Theme code: sections/*.liquid or snippets for forms; add <label for> and keep the visually-hidden class.",
+          "webflow": "Select the form field > Settings: add a Label element linked with the field ID.",
+          "framer": "Use a Form component with label text, or an override that sets aria-labelledby to the visible text.",
+          "squarespace": "Form block: every field has a label; do not leave it blank.",
+          "wix": "Field settings > \"Field title\" (shown); avoid placeholder-only titles.",
+          "react": "Render <label htmlFor={id}>; for design-system inputs require a `label` prop and fail the build without it."
+        },
+        "verify": "Click the label text: focus must move into the field. In DevTools > Accessibility the field's Name equals the visible label.",
+        "references": [
+          "https://www.w3.org/WAI/tutorials/forms/labels/",
+          "https://dequeuniversity.com/rules/axe/4.14/label",
+          "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+          "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html",
+          "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
+        ]
+      }
+    },
+    {
+      "id": "F-002",
+      "fingerprint": "0f27c8087e8121de",
+      "group": "alt-missing",
+      "title": "Images missing a useful text alternative",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.1.1",
+          "name": "Non-text Content",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html"
+        }
+      ],
+      "severity": "critical",
+      "confidence": "automated-certain",
+      "corroborated": true,
+      "priority": {
+        "plan": "fix-now",
+        "rung": 3,
+        "score": 72,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 3,
+      "impact": {
+        "who": "Blind users hear a file name or nothing at all, and miss product details, prices or link destinations.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)",
+        "DOM inspection (scripted)",
+        "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
+      ],
+      "rules": [
+        "axe/image-alt",
+        "inventory/alt-missing",
+        "sr-transcript/img-filename"
+      ],
+      "tools": [
+        "axe",
+        "inventory",
+        "sr-transcript"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "img",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/image-alt",
+              "detail": "Images must have alternative text: Fix any of the following:   Element does not have an alt attribute",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23234'/%3E%3C/svg%3E\" width=\"40\" height=\"40\">"
+            }
+          ],
+          "fingerprint": "4400d6bbaea0bda7"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "img svg%3E alt=(none)",
+          "widths": [],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "inventory",
+              "rule": "inventory/alt-missing",
+              "detail": "ALT-MISSING\timg svg%3E alt=(none)",
+              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "line": 15
+            }
+          ],
+          "fingerprint": "7a0d886f5841c2c8"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/img-filename",
+              "detail": "-\tIMG-FILENAME(?)\tno alt; real SR may say \"svg%3E\"",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 10
+            }
+          ],
+          "fingerprint": "c5b49d1f87b0285c"
+        }
+      ],
+      "remediation": {
+        "concept": "alt-text",
+        "summary": "Images missing a useful text alternative",
+        "steps": [
+          "Informative image: alt describes what it conveys (\"Red trail lantern, 300 lumens\").",
+          "Decorative image: alt=\"\" (empty), never missing.",
+          "Linked image: alt names the destination (\"Trail lantern details\").",
+          "Images of text: use real text, or put all the text in the alt."
+        ],
+        "before": "<img src=\"IMG_2041.jpg\">",
+        "after": "<img src=\"IMG_2041.jpg\" alt=\"Red trail lantern on a picnic table\">",
+        "platforms": {
+          "wordpress": "Media Library > image > Alternative Text; decorative: leave blank and the theme must output alt=\"\".",
+          "shopify": "Products > Media > Edit alt text; theme Liquid: {{ image | image_tag: alt: image.alt }}.",
+          "webflow": "Asset panel > settings > Alt text (or \"Decorative\").",
+          "framer": "Image > Accessibility > Alt text.",
+          "squarespace": "Image block > Design/Content > Image alt text (filename is the default: replace it).",
+          "wix": "Image settings > \"What's in the image?\".",
+          "react": "<img alt>; jsx-a11y/alt-text rule; CMS field required."
+        },
+        "verify": "Open the images review sheet (inventory *_images.html) and compare each alt to the picture; screen reader reads a meaningful phrase.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/image-alt",
+          "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html"
+        ]
+      }
+    },
+    {
+      "id": "F-003",
+      "fingerprint": "ab0450049c49a689",
+      "group": "change-on-input",
+      "title": "Page changes on focus or input without warning",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "3.2.2",
+          "name": "On Input",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/on-input.html"
+        }
+      ],
+      "severity": "critical",
+      "confidence": "automated-certain",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-now",
+        "rung": 2,
+        "score": 25,
+        "quickWin": false
+      },
+      "effort": "medium",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 2,
+      "impact": {
+        "who": "Keyboard and screen-reader users are sent to a new page while just moving through a list or typing.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard/DOM test (scripted, navigations aborted)"
+      ],
+      "rules": [
+        "context-change/change-on-input",
+        "context-change/onchange-nav"
+      ],
+      "tools": [
+        "context-change"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "select \"Shipping speed\"",
+          "widths": [
+            1440
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "context-change",
+              "rule": "context-change/change-on-input",
+              "detail": "CHANGE-ON-INPUT\tselect 0 \"Shipping speed\" ArrowDown -> GET http://127.0.0.1:4176/checkout-bad.html?ship=exp (3.2.2; aborted, not followed)",
+              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "line": 6
+            }
+          ],
+          "fingerprint": "7c5c231cc715634b"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "select#ship",
+          "widths": [
+            1440
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "context-change",
+              "rule": "context-change/onchange-nav",
+              "detail": "ONCHANGE-NAV?\tselect#ship \"Standard Express Overnight\" location.href='checkout-bad.html?ship='+this.value\t(3.2.2 candidate; confirm below)",
+              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "line": 4
+            }
+          ],
+          "fingerprint": "a0cc3078154d396b"
+        }
+      ],
+      "remediation": {
+        "concept": "context-change",
+        "summary": "Page changes on focus or input without warning",
+        "steps": [
+          "Do not navigate on select change or on focus; add a \"Go\"/\"Apply\" button.",
+          "If a change must happen, explain it before the control."
+        ],
+        "before": "<select onchange=\"location=this.value\">",
+        "after": "<select id=\"sort\">...</select> <button type=\"submit\">Apply</button>",
+        "platforms": {},
+        "verify": "Arrow through each select and Tab across fields: nothing navigates or opens until you press the button.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/on-input.html"
+        ]
+      }
+    },
+    {
+      "id": "F-004",
+      "fingerprint": "afaec3a43ee74220",
+      "group": "unnamed-control",
+      "title": "Buttons, links or icons with no accessible name",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "4.1.2",
+          "name": "Name, Role, Value",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
+        }
+      ],
+      "severity": "critical",
+      "confidence": "automated-certain",
+      "corroborated": true,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 4,
+        "score": 54,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 3,
+      "impact": {
+        "who": "Screen-reader and voice-control users hear \"button\" or \"link\" and must guess what it does.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)",
+        "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
+      ],
+      "rules": [
+        "axe/button-name",
+        "sr-transcript/no-name"
+      ],
+      "tools": [
+        "axe",
+        "sr-transcript"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "button",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/no-name",
+              "detail": "10\tNO-NAME\tbutton",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 6
+            }
+          ],
+          "fingerprint": "8cdc30f38e4bd6d1"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "button[onclick=\"location.href='cart.html'\"]",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/button-name",
+              "detail": "Buttons must have discernible text: Fix any of the following:   Element does not have inner text that is visible to screen readers",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<button class=\"icon\" onclick=\"location.href='cart.html'\"></button>"
+            }
+          ],
+          "fingerprint": "3d30e3058ad4d217"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "image",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/no-name",
+              "detail": "2\tNO-NAME\timage",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "c24dd214ed8eda18"
+        }
+      ],
+      "remediation": {
+        "concept": "accessible-name",
+        "summary": "Buttons, links or icons with no accessible name",
+        "steps": [
+          "Give icon-only controls a name: visible text, aria-label, or visually-hidden text.",
+          "Make the accessible name start with the visible label (2.5.3 Label in Name).",
+          "For SVG icons inside a named control, add aria-hidden=\"true\" to the SVG."
+        ],
+        "before": "<a href=\"/cart\"><svg>...</svg></a>",
+        "after": "<a href=\"/cart\"><svg aria-hidden=\"true\">...</svg><span class=\"visually-hidden\">Cart, 1 item</span></a>",
+        "platforms": {
+          "shopify": "Header cart/search icons in sections/header.liquid: add visually-hidden text.",
+          "webflow": "Link block > Settings > Custom attribute aria-label.",
+          "framer": "Accessibility > Label on the link/button.",
+          "wix": "Element settings > Accessibility (or Velo `ariaLabel` where supported): give icon buttons a name.",
+          "react": "Icon button component requires a label prop."
+        },
+        "verify": "DevTools > Accessibility: each control has a Name; voice control \"click Cart\" works.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/button-name",
+          "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
+        ]
+      }
+    },
+    {
+      "id": "F-005",
+      "fingerprint": "85eded4400a9c51b",
+      "group": "contrast:1.4.3:failure",
+      "title": "Text contrast too low",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.4.3",
+          "name": "Contrast (Minimum)",
+          "level": "AA",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "automated-certain",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 3,
+        "score": 30,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Low-vision users, older users and anyone on a phone in sunlight cannot read the text.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)"
+      ],
+      "rules": [
+        "axe/color-contrast"
+      ],
+      "tools": [
+        "axe"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": ".muted",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/color-contrast",
+              "detail": "Elements must meet minimum color contrast ratio thresholds: Fix any of the following:   Element has insufficient color contrast of 2.16 (foreground color: #b0b0b0, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<p class=\"muted\">Free shipping on orders over $50. Prices include tax.</p>"
+            }
+          ],
+          "fingerprint": "3f7a89d9ba36293d"
+        }
+      ],
+      "remediation": {
+        "concept": "contrast",
+        "summary": "Text contrast too low",
+        "steps": [
+          "Raise text contrast to at least 4.5:1 (3:1 for 24px+ or 18.66px+ bold text).",
+          "Fix the design token (brand colour) once rather than per element.",
+          "Check hover, focus and disabled-looking states too."
+        ],
+        "before": "color: #9a9a9a; /* 2.8:1 on white */",
+        "after": "color: #595959; /* 7:1 on white */",
+        "platforms": {
+          "wordpress": "Theme.json / Global Styles > Colors; Elementor Site Settings > Global Colors.",
+          "shopify": "Theme settings > Colors (color schemes).",
+          "webflow": "Style guide variables/swatches.",
+          "framer": "Color styles in the Assets panel.",
+          "squarespace": "Site Styles > Colors > edit the palette and section themes.",
+          "wix": "Site Design > Colors.",
+          "react": "Design tokens; add a contrast check to the token pipeline."
+        },
+        "verify": "Measure with a contrast checker on the rendered pixels (not just CSS): 4.5:1 or better; re-run axe color-contrast.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/color-contrast",
+          "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
+        ]
+      }
+    },
+    {
+      "id": "F-006",
+      "fingerprint": "a93632b269be4dce",
+      "group": "page-language",
+      "title": "Page language not declared",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "3.1.1",
+          "name": "Language of Page",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "automated-certain",
+      "corroborated": true,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 4,
+        "score": 27,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 2,
+      "impact": {
+        "who": "Screen readers read the text with the wrong voice and pronunciation.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)",
+        "DOM inspection (scripted)"
+      ],
+      "rules": [
+        "axe/html-has-lang",
+        "inventory/no-lang"
+      ],
+      "tools": [
+        "axe",
+        "inventory"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "html",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/html-has-lang",
+              "detail": "<html> element must have a lang attribute: Fix any of the following:   The <html> element does not have a lang attribute",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<html>"
+            }
+          ],
+          "fingerprint": "11ace1186b9af02b"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "inventory",
+              "rule": "inventory/no-lang",
+              "detail": "lang: null xml:lang: null  NO-LANG (3.1.1 candidate)",
+              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "ea5d711c54ce23b7"
+        }
+      ],
+      "remediation": {
+        "concept": "page-language",
+        "summary": "Page language not declared",
+        "steps": [
+          "Set <html lang=\"en\"> (or the page language); mark foreign-language passages with lang on the element."
+        ],
+        "before": "<html>",
+        "after": "<html lang=\"en\">",
+        "platforms": {
+          "wordpress": "Settings > General > Site Language.",
+          "shopify": "Settings > Languages (theme outputs request.locale.iso_code).",
+          "webflow": "Site Settings > General > Language.",
+          "framer": "Site Settings > General > Language.",
+          "squarespace": "Settings > Language & Region.",
+          "wix": "Settings > Language & Region.",
+          "react": "<html lang> in the root document/layout."
+        },
+        "verify": "View source: <html lang> matches the content language.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/html-has-lang",
+          "https://www.w3.org/WAI/WCAG22/Understanding/language-of-page.html"
+        ]
+      }
+    },
+    {
+      "id": "F-007",
+      "fingerprint": "9f93e9a57dfdaf0e",
+      "group": "bypass-none",
+      "title": "No way to skip repeated blocks",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "2.4.1",
+          "name": "Bypass Blocks",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 2,
+        "score": 26.3,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Keyboard and switch users must press Tab through every menu link on every page before reaching the content.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard + layout test (scripted)"
+      ],
+      "rules": [
+        "bypass-order/bypass-none"
+      ],
+      "tools": [
+        "bypass-order"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "bypass-order",
+              "rule": "bypass-order/bypass-none",
+              "detail": "BYPASS-NONE(2.4.1,high)\t14 focusable(s) before the content and no working skip link, main landmark or headings",
+              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null
+            }
+          ],
+          "fingerprint": "272c274000f246cf"
+        }
+      ],
+      "remediation": {
+        "concept": "skip-link",
+        "summary": "No working way to skip repeated navigation",
+        "steps": [
+          "Make the first focusable element a \"Skip to main content\" link.",
+          "Point it at the main content: <main id=\"main\" tabindex=\"-1\">.",
+          "Keep it visible when focused (do not hide it with display:none)."
+        ],
+        "before": "<a href=\"#content\" class=\"hidden\">Skip</a> <!-- #content does not exist -->",
+        "after": "<a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n...\n<main id=\"main\" tabindex=\"-1\">\n<style>.skip-link{position:absolute;left:-9999px}.skip-link:focus{left:1rem;top:1rem}</style>",
+        "platforms": {
+          "wordpress": "Most block themes include one: check header.php or the theme's \"skip link\" option; make sure <main id> matches.",
+          "shopify": "Dawn-based themes include `skip-to-content-link` in layout/theme.liquid; check the target id after customising.",
+          "webflow": "Add a Link block first in the Navbar symbol pointing to a #main section ID; style it visible on focus.",
+          "framer": "Add a link in the top layer pointing to the main section ID; set focus-visible styles.",
+          "squarespace": "7.1 sites include a \"Skip to content\" link: confirm it is the first Tab stop and lands on the main content; custom headers built in code blocks may need one added.",
+          "wix": "Wix adds a \"Skip to Main Content\" link; confirm it appears first.",
+          "react": "Render the skip link in the root layout and focus the <main> on route change."
+        },
+        "verify": "Load the page, press Tab once: the skip link appears; press Enter, then Tab: focus lands on the first item inside the main content.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html"
+        ]
+      }
+    },
+    {
+      "id": "F-008",
+      "fingerprint": "fe1dc497309318d0",
+      "group": "focus-visible:2.4.7:failure",
+      "title": "No visible focus indicator",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "2.4.7",
+          "name": "Focus Visible",
+          "level": "AA",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 2,
+        "score": 26.3,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 9,
+      "impact": {
+        "who": "Sighted keyboard users (motor disabilities, power users, low vision) cannot see where they are on the page.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard test (scripted, Chromium via Playwright 1.65.1)"
+      ],
+      "rules": [
+        "tab-walk/no-ring"
+      ],
+      "tools": [
+        "tab-walk"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"About\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "2\ta\t\"About\"\tabout.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 5
+            }
+          ],
+          "fingerprint": "0d021af7484de86b"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Help\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "5\ta\t\"Help\"\thelp.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 8
+            }
+          ],
+          "fingerprint": "f091c57433ddfa60"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Home\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "1\ta\t\"Home\"\tindex-good.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 4
+            }
+          ],
+          "fingerprint": "dba91e92197041fc"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Journal\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "4\ta\t\"Journal\"\tblog.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 7
+            }
+          ],
+          "fingerprint": "a8e762e9cc99280f"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Privacy\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "14\ta\t\"Privacy\"\tprivacy.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 17
+            }
+          ],
+          "fingerprint": "55945fceb4f180e0"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Read more\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "13\ta\t\"Read more\"\tabout.html#returns\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 16
+            }
+          ],
+          "fingerprint": "b5128b82afe4cca6"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "a \"Stores\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "3\ta\t\"Stores\"\tstores.html\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 6
+            }
+          ],
+          "fingerprint": "e474ca19685bcc96"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "button \"\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 9
+            }
+          ],
+          "fingerprint": "512968e12909ff79"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "button \"Place order\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
+              "detail": "12\tbutton\t\"Place order\"\t\tring=NONE\tNO-RING?",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 15
+            }
+          ],
+          "fingerprint": "54ff3b9f16beb8ae"
+        }
+      ],
+      "remediation": {
+        "concept": "focus-visible",
+        "summary": "Keyboard focus is invisible",
+        "steps": [
+          "Remove outline:none / outline:0 rules that have no replacement.",
+          "Add a clear :focus-visible style (2px+ outline with 3:1 contrast against the background)."
+        ],
+        "before": "a:focus, button:focus { outline: none; }",
+        "after": ":focus-visible { outline: 3px solid #1a5fb4; outline-offset: 2px; }",
+        "platforms": {
+          "wordpress": "Customizer > Additional CSS, or theme style.css.",
+          "shopify": "assets/base.css (Dawn uses :focus-visible; check custom CSS overrides).",
+          "webflow": "Select the element > States > \"Focused (keyboard)\" and set an outline.",
+          "framer": "Site Settings > Custom code: add the CSS, or set focus variants.",
+          "squarespace": "Design > Custom CSS.",
+          "wix": "Settings > Accessibility: turn on the visual focus indicator; custom-coded elements still need their own focus style.",
+          "react": "Global stylesheet; never reset outline in component CSS."
+        },
+        "verify": "Tab through the page: every focused item shows a visible ring.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
+        ]
+      }
+    },
+    {
+      "id": "F-009",
+      "fingerprint": "af6d133c578b1465",
+      "group": "no-headings",
+      "title": "Page regions not marked up (no <main>, headings missing)",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html"
+        },
+        {
+          "sc": "2.4.1",
+          "name": "Bypass Blocks",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "needs-review",
+      "corroborated": true,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 4,
+        "score": 18.9,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 2,
+      "impact": {
+        "who": "Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard + layout test (scripted)",
+        "DOM inspection (scripted)",
+        "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
+      ],
+      "rules": [
+        "bypass-order/no-headings",
+        "inventory/no-real-headings",
+        "sr-transcript/no-headings"
+      ],
+      "tools": [
+        "bypass-order",
+        "inventory",
+        "sr-transcript"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "content sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
+          "widths": [],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "inventory",
+              "rule": "inventory/no-real-headings",
+              "detail": "NO-REAL-HEADINGS\tcontent sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
+              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "line": 17
+            }
+          ],
+          "fingerprint": "998d49ddae60c064"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "bypass-order",
+              "rule": "bypass-order/no-headings",
+              "detail": "NO-HEADINGS(2.4.1/1.3.1,medium)\tno headings to navigate by",
+              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null
+            },
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/no-headings",
+              "detail": "-\tNO-HEADINGS",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 8
+            }
+          ],
+          "fingerprint": "efddea3d90f193ce"
+        }
+      ],
+      "remediation": {
+        "concept": "landmarks",
+        "summary": "Page regions not marked up (no <main>, headings missing)",
+        "steps": [
+          "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.",
+          "Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text)."
+        ],
+        "before": "<div class=\"content\"><div class=\"title\">Shop</div>",
+        "after": "<main id=\"main\"><h1>Shop</h1>",
+        "platforms": {
+          "wordpress": "Block editor: use Heading blocks; theme template-parts should output <main>.",
+          "shopify": "layout/theme.liquid: <main id=\"MainContent\" role=\"main\">; section titles as headings.",
+          "webflow": "Set the element tag (Settings > Tag) to main/nav/header; use Heading elements.",
+          "framer": "Set the HTML tag of frames (Accessibility > Tag) to main/nav; set text layers to H1/H2.",
+          "squarespace": "Use Heading 1-4 text styles, not large paragraph text.",
+          "wix": "Text settings: choose Heading 1-6 as the semantic tag (SEO & accessibility).",
+          "react": "Layout component renders <main>; lint with eslint-plugin-jsx-a11y."
+        },
+        "verify": "Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+          "https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks.html"
+        ]
+      }
+    },
+    {
+      "id": "F-010",
+      "fingerprint": "90dff7f67b5abaaf",
+      "group": "autocomplete:1.3.5:failure",
+      "title": "Personal-data field missing autocomplete",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.3.5",
+          "name": "Identify Input Purpose",
+          "level": "AA",
+          "since": "2.1",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html"
+        }
+      ],
+      "severity": "moderate",
+      "confidence": "automated-certain",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 1,
+        "score": 15,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 4,
+      "impact": {
+        "who": "People with memory, dexterity or cognitive disabilities must retype details that the browser could fill; slow, error-prone on mobile.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Accessibility tree + DOM inspection (scripted)"
+      ],
+      "rules": [
+        "forms/no-autocomplete"
+      ],
+      "tools": [
+        "forms"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#email",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/no-autocomplete",
+              "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 6
+            }
+          ],
+          "fingerprint": "592a76ef3d07e7a8"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#name",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/no-autocomplete",
+              "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "3c0928875893b80b"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#phone",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/no-autocomplete",
+              "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 7
+            }
+          ],
+          "fingerprint": "8997cd6bdec775b4"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#zip",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/no-autocomplete",
+              "detail": "input[text] id=zip name=zip label=\"ZIP code\" placeholder=\"\" required=false autocomplete=\"off\" NO-AUTOCOMPLETE(postal-code; 1.3.5)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 8
+            }
+          ],
+          "fingerprint": "13d02a9a09d7dfc9"
+        }
+      ],
+      "remediation": {
+        "concept": "autocomplete",
+        "summary": "Personal-data fields missing autocomplete",
+        "steps": [
+          "Add the matching HTML autocomplete token to each field that collects the user's own data (name, email, tel, street-address, postal-code, cc-number, one-time-code...).",
+          "Do not set autocomplete=\"off\" on those fields."
+        ],
+        "before": "<input id=\"zip\" name=\"zip\">",
+        "after": "<input id=\"zip\" name=\"zip\" autocomplete=\"postal-code\" inputmode=\"numeric\">",
+        "platforms": {
+          "wordpress": "Gravity Forms: Field > Advanced > enable autocomplete; WPForms/CF7: add autocomplete attribute in field options or the tag.",
+          "shopify": "Shopify's own checkout fields are controlled by Shopify; fix custom forms (contact, newsletter, account) in theme Liquid.",
+          "webflow": "Field > Settings > Custom attributes: autocomplete = token.",
+          "framer": "Form field autocomplete setting if your Framer version has one; otherwise a code override that sets the attribute.",
+          "squarespace": "Limited control; use the built-in Name/Email/Address field types, which emit tokens.",
+          "wix": "Use the matching field type (Email, Phone, Address); if a custom input cannot get the right token, log it as a platform dependency.",
+          "react": "<input autoComplete=\"postal-code\" />."
+        },
+        "verify": "Open the form in Chrome or Safari with a saved address/profile: each field offers autofill with the right value.",
+        "references": [
+          "https://www.w3.org/TR/WCAG22/#input-purposes",
+          "https://www.w3.org/WAI/WCAG22/Understanding/identify-input-purpose.html"
+        ]
+      }
+    },
+    {
+      "id": "F-011",
+      "fingerprint": "6ae74afae9de3481",
+      "group": "required-cue:3.3.2:failure",
+      "title": "Required field has no visible cue",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "3.3.2",
+          "name": "Labels or Instructions",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html"
+        }
+      ],
+      "severity": "moderate",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 1,
+        "score": 10.5,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 2,
+      "impact": {
+        "who": "Colour-blind and screen-reader users cannot tell which fields are required until they get errors.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Accessibility tree + DOM inspection (scripted)"
+      ],
+      "rules": [
+        "forms/required-not-shown"
+      ],
+      "tools": [
+        "forms"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#email",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/required-not-shown",
+              "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 6
+            }
+          ],
+          "fingerprint": "aeb7fc25ade4056f"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "input#name",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "forms",
+              "rule": "forms/required-not-shown",
+              "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
+              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "eacc77dc8bd3a710"
+        }
+      ],
+      "remediation": {
+        "concept": "required-cue",
+        "summary": "Required fields shown by colour only (or not at all)",
+        "steps": [
+          "Mark required fields in text: \"(required)\" in the label, or an asterisk explained at the top of the form.",
+          "Add the required attribute (or aria-required=\"true\") so assistive technology announces it."
+        ],
+        "before": "<label style=\"color:red\">Name</label><input id=\"n\">",
+        "after": "<label for=\"n\">Name <span>(required)</span></label><input id=\"n\" required>",
+        "platforms": {
+          "wordpress": "Form plugin: enable \"Required\" and the required indicator text.",
+          "shopify": "Theme form snippet: add \"(required)\" text and the required attribute.",
+          "webflow": "Field settings: check Required; add the text to the label.",
+          "framer": "Form field: required toggle + label text.",
+          "squarespace": "Field settings: Required (shows \"(required)\").",
+          "wix": "Field settings: Required + label text.",
+          "react": "Pass required to the input and render the text cue in the label component."
+        },
+        "verify": "Grayscale the page (DevTools > Rendering > Emulate vision deficiency: achromatopsia): every required field is still identifiable; screen reader says \"required\".",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html"
+        ]
+      }
+    },
+    {
+      "id": "F-012",
+      "fingerprint": "62859c99dc7919fa",
+      "group": "mouse-only",
+      "title": "Click handler on an element keyboard users cannot reach",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "2.1.1",
+          "name": "Keyboard",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 2,
+        "score": 8.8,
+        "quickWin": false
+      },
+      "effort": "medium",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Keyboard, switch and voice users cannot open the menu, accept the banner or press the button; the journey stops.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard/DOM test (scripted, navigations aborted)"
+      ],
+      "rules": [
+        "context-change/mouse-only"
+      ],
+      "tools": [
+        "context-change"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "div.icon",
+          "widths": [
+            1440
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "context-change",
+              "rule": "context-change/mouse-only",
+              "detail": "MOUSE-ONLY\tdiv.icon \"\" role=presentation\t(2.1.1/4.1.2 candidate: not keyboard reachable)",
+              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "line": 5
+            }
+          ],
+          "fingerprint": "9c2e9419e35a9e4d"
+        }
+      ],
+      "remediation": {
+        "concept": "keyboard-access",
+        "summary": "Controls that only work with a mouse",
+        "steps": [
+          "Use native <button> for actions and <a href> for navigation; avoid clickable <div>/<span>.",
+          "If a custom control is unavoidable: tabindex=\"0\", role, and Enter/Space handlers.",
+          "Menus must open on Enter/Space (and click), not only on hover."
+        ],
+        "before": "<div class=\"accept\" onclick=\"accept()\">Accept</div>",
+        "after": "<button type=\"button\" onclick=\"accept()\">Accept</button>",
+        "platforms": {
+          "wordpress": "Replace page-builder \"div with click action\" widgets with Button widgets.",
+          "shopify": "Theme JS: bind to <button>; for mega menus use <details>/<summary> or aria-expanded buttons.",
+          "webflow": "Use Button or Link Block elements; Dropdown: enable \"Open menu on hover\" only alongside click/keyboard.",
+          "framer": "Use Link/Button components; hover-only variants need a tap/focus trigger too.",
+          "squarespace": "Built-in menus are keyboard accessible; custom code blocks need <button>.",
+          "wix": "Use Button elements; Velo onClick on boxes is not keyboard accessible.",
+          "react": "Use <button>; jsx-a11y rules click-events-have-key-events and no-static-element-interactions."
+        },
+        "verify": "Unplug the mouse: complete the journey with Tab, Shift+Tab, Enter, Space, arrows and Esc only.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html"
+        ]
+      }
+    },
+    {
+      "id": "F-013",
+      "fingerprint": "cc92c9a5c7df0e15",
+      "group": "focus-obscured:2.4.7:failure",
+      "title": "Focus moves to an off-screen item",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "2.4.7",
+          "name": "Focus Visible",
+          "level": "AA",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
+        }
+      ],
+      "severity": "moderate",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 2,
+        "score": 8.8,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Keyboard users tab to a link they cannot see, and may activate the wrong thing.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Keyboard test (scripted, Chromium via Playwright 1.65.1)"
+      ],
+      "rules": [
+        "tab-walk/offscreen"
+      ],
+      "tools": [
+        "tab-walk"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "button \"\"",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/offscreen",
+              "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
+              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "line": 9
+            }
+          ],
+          "fingerprint": "fa195e83bebd3b46"
+        }
+      ],
+      "remediation": {
+        "concept": "focus-obscured",
+        "summary": "Focused item hidden behind a sticky header, banner or overlay",
+        "steps": [
+          "Add scroll-padding-top equal to the sticky header height.",
+          "Do not let cookie or chat banners cover content while it has focus; make them dismissible."
+        ],
+        "before": null,
+        "after": "html { scroll-padding-top: 6rem; } /* sticky header height */",
+        "platforms": {},
+        "verify": "Tab through the whole page at 390 px and 1440 px: no focused item is entirely covered (2.4.11 AA; partly covered = 2.4.12 AAA).",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
+        ]
+      }
+    },
+    {
+      "id": "F-014",
+      "fingerprint": "0234ab95ad085f8a",
+      "group": "headings-labels:1.3.1:failure",
+      "title": "Text styled as a heading but not a heading",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.3.1",
+          "name": "Info and Relationships",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html"
+        },
+        {
+          "sc": "2.4.6",
+          "name": "Headings and Labels",
+          "level": "AA",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
+        }
+      ],
+      "severity": "moderate",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 4,
+        "score": 5.3,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Screen-reader users skimming the headings list cannot find the section they need.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "DOM inspection (scripted)"
+      ],
+      "rules": [
+        "inventory/fake-heading"
+      ],
+      "tools": [
+        "inventory"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "div \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
+          "widths": [],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "inventory",
+              "rule": "inventory/fake-heading",
+              "detail": "FAKE-HEADING?\tdiv \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
+              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "line": 16
+            }
+          ],
+          "fingerprint": "bc57a134bcf72635"
+        }
+      ],
+      "remediation": {
+        "concept": "headings-labels",
+        "summary": "Headings or labels that do not describe their section",
+        "steps": [
+          "Turn styled \"fake\" headings into real headings; make heading text describe the section.",
+          "Remove empty headings; make repeated labels unique (e.g. \"Billing address – City\")."
+        ],
+        "before": null,
+        "after": null,
+        "platforms": {},
+        "verify": "Headings list reads as a meaningful outline; no empty or duplicate entries.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html",
+          "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
+        ]
+      }
+    },
+    {
+      "id": "F-015",
+      "fingerprint": "846fea91fa5bda08",
+      "group": "vague-link",
+      "title": "Vague link text",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "2.4.4",
+          "name": "Link Purpose (In Context)",
+          "level": "A",
+          "since": "2.0",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html"
+        }
+      ],
+      "severity": "moderate",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 4,
+        "score": 5.3,
+        "quickWin": true
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Screen-reader users listing links hear several identical \"Read more\" links with no destination.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
+      ],
+      "rules": [
+        "sr-transcript/vague-link"
+      ],
+      "tools": [
+        "sr-transcript"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "link, Read more",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/vague-link",
+              "detail": "33\tVAGUE-LINK\tlink, Read more",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 7
+            }
+          ],
+          "fingerprint": "5cb139769609ced1"
+        }
+      ],
+      "remediation": {
+        "concept": "link-purpose",
+        "summary": "Vague link text (\"click here\", \"read more\")",
+        "steps": [
+          "Write link text that names the destination (\"Read the lantern care guide\").",
+          "If the design needs short text, add visually-hidden context or aria-describedby."
+        ],
+        "before": "<a href=\"/care\">Read more</a>",
+        "after": "<a href=\"/care\">Read more<span class=\"visually-hidden\"> about lantern care</span></a>",
+        "platforms": {},
+        "verify": "Screen reader links list (NVDA Insert+F7 / VoiceOver rotor): each link makes sense alone.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-in-context.html"
+        ]
+      }
+    },
+    {
+      "id": "F-016",
+      "fingerprint": "5fde57db9bba0084",
+      "group": "reflow",
+      "title": "Page scrolls sideways at 320 px",
+      "kind": "failure",
+      "wcag": [
+        {
+          "sc": "1.4.10",
+          "name": "Reflow",
+          "level": "AA",
+          "since": "2.1",
+          "url": "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        }
+      ],
+      "severity": "serious",
+      "confidence": "needs-review",
+      "corroborated": false,
+      "priority": {
+        "plan": "fix-next",
+        "rung": 5,
+        "score": 3.5,
+        "quickWin": false
+      },
+      "effort": "medium",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Low-vision users who zoom to 400% (≈320 px wide) must scroll sideways on every line.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Zoom/reflow (scripted 320 px + text spacing)"
+      ],
+      "rules": [
+        "reflow/h-overflow"
+      ],
+      "tools": [
+        "reflow"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [
+            320
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "reflow",
+              "rule": "reflow/h-overflow",
+              "detail": "320px: scrollWidth=916 H-OVERFLOW (1.4.10 candidate at 320) offenders=3",
+              "file": "test/data/raw-checkout/reflow/127_0_0_1_4176_checkout_bad_html.txt",
+              "line": 4
+            }
+          ],
+          "fingerprint": "d1a6cd1ba1c0806f"
+        }
+      ],
+      "remediation": {
+        "concept": "reflow",
+        "summary": "Content does not reflow on small screens or zoom",
+        "steps": [
+          "Find the element wider than the viewport (fixed widths, wide tables, long words).",
+          "Use max-width:100%, flexible grids, overflow-wrap:anywhere; scroll only data tables inside their own container."
+        ],
+        "before": null,
+        "after": "img, video { max-width: 100%; height: auto; }\n.wrap { overflow-wrap: anywhere; }",
+        "platforms": {},
+        "verify": "Set the browser to 1280 px wide and zoom to 400% (or DevTools 320 px): no horizontal scrollbar for the page.",
+        "references": [
+          "https://www.w3.org/WAI/WCAG22/Understanding/reflow.html"
+        ]
+      }
+    },
+    {
+      "id": "F-017",
+      "fingerprint": "18210cf02a919b40",
+      "group": "landmarks:page-has-heading-one:best-practice",
+      "title": "Page should contain a level-one heading",
+      "kind": "best-practice",
+      "wcag": [],
+      "severity": "moderate",
+      "confidence": "automated-certain",
+      "corroborated": false,
+      "priority": {
+        "plan": "monitor",
+        "rung": 4,
+        "score": 0,
+        "quickWin": false
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 1,
+      "impact": {
+        "who": "Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)"
+      ],
+      "rules": [
+        "axe/page-has-heading-one"
+      ],
+      "tools": [
+        "axe"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "html",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/page-has-heading-one",
+              "detail": "Page should contain a level-one heading: Fix all of the following:   Page must have a level-one heading",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<html>"
+            }
+          ],
+          "fingerprint": "bd2ad8f11c6a5882"
+        }
+      ],
+      "remediation": {
+        "concept": "landmarks",
+        "summary": "Page regions not marked up (no <main>, headings missing)",
+        "steps": [
+          "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.",
+          "Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text)."
+        ],
+        "before": "<div class=\"content\"><div class=\"title\">Shop</div>",
+        "after": "<main id=\"main\"><h1>Shop</h1>",
+        "platforms": {
+          "wordpress": "Block editor: use Heading blocks; theme template-parts should output <main>.",
+          "shopify": "layout/theme.liquid: <main id=\"MainContent\" role=\"main\">; section titles as headings.",
+          "webflow": "Set the element tag (Settings > Tag) to main/nav/header; use Heading elements.",
+          "framer": "Set the HTML tag of frames (Accessibility > Tag) to main/nav; set text layers to H1/H2.",
+          "squarespace": "Use Heading 1-4 text styles, not large paragraph text.",
+          "wix": "Text settings: choose Heading 1-6 as the semantic tag (SEO & accessibility).",
+          "react": "Layout component renders <main>; lint with eslint-plugin-jsx-a11y."
+        },
+        "verify": "Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/page-has-heading-one"
+        ]
+      }
+    },
+    {
+      "id": "F-018",
+      "fingerprint": "46ae73b720e05929",
+      "group": "no-main",
+      "title": "No main landmark",
+      "kind": "best-practice",
+      "wcag": [],
+      "severity": "moderate",
+      "confidence": "automated-certain",
+      "corroborated": true,
+      "priority": {
+        "plan": "monitor",
+        "rung": 4,
+        "score": 0,
+        "quickWin": false
+      },
+      "effort": "low",
+      "onCriticalJourney": true,
+      "journeyAssumed": false,
+      "scope": "single-page",
+      "pages": 1,
+      "occurrences": 14,
+      "impact": {
+        "who": "Screen-reader users navigate by landmarks and headings; without them they must listen to the whole page.",
+        "personas": [],
+        "simulatedOutcomes": []
+      },
+      "howFound": [
+        "Automated (axe-core 4.14.0)",
+        "Keyboard + layout test (scripted)",
+        "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
+      ],
+      "rules": [
+        "axe/landmark-one-main",
+        "axe/region",
+        "bypass-order/no-main-landmark",
+        "sr-transcript/no-main"
+      ],
+      "tools": [
+        "axe",
+        "bypass-order",
+        "sr-transcript"
+      ],
+      "locations": [
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": ".muted",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<p class=\"muted\">Free shipping on orders over $50. Prices include tax.</p>"
+            }
+          ],
+          "fingerprint": "abfcd9957d589862"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": ".req",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<label class=\"req\">Full name</label>"
+            }
+          ],
+          "fingerprint": "4f54960908fda603"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": ".title",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<div class=\"title\">Checkout</div>"
+            }
+          ],
+          "fingerprint": "519e7589797126a7"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": ".wide",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<div class=\"wide\">Order summary: 1 × Trail Lantern — $39.00</div>"
+            }
+          ],
+          "fingerprint": "4b233838fe110314"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#email",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"email\" name=\"email\" type=\"email\" placeholder=\"Email\" required=\"\">"
+            }
+          ],
+          "fingerprint": "ecbcb1e580232101"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#name",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"name\" name=\"name\" required=\"\">"
+            }
+          ],
+          "fingerprint": "a6876bf163603a9b"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#phone",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"phone\" name=\"phone\" type=\"tel\">"
+            }
+          ],
+          "fingerprint": "1d29d36ca2902ef6"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#ship",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<select id=\"ship\" name=\"ship\" onchange=\"location.href='checkout-bad.html?ship='+this.value\">\n      <option value=\"std\">Standard</option><option value=\"exp\">Express</option><option value=\"ovn\">Overnight</option>\n    </select>"
+            }
+          ],
+          "fingerprint": "72b9fdbbb5965dfc"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "#zip",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<input id=\"zip\" name=\"zip\" autocomplete=\"off\">"
+            }
+          ],
+          "fingerprint": "d5f2088747014d80"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "html",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/landmark-one-main",
+              "detail": "Document should have one main landmark: Fix all of the following:   Document does not have a main landmark",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<html>"
+            }
+          ],
+          "fingerprint": "57653544e8d38d8a"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "label[for=\"ship\"]",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<label for=\"ship\">Shipping speed</label>"
+            }
+          ],
+          "fingerprint": "9aa3cb7999939bb5"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "label[for=\"zip\"]",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<label for=\"zip\">ZIP code</label>"
+            }
+          ],
+          "fingerprint": "a2cfc96908f37834"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": null,
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "bypass-order",
+              "rule": "bypass-order/no-main-landmark",
+              "detail": "NO-MAIN-LANDMARK(2.4.1/1.3.1 advisory,low)\tno <main> or role=main",
+              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null
+            },
+            {
+              "tool": "sr-transcript",
+              "rule": "sr-transcript/no-main",
+              "detail": "-\tNO-MAIN",
+              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "line": 9
+            }
+          ],
+          "fingerprint": "1383fdec5635c698"
+        },
+        {
+          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "target": "p:nth-child(5)",
+          "widths": [
+            390
+          ],
+          "journey": "Checkout (assumed)",
+          "screenshots": [],
+          "evidence": [
+            {
+              "tool": "axe",
+              "rule": "axe/region",
+              "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
+              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "line": null,
+              "html": "<p><a href=\"about.html#returns\">Read more</a> about returns.</p>"
+            }
+          ],
+          "fingerprint": "a01c5f399639d323"
+        }
+      ],
+      "remediation": {
+        "concept": "landmarks",
+        "summary": "Page regions not marked up (no <main>, headings missing)",
+        "steps": [
+          "Wrap the primary content in one <main>; use <header>, <nav aria-label>, <footer>.",
+          "Give each page one <h1> and use real <h2>/<h3> headings for sections (not bold text)."
+        ],
+        "before": "<div class=\"content\"><div class=\"title\">Shop</div>",
+        "after": "<main id=\"main\"><h1>Shop</h1>",
+        "platforms": {
+          "wordpress": "Block editor: use Heading blocks; theme template-parts should output <main>.",
+          "shopify": "layout/theme.liquid: <main id=\"MainContent\" role=\"main\">; section titles as headings.",
+          "webflow": "Set the element tag (Settings > Tag) to main/nav/header; use Heading elements.",
+          "framer": "Set the HTML tag of frames (Accessibility > Tag) to main/nav; set text layers to H1/H2.",
+          "squarespace": "Use Heading 1-4 text styles, not large paragraph text.",
+          "wix": "Text settings: choose Heading 1-6 as the semantic tag (SEO & accessibility).",
+          "react": "Layout component renders <main>; lint with eslint-plugin-jsx-a11y."
+        },
+        "verify": "Screen reader landmarks list (NVDA D / VoiceOver rotor) shows main and navigation; headings list reads as an outline of the page.",
+        "references": [
+          "https://dequeuniversity.com/rules/axe/4.14/landmark-one-main",
+          "https://dequeuniversity.com/rules/axe/4.14/region"
+        ]
+      }
+    }
+  ],
+  "suppressed": [],
+  "errors": [],
+  "conformance": {
+    "target": "WCAG 2.2 Level AA",
+    "statement": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks, in headless Chromium (Playwright 1.65.1) at 390 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\".",
+    "claim": false
+  },
+  "manualChecklist": [
+    {
+      "sc": "3.3.1, 3.3.3, 4.1.3",
+      "check": "On staging or with one owner-approved test entry: submit each journey form empty and with invalid values. Errors must be text, linked to the field, announced, and focus must move to them. Read-only runs cannot test server-side errors.",
+      "priority": true
+    },
+    {
+      "sc": "2.1.1, 2.1.2, 2.4.3, 2.4.7",
+      "check": "Complete every critical journey with the keyboard only (Tab, Shift+Tab, Enter, Space, arrows, Esc). Note any control you cannot reach, operate or leave."
+    },
+    {
+      "sc": "1.1.1, 1.3.1, 4.1.2, 4.1.3",
+      "check": "Real screen reader pass on each journey: NVDA or JAWS with Chrome (Windows), VoiceOver with Safari (macOS and iOS), TalkBack with Chrome (Android). Listen to headings, landmarks, form labels, errors and status messages. Record AT, browser, OS and versions."
+    },
+    {
+      "sc": "1.1.1",
+      "check": "Judge alt text quality against the actual images (inventory *_images.html review sheet): does each alt convey what the image means here?"
+    },
+    {
+      "sc": "1.4.3, 1.4.11",
+      "check": "Check contrast of text over images, gradients and video, and of icons, input borders and focus rings, on rendered pixels."
+    },
+    {
+      "sc": "1.4.4, 1.4.10",
+      "check": "Zoom to 200% and 400% in a real browser at 1280 px: nothing is cut off and no sideways scrolling for text content."
+    },
+    {
+      "sc": "1.3.3, 1.4.1",
+      "check": "Instructions do not rely on shape, colour, size or position alone (\"click the green button\")."
+    },
+    {
+      "sc": "1.4.13",
+      "check": "Hover/focus pop-ups (tooltips, menus) can be dismissed with Esc, hovered over, and stay until dismissed."
+    },
+    {
+      "sc": "2.5.3",
+      "check": "Voice control (\"click Add to cart\") works: accessible names start with the visible label."
+    },
+    {
+      "sc": "3.2.6",
+      "check": "Help and contact options appear in the same relative place on every page that has them."
+    },
+    {
+      "sc": "3.3.4",
+      "check": "Purchases, bookings and legal submissions can be reviewed, corrected or reversed before they are final."
+    },
+    {
+      "sc": "1.2.x",
+      "check": "Video and audio on journeys have accurate captions, transcripts and audio description where needed."
+    },
+    {
+      "sc": "-",
+      "check": "PDFs and documents linked from journeys are tagged and readable (or have an accessible HTML alternative)."
+    },
+    {
+      "sc": "3.3.7",
+      "check": "Multi-step processes do not ask again for information already given."
+    },
+    {
+      "sc": "2.5.7",
+      "check": "Every drag action (sliders, sortable lists, maps) has a single-tap alternative."
+    }
+  ]
+}

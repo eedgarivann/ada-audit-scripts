@@ -1,0 +1,6 @@
+# motion — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:27.871Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html width=390
+# Outputs are candidates: confirm in DOM + screenshot.
+
+no-preference: movedElements(>3px in 3s)=0 infiniteAnimations=[] marquee/blink=0 gifs=0 videos=[] pauseControls=0
+reduce: movedElements(>3px in 3s)=0 infiniteAnimations=[] marquee/blink=0 gifs=0 videos=[] pauseControls=0
+Note: animated GIFs and canvas motion are not detected by DOM position; check visually (2.2.2).

@@ -1,0 +1,119 @@
+Simulated screen reader output (Guidepup Virtual Screen Reader). Not JAWS, NVDA or VoiceOver; confirm with a real screen reader.
+# http://127.0.0.1:4176/checkout-bad.html | mobile 390 | @guidepup/virtual-screen-reader 0.33.0 | 2026-11-16T00:37:29.299Z
+
+## Flags (candidates; confirm each in DOM + screenshot)
+2	NO-NAME	image
+10	NO-NAME	button
+33	VAGUE-LINK	link, Read more
+-	NO-HEADINGS
+-	NO-MAIN
+-	IMG-FILENAME(?)	no alt; real SR may say "svg%3E"
+
+## Headings
+
+## Landmarks
+header, nav, footer
+
+## Tab pass (real keyboard)
+1	a	"Home"	
+2	a	"About"	
+3	a	"Stores"	
+4	a	"Journal"	
+5	a	"Help"	
+6	button	""	NO-NAME
+7	input	""	NO-NAME
+8	input	""	NO-NAME
+9	input	""	NO-NAME REPEAT(trap?)
+10	input	"ZIP code"	
+11	select	"Shipping speed"	
+12	button	"Place order"	
+13	a	"Read more"	VAGUE-LINK
+14	a	"Privacy"	
+15	<body>	END-OF-TAB-ORDER
+16	a	"Home"	
+17	a	"About"	
+18	a	"Stores"	
+19	a	"Journal"	
+20	a	"Help"	
+21	button	""	NO-NAME
+22	input	""	NO-NAME
+23	input	""	NO-NAME
+24	input	""	NO-NAME REPEAT(trap?)
+25	input	"ZIP code"	
+26	select	"Shipping speed"	
+27	button	"Place order"	
+28	a	"Read more"	VAGUE-LINK
+29	a	"Privacy"	
+30	<body>	END-OF-TAB-ORDER
+31	a	"Home"	
+32	a	"About"	
+33	a	"Stores"	
+34	a	"Journal"	
+35	a	"Help"	
+36	button	""	NO-NAME
+37	input	""	NO-NAME
+38	input	""	NO-NAME
+39	input	""	NO-NAME REPEAT(trap?)
+40	input	"ZIP code"	
+41	select	"Shipping speed"	
+42	button	"Place order"	
+43	a	"Read more"	VAGUE-LINK
+44	a	"Privacy"	
+45	<body>	END-OF-TAB-ORDER
+46	a	"Home"	
+47	a	"About"	
+48	a	"Stores"	
+49	a	"Journal"	
+50	a	"Help"	
+51	button	""	NO-NAME
+52	input	""	NO-NAME
+53	input	""	NO-NAME
+54	input	""	NO-NAME REPEAT(trap?)
+55	input	"ZIP code"	
+56	select	"Shipping speed"	
+57	button	"Place order"	
+58	a	"Read more"	VAGUE-LINK
+59	a	"Privacy"	
+60	<body>	END-OF-TAB-ORDER
+
+## Linear read (40 phrases, cap 1500)
+document
+banner
+image
+navigation
+link, Home
+link, About
+link, Stores
+link, Journal
+link, Help
+end of navigation
+button
+end of banner
+Checkout
+paragraph
+Free shipping on orders over $50. Prices include tax.
+end of paragraph
+Order summary: 1 × Trail Lantern — $39.00
+form
+Full name
+textbox, required
+textbox, placeholder Email, required
+textbox
+ZIP code
+textbox, ZIP code
+Shipping speed
+combobox, Shipping speed, std, has popup listbox, not expanded
+option, Standard, std, not selected, position 1, set size 3
+option, Express, exp, not selected, position 2, set size 3
+option, Overnight, ovn, not selected, position 3, set size 3
+end of combobox, Shipping speed, std, has popup listbox, not expanded
+button, Place order
+end of form
+paragraph
+link, Read more
+about returns.
+end of paragraph
+contentinfo
+link, Privacy
+end of contentinfo
+end of document

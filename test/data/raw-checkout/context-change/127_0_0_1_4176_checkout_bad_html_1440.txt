@@ -1,0 +1,6 @@
+# context-change — ada-audit-scripts 4.2.0 — 2026-11-16T00:37:21.512Z — playwright 1.65.1 http://127.0.0.1:4176/checkout-bad.html width=1440
+# Outputs are candidates: confirm in DOM + screenshot.
+
+ONCHANGE-NAV?	select#ship "Standard Express Overnight" location.href='checkout-bad.html?ship='+this.value	(3.2.2 candidate; confirm below)
+MOUSE-ONLY	div.icon "" role=presentation	(2.1.1/4.1.2 candidate: not keyboard reachable)
+CHANGE-ON-INPUT	select 0 "Shipping speed" ArrowDown -> GET http://127.0.0.1:4176/checkout-bad.html?ship=exp (3.2.2; aborted, not followed)

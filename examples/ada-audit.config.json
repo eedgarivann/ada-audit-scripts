@@ -1,0 +1,26 @@
+{
+  "urls": [
+    "https://www.w3.org/WAI/demos/bad/before/home.html",
+    "https://www.w3.org/WAI/demos/bad/before/news.html",
+    "https://www.w3.org/WAI/demos/bad/before/tickets.html",
+    "https://www.w3.org/WAI/demos/bad/before/survey.html"
+  ],
+  "journeys": [
+    {
+      "name": "Buy tickets",
+      "goal": "buy",
+      "target": "tickets",
+      "urls": ["https://www.w3.org/WAI/demos/bad/before/home.html", "https://www.w3.org/WAI/demos/bad/before/tickets.html"]
+    },
+    { "name": "Survey", "goal": "contact", "urls": ["https://www.w3.org/WAI/demos/bad/before/survey.html"] }
+  ],
+  "runJourneys": true,
+  "personas": "keyboard,sr,zoom",
+  "widths": [390, 1440],
+  "platform": "react",
+  "formats": ["json", "md", "html", "sarif", "csv"],
+  "concurrency": 4,
+  "timeouts": { "navigation": 90000, "job": 600000 },
+  "retries": 2,
+  "out": "./audit-output/w3c-bad"
+}

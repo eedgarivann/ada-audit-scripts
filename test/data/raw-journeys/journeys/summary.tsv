@@ -1,0 +1,13 @@
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+http://127.0.0.1:4176/cookie-bad.html	keyboard	stuck	20	20	26		-	OVERLAY-NO-KEYBOARD-EXIT(high) KEYBOARD-TRAP(high)
+http://127.0.0.1:4176/cookie-bad.html	sr	reached	15	15	19	11	1.4x	VISUAL-OVERLAY-NOT-EXPOSED(medium)
+http://127.0.0.1:4176/cookie-bad.html	zoom	reached	5	4	12	2	2.0x	ZOOM-HSCROLL-BIGTEXT(low) ZOOM-OVERLAY(high)
+http://127.0.0.1:4176/cookie-bad.html	tremor	ok	12	0	0		-	TARGET-COVERED(medium) TARGET-SMALL-SPACED(low) TARGET-SMALL-SPACED(low) TARGET-SMALL-SPACED(low)
+http://127.0.0.1:4176/cookie-bad.html	hurried	ok	8	0	16		-	
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
+url	persona	outcome	steps	keys/commands	sim_seconds	baseline	friction	issues
