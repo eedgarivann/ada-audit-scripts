@@ -162,7 +162,7 @@ export function parseRGB(s) {
   const m = String(s).match(/rgba?\(([^)]+)\)/);
   if (!m) return null;
   const p = m[1]
-    .split(/[ ,\/]+/)
+    .split(/[ ,/]+/)
     .filter(Boolean)
     .map(Number);
   return p.slice(0, 3);

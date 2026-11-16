@@ -6,7 +6,7 @@
       "tool": {
         "driver": {
           "name": "ada-audit-scripts",
-          "version": "4.2.0",
+          "version": "4.2.1",
           "informationUri": "https://github.com/eedgarivann/ada-audit-scripts",
           "rules": [
             {
@@ -469,9 +469,9 @@
             },
             {
               "id": "reflow",
-              "name": "PageScrollsSidewaysAt320Px",
+              "name": "ContentDoesNotReflowOnSmallScreensOrZoom",
               "shortDescription": {
-                "text": "Page scrolls sideways at 320 px"
+                "text": "Content does not reflow on small screens or zoom"
               },
               "fullDescription": {
                 "text": "Content does not reflow on small screens or zoom. Low-vision users who zoom to 400% (≈320 px wide) must scroll sideways on every line."
@@ -566,7 +566,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -578,7 +578,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "dc52d386dd177a5f"
+            "adaAudit/v1": "43499889f61ea1a8"
           },
           "properties": {
             "findingId": "F-001",
@@ -587,7 +587,8 @@
             "plan": "fix-now",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -602,7 +603,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -614,7 +615,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "ee4daa7ed46ecbbd"
+            "adaAudit/v1": "a4dfd350c8e181dd"
           },
           "properties": {
             "findingId": "F-001",
@@ -623,7 +624,8 @@
             "plan": "fix-now",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -638,7 +640,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -650,7 +652,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "d6363c1d419e3491"
+            "adaAudit/v1": "37edf81413599f7f"
           },
           "properties": {
             "findingId": "F-001",
@@ -674,7 +676,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -686,7 +688,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "4400d6bbaea0bda7"
+            "adaAudit/v1": "a4664ec9e73a115a"
           },
           "properties": {
             "findingId": "F-002",
@@ -695,7 +697,8 @@
             "plan": "fix-now",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -710,7 +713,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -722,7 +725,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "7a0d886f5841c2c8"
+            "adaAudit/v1": "5946a0f280d86bd6"
           },
           "properties": {
             "findingId": "F-002",
@@ -744,13 +747,13 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "c5b49d1f87b0285c"
+            "adaAudit/v1": "1684a1bad7e2ed41"
           },
           "properties": {
             "findingId": "F-002",
@@ -774,7 +777,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -786,7 +789,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "7c5c231cc715634b"
+            "adaAudit/v1": "e8b949957c53157b"
           },
           "properties": {
             "findingId": "F-003",
@@ -810,7 +813,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -822,7 +825,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "a0cc3078154d396b"
+            "adaAudit/v1": "fffd4e74eb158f82"
           },
           "properties": {
             "findingId": "F-003",
@@ -846,7 +849,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -858,7 +861,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "8cdc30f38e4bd6d1"
+            "adaAudit/v1": "50301d48aa375d56"
           },
           "properties": {
             "findingId": "F-004",
@@ -882,7 +885,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -894,7 +897,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "3d30e3058ad4d217"
+            "adaAudit/v1": "075e7fb2997c9542"
           },
           "properties": {
             "findingId": "F-004",
@@ -903,7 +906,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -918,7 +922,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -930,7 +934,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "c24dd214ed8eda18"
+            "adaAudit/v1": "2207adccc1780f70"
           },
           "properties": {
             "findingId": "F-004",
@@ -954,7 +958,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -966,7 +970,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "3f7a89d9ba36293d"
+            "adaAudit/v1": "07ca93040f2dbfbc"
           },
           "properties": {
             "findingId": "F-005",
@@ -975,7 +979,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -990,7 +995,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1002,7 +1007,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "11ace1186b9af02b"
+            "adaAudit/v1": "15ca94b852aab82b"
           },
           "properties": {
             "findingId": "F-006",
@@ -1011,7 +1016,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1026,13 +1032,13 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "ea5d711c54ce23b7"
+            "adaAudit/v1": "c1f365362e18af1f"
           },
           "properties": {
             "findingId": "F-006",
@@ -1054,13 +1060,13 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "272c274000f246cf"
+            "adaAudit/v1": "ccdeb760b9042856"
           },
           "properties": {
             "findingId": "F-007",
@@ -1069,7 +1075,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1084,7 +1091,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1096,7 +1103,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "0d021af7484de86b"
+            "adaAudit/v1": "1d86d5ecef5a2c7c"
           },
           "properties": {
             "findingId": "F-008",
@@ -1105,7 +1112,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1120,7 +1128,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1132,7 +1140,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "f091c57433ddfa60"
+            "adaAudit/v1": "2a1f6396974ba57b"
           },
           "properties": {
             "findingId": "F-008",
@@ -1141,7 +1149,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1156,7 +1165,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1168,7 +1177,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "dba91e92197041fc"
+            "adaAudit/v1": "4c55c4487a2d6881"
           },
           "properties": {
             "findingId": "F-008",
@@ -1177,7 +1186,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1192,7 +1202,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1204,7 +1214,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "a8e762e9cc99280f"
+            "adaAudit/v1": "da4c04650ddba62b"
           },
           "properties": {
             "findingId": "F-008",
@@ -1213,7 +1223,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1228,7 +1239,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1240,7 +1251,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "55945fceb4f180e0"
+            "adaAudit/v1": "2bc89900f21dd019"
           },
           "properties": {
             "findingId": "F-008",
@@ -1249,7 +1260,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1264,7 +1276,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1276,7 +1288,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "b5128b82afe4cca6"
+            "adaAudit/v1": "1d83d1594b45a58b"
           },
           "properties": {
             "findingId": "F-008",
@@ -1285,7 +1297,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1300,7 +1313,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1312,7 +1325,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "e474ca19685bcc96"
+            "adaAudit/v1": "22d19ae44b54b424"
           },
           "properties": {
             "findingId": "F-008",
@@ -1321,7 +1334,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1336,7 +1350,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1348,7 +1362,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "512968e12909ff79"
+            "adaAudit/v1": "237baa22216876f9"
           },
           "properties": {
             "findingId": "F-008",
@@ -1357,7 +1371,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1372,7 +1387,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1384,7 +1399,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "54ff3b9f16beb8ae"
+            "adaAudit/v1": "bcbcbbfd6cd2f6b0"
           },
           "properties": {
             "findingId": "F-008",
@@ -1393,7 +1408,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1408,7 +1424,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1420,7 +1436,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "998d49ddae60c064"
+            "adaAudit/v1": "380f21dcb032d959"
           },
           "properties": {
             "findingId": "F-009",
@@ -1442,13 +1458,13 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "efddea3d90f193ce"
+            "adaAudit/v1": "f031b8d856499017"
           },
           "properties": {
             "findingId": "F-009",
@@ -1457,7 +1473,8 @@
             "plan": "fix-next",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1472,7 +1489,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1484,7 +1501,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "592a76ef3d07e7a8"
+            "adaAudit/v1": "1de7dc52aa223b37"
           },
           "properties": {
             "findingId": "F-010",
@@ -1508,7 +1525,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1520,7 +1537,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "3c0928875893b80b"
+            "adaAudit/v1": "aaf746f73be20f26"
           },
           "properties": {
             "findingId": "F-010",
@@ -1544,7 +1561,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1556,7 +1573,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "8997cd6bdec775b4"
+            "adaAudit/v1": "9b347ea3d397bfaf"
           },
           "properties": {
             "findingId": "F-010",
@@ -1580,7 +1597,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1592,7 +1609,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "13d02a9a09d7dfc9"
+            "adaAudit/v1": "2d202ad5c3877604"
           },
           "properties": {
             "findingId": "F-010",
@@ -1616,7 +1633,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1628,7 +1645,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "aeb7fc25ade4056f"
+            "adaAudit/v1": "f7809286dc587539"
           },
           "properties": {
             "findingId": "F-011",
@@ -1652,7 +1669,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1664,7 +1681,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "eacc77dc8bd3a710"
+            "adaAudit/v1": "0e340ea58032142c"
           },
           "properties": {
             "findingId": "F-011",
@@ -1688,7 +1705,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1700,7 +1717,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "9c2e9419e35a9e4d"
+            "adaAudit/v1": "998feaa6525be9b3"
           },
           "properties": {
             "findingId": "F-012",
@@ -1724,7 +1741,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1736,7 +1753,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "fa195e83bebd3b46"
+            "adaAudit/v1": "3425fbc24170d97b"
           },
           "properties": {
             "findingId": "F-013",
@@ -1760,7 +1777,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1772,7 +1789,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "bc57a134bcf72635"
+            "adaAudit/v1": "b3793151cdb20496"
           },
           "properties": {
             "findingId": "F-014",
@@ -1794,7 +1811,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1806,7 +1823,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "5cb139769609ced1"
+            "adaAudit/v1": "9b3cddea79af84f3"
           },
           "properties": {
             "findingId": "F-015",
@@ -1824,19 +1841,19 @@
           "ruleIndex": 15,
           "level": "error",
           "message": {
-            "text": "F-016 Page scrolls sideways at 320 px. Needs human confirmation. Fix: Find the element wider than the viewport (fixed widths, wide tables, long words)."
+            "text": "F-016 Content does not reflow on small screens or zoom. Needs human confirmation. Fix: Find the element wider than the viewport (fixed widths, wide tables, long words)."
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "d1a6cd1ba1c0806f"
+            "adaAudit/v1": "eba2b75a85524285"
           },
           "properties": {
             "findingId": "F-016",
@@ -1860,7 +1877,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1872,7 +1889,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "bd2ad8f11c6a5882"
+            "adaAudit/v1": "de29a69bd9ab3bfc"
           },
           "properties": {
             "findingId": "F-017",
@@ -1881,7 +1898,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1896,7 +1914,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1908,7 +1926,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "abfcd9957d589862"
+            "adaAudit/v1": "31f29085a2bd5148"
           },
           "properties": {
             "findingId": "F-018",
@@ -1917,7 +1935,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1932,7 +1951,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1944,7 +1963,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "4f54960908fda603"
+            "adaAudit/v1": "036f4f7eeb7192df"
           },
           "properties": {
             "findingId": "F-018",
@@ -1953,7 +1972,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -1968,7 +1988,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -1980,7 +2000,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "519e7589797126a7"
+            "adaAudit/v1": "80c59c3e06697ccd"
           },
           "properties": {
             "findingId": "F-018",
@@ -1989,7 +2009,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2004,7 +2025,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2016,7 +2037,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "4b233838fe110314"
+            "adaAudit/v1": "76357c68f9f52f90"
           },
           "properties": {
             "findingId": "F-018",
@@ -2025,7 +2046,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2040,7 +2062,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2052,7 +2074,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "ecbcb1e580232101"
+            "adaAudit/v1": "45ef74d89d9d67d4"
           },
           "properties": {
             "findingId": "F-018",
@@ -2061,7 +2083,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2076,7 +2099,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2088,7 +2111,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "a6876bf163603a9b"
+            "adaAudit/v1": "a99bf987338dabe3"
           },
           "properties": {
             "findingId": "F-018",
@@ -2097,7 +2120,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2112,7 +2136,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2124,7 +2148,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "1d29d36ca2902ef6"
+            "adaAudit/v1": "aba37f72f121537c"
           },
           "properties": {
             "findingId": "F-018",
@@ -2133,7 +2157,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2148,7 +2173,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2160,7 +2185,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "72b9fdbbb5965dfc"
+            "adaAudit/v1": "71a932c3aec8429e"
           },
           "properties": {
             "findingId": "F-018",
@@ -2169,7 +2194,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2184,7 +2210,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2196,7 +2222,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "d5f2088747014d80"
+            "adaAudit/v1": "d09df265d1adf99e"
           },
           "properties": {
             "findingId": "F-018",
@@ -2205,7 +2231,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2220,7 +2247,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2232,7 +2259,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "57653544e8d38d8a"
+            "adaAudit/v1": "313b949cf910ba63"
           },
           "properties": {
             "findingId": "F-018",
@@ -2241,7 +2268,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2256,7 +2284,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2268,7 +2296,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "9aa3cb7999939bb5"
+            "adaAudit/v1": "cbe54e53229d5389"
           },
           "properties": {
             "findingId": "F-018",
@@ -2277,7 +2305,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2292,7 +2321,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2304,7 +2333,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "a2cfc96908f37834"
+            "adaAudit/v1": "473b0501620b063b"
           },
           "properties": {
             "findingId": "F-018",
@@ -2313,7 +2342,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2328,13 +2358,13 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "1383fdec5635c698"
+            "adaAudit/v1": "7d9d2bd328431f26"
           },
           "properties": {
             "findingId": "F-018",
@@ -2343,7 +2373,8 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         },
@@ -2358,7 +2389,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "http://127.0.0.1:4176/checkout-bad.html"
+                  "uri": "http://127.0.0.1:4177/checkout-bad.html"
                 }
               },
               "logicalLocations": [
@@ -2370,7 +2401,7 @@
             }
           ],
           "partialFingerprints": {
-            "adaAudit/v1": "a01c5f399639d323"
+            "adaAudit/v1": "4d4da694a965e456"
           },
           "properties": {
             "findingId": "F-018",
@@ -2379,13 +2410,14 @@
             "plan": "monitor",
             "effort": "low",
             "widths": [
-              390
+              390,
+              1440
             ]
           }
         }
       ],
       "properties": {
-        "conformance": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks, in headless Chromium (Playwright 1.65.1) at 390 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\"."
+        "conformance": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks; simulated persona journeys (scripted models, not real users), in headless Chromium (Playwright 1.65.1) at 390 and 1440 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\"."
       }
     }
   ]

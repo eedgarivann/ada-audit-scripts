@@ -1,7 +1,7 @@
 // Accessible HTML report (no JavaScript): lang, skip link, landmarks, one h1, heading outline, captioned tables
 // with th scope, text labels (never colour alone), visible focus, 4.5:1+ colours, reflows at 320 px, print styles.
 import path from 'node:path';
-import { executiveSummary, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
+import { executiveSummary, keyScreenshot, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
 import { PLAN_LABEL, CONF_LABEL, KIND_LABEL, PLATFORM_LABEL, rel, platformOrder } from './markdown.mjs';
 
 const e = (s) =>
@@ -16,7 +16,7 @@ const CSS = `:root{color-scheme:light;--fg:#1b1b1b;--muted:#4a4a4a;--bg:#fff;--l
 a{color:var(--link)}a:focus-visible,summary:focus-visible,.tbl:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;background:#fff;padding:.5rem 1rem;z-index:9}
 header,main,footer{max-width:62rem;margin:0 auto;padding:1rem}header{border-bottom:2px solid var(--line)}
-.note{color:var(--muted)}.warn{border:2px solid #8a4b00;background:#fff4e5;color:#1b1b1b;padding:.5rem 1rem}nav ol{columns:2;padding-left:1.2rem}@media(max-width:40rem){nav ol{columns:1}}
+.note{color:var(--muted)}figure{margin:1rem 0}figure img{max-width:100%;max-height:28rem;height:auto;border:1px solid var(--line)}figcaption{font-size:.9rem;color:var(--muted)}.warn{border:2px solid #8a4b00;background:#fff4e5;color:#1b1b1b;padding:.5rem 1rem}nav ol{columns:2;padding-left:1.2rem}@media(max-width:40rem){nav ol{columns:1}}
 table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.95rem}caption{text-align:left;font-weight:600;padding:.25rem 0}
 th,td{border:1px solid var(--line);padding:.4rem .5rem;text-align:left;vertical-align:top}th{background:#f2f2f2}
 .tbl{overflow-x:auto}.card{border:1px solid var(--line);border-left:6px solid #5f5f5f;border-radius:4px;padding:.5rem 1rem;margin:1.25rem 0}
@@ -209,6 +209,11 @@ function card(f, { outDir, platform, maxLocations }) {
       (f.locations.length > maxLocations ? `<li>…and ${f.locations.length - maxLocations} more (see findings.json)</li>` : '') +
       '</ul>',
   );
+  const shot = keyScreenshot(f);
+  if (shot)
+    H.push(
+      `<figure><img src="${e(rel(outDir, shot.file))}" alt="${e(shot.alt)}" loading="lazy"><figcaption>${e(shot.caption)}</figcaption></figure>`,
+    );
   const ev = f.locations[0]?.evidence?.[0];
   if (ev)
     H.push(`<p><strong>Evidence (first location):</strong></p><pre><code>${e((ev.html ? ev.html + '\n' : '') + ev.detail)}</code></pre>`);
@@ -220,7 +225,7 @@ function card(f, { outDir, platform, maxLocations }) {
     const first = platform && f.remediation.platforms[platform] ? [platform] : [];
     const rest = plats.filter((p) => !first.includes(p));
     H.push(
-      '<p><strong>Where to change it</strong> (typical location; menus differ by theme, app and version):</p>' +
+      '<p><strong>Where to change it</strong> (typical location; menus differ by theme, app and version; <a href="https://github.com/eedgarivann/ada-audit-scripts/blob/main/docs/platform-hints.md">sources</a>):</p>' +
         (first.length ? `<p>${PLATFORM_LABEL[first[0]]}: ${e(f.remediation.platforms[first[0]])}</p>` : '') +
         (rest.length
           ? `<details><summary>${first.length ? 'Other platforms' : 'Platform hints'}</summary><ul>${rest.map((p) => `<li>${PLATFORM_LABEL[p]}: ${e(f.remediation.platforms[p])}</li>`).join('')}</ul></details>`

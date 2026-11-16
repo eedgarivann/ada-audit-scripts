@@ -1,6 +1,6 @@
 // Markdown report: executive summary -> fix plan -> table -> per-finding cards -> journeys -> non-failures -> manual checklist -> scope.
 import path from 'node:path';
-import { executiveSummary, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
+import { executiveSummary, keyScreenshot, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
 
 export const PLAN_LABEL = { 'fix-now': 'Fix now', 'fix-next': 'Fix next', monitor: 'Monitor' };
 export const CONF_LABEL = {
@@ -211,6 +211,8 @@ function card(f, { outDir, platform, maxLocations }) {
     ),
   );
   if (f.locations.length > maxLocations) L.push(`  - …and ${f.locations.length - maxLocations} more (see findings.json)`);
+  const shot = keyScreenshot(f);
+  if (shot) L.push('', `  ![${shot.alt.replace(/[[\]]/g, '')}](${rel(outDir, shot.file)})`, `  <br>*${shot.caption}*`, '');
   const ev = f.locations[0]?.evidence?.[0];
   if (ev)
     L.push(
@@ -230,7 +232,9 @@ function card(f, { outDir, platform, maxLocations }) {
   }
   const plats = platformOrder(platform).filter((p) => f.remediation.platforms[p]);
   if (plats.length) {
-    L.push('- **Where to change it** (typical location; menus differ by theme, app and version):');
+    L.push(
+      '- **Where to change it** (typical location; menus differ by theme, app and version; [sources](https://github.com/eedgarivann/ada-audit-scripts/blob/main/docs/platform-hints.md)):',
+    );
     (platform && f.remediation.platforms[platform] ? [platform] : plats).forEach((p) =>
       L.push(`  - ${PLATFORM_LABEL[p]}: ${f.remediation.platforms[p]}`),
     );

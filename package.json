@@ -1,6 +1,6 @@
 {
   "name": "ada-audit-scripts",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Read-only accessibility audit toolkit (WCAG 2.2 AA candidates): one CLI, parallel Playwright + axe-core + simulated screen reader + persona journeys, a versioned findings schema and prioritized fix reports (Markdown, HTML, SARIF, CSV). Not a compliance certification.",
   "license": "MIT",
   "type": "module",
@@ -49,8 +49,9 @@
     "schema/",
     "types/",
     "*.mjs",
+    "!eslint.config.js",
     "examples/",
-    "docs/",
+    "docs/*.md",
     "README.md",
     "CHANGELOG.md",
     "SECURITY.md",
@@ -67,10 +68,11 @@
     "smoke": "npm run test:e2e",
     "smoke:live": "node bin/ada-audit.mjs --urls examples/urls.txt --out ./audit-output/live --journeys --personas keyboard,sr",
     "sample-report": "node scripts/sample-report.mjs",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "npm run lint && npm run format:check && npm run test:unit"
+    "check": "npm run lint && npm run format:check && npm run test:unit",
+    "prepublishOnly": "npm run check && npm test"
   },
   "dependencies": {
     "@axe-core/playwright": "4.14.0",
@@ -84,5 +86,9 @@
     "eslint": "9.39.5",
     "globals": "17.14.0",
     "prettier": "3.10.1"
-  }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "eedgarivann"
 }

@@ -163,3 +163,30 @@ export const NOT_TESTED = [
   'Real screen readers and other assistive technology; testing with disabled users.',
   'Native mobile apps, PDFs and documents, canvas or WebGL content, media captions quality.',
 ];
+
+/**
+ * Pick the most specific screenshot for a finding (element crop > journey step > viewport) and describe it.
+ * Returns null when the finding has none. Alt text says what the image shows; it never claims more than the tool captured.
+ * @returns {{file:string, alt:string, caption:string}|null}
+ */
+export function keyScreenshot(f) {
+  // Works on tool output paths (tab-walk/…) and on flattened copies (tab-walk__…).
+  const rank = (s) => (/(^|[\\/])tab-walk(__|[\\/])/.test(s) ? 0 : /(^|[\\/])journeys(__|[\\/])/.test(s) ? 1 : 2);
+  const px = (s) => Number((/_(\d{3,4})(?:[\\/]|__|\.png$)/.exec(s) || [])[1] || 9999);
+  // Most specific first; then the narrowest (mobile-first) capture.
+  const shots = f.locations
+    .flatMap((l) => l.screenshots.map((s) => ({ s, l })))
+    .sort((a, b) => rank(a.s) - rank(b.s) || px(a.s) - px(b.s) || a.s.localeCompare(b.s));
+  if (!shots.length) return null;
+  const { s, l } = shots[0];
+  const width = (/_(\d{3,4})(?:[\\/]|__|\.png$)/.exec(s) || [])[1] || (rank(s) === 1 ? '' : l.widths[0]) || '';
+  const where = `${shortUrl(l.url) || 'the page'}${width ? ` at ${width} px wide` : ''}`;
+  const kind =
+    rank(s) === 0
+      ? 'Cropped screenshot of the focused control'
+      : rank(s) === 1
+        ? 'Screenshot from a simulated persona journey'
+        : 'Viewport screenshot';
+  const alt = `${kind} on ${where}${l.target && rank(s) === 0 ? `, element ${l.target}` : ''}, captured for: ${f.title}.`;
+  return { file: s, alt, caption: `${f.id}: ${kind.toLowerCase()} (${where}). Confirm the barrier on the live page.` };
+}

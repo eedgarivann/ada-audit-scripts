@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { parseArgs, readUrls, safePage, open, outDir, slug, sleep, header, writeJSON, BODY_STATE, trackFocus } from '../core/lib.mjs';
+import { parseArgs, readUrls, safePage, outDir, slug, sleep, header, writeJSON, BODY_STATE, trackFocus } from '../core/lib.mjs';
 const require = createRequire(import.meta.url);
 const args = parseArgs();
 const urls = readUrls(args);
@@ -315,17 +315,16 @@ async function keyboardPersona(url, d) {
   await trackFocus(page);
   let shiftInRound = false,
     closedAt = -99;
+  const dialogTried = new Set(),
+    altQueue = [];
   let roundStops = new Set(),
-    dialogTried = new Set(),
-    escTried = false,
-    nFocusable = 0;
+    escTried = false;
   let firstStop = null,
     wraps = 0,
     tried = new Set(),
     coverStreak = 0,
     lostStreak = 0,
     seen = new Map(),
-    altQueue = [],
     pending = null,
     lastPath = null,
     usedSkip = false;
@@ -728,7 +727,6 @@ async function keyboardPersona(url, d) {
           (a) => (!a.getClientRects().length || getComputedStyle(a).visibility === 'hidden') && !a.closest('[aria-modal],[role=dialog]'),
         )
         .filter((a) => {
-          const box = a.closest('li') || a.parentElement;
           for (let x = a.parentElement; x && x !== document.body; x = x.parentElement) {
             const trig = [...x.querySelectorAll('button,[aria-expanded],summary,[aria-haspopup]')].find(
               (t) => t.getClientRects().length && t.tabIndex >= 0,
@@ -992,7 +990,6 @@ async function srPersona(url, d) {
           async ({ ref, max }) => {
             const v = window.__vsr.virtual;
             const out = [];
-            const seen = 0; // move to heading then read next items
             await v.stop();
             await v.start({ container: document.body });
             for (let k = 0; k < 400; k++) {
@@ -1080,7 +1077,6 @@ async function srPersona(url, d) {
     const links = await scan('moveToNextLink', 150);
     const unnamed = links.filter((l) => !l.name || /^[\w\-./:?=&#]+\.(html?|php|aspx?)$|^https?:/.test(l.name));
     j.note(`links list x${links.length}${unnamed.length ? `, ${unnamed.length} with no usable name` : ''}`);
-    const navs = []; // expandable buttons met in navigation are discovered by read-down below
     let r = await tryItems(links, 'links list');
     if (r === true) break;
     if (r === 'nav') continue;
@@ -1128,7 +1124,6 @@ async function srPersona(url, d) {
           (a) => (!a.getClientRects().length || getComputedStyle(a).visibility === 'hidden') && !a.closest('[aria-modal],[role=dialog]'),
         )
         .filter((a) => {
-          const box = a.closest('li') || a.parentElement;
           for (let x = a.parentElement; x && x !== document.body; x = x.parentElement) {
             const trig = [...x.querySelectorAll('button,[aria-expanded],summary,[aria-haspopup]')].find(
               (t) => t.getClientRects().length && t.tabIndex >= 0,
@@ -1160,7 +1155,7 @@ async function srPersona(url, d) {
 // ---------- persona: low vision / zoom (320 CSS px + 200% text) ----------
 async function zoomPersona(url, d) {
   const j = new Journey('zoom', url, d);
-  const { browser, page, blockedWrites } = await safePage(args, { width: 320, height: 640 });
+  const { browser, page } = await safePage(args, { width: 320, height: 640 });
   await armGuard(page, j);
   const bigText = async () => {
     await page
@@ -1543,10 +1538,6 @@ async function tremorPersona(url, d) {
   j.done(j.issues.some((i) => i.conf === 'high') ? 'at risk' : 'ok', `${j.issues.length} motor-access candidate(s) on the path`);
   return j;
 }
-function min(x) {
-  return x;
-}
-
 // ---------- persona: hurried / cognitive ----------
 async function hurriedPersona(url, d) {
   const j = new Journey('hurried', url, d);

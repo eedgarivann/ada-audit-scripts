@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.2.1 — 2026-11-15
+
+### Added
+- The sample report (`npm run sample-report`) now comes from a live, read-only run against the local fictional checkout fixture. It includes screenshots: element crops of focused controls, viewport and journey captures, copied into `docs/sample-report/screenshots/`.
+- Each finding card in Markdown and HTML now shows its most specific screenshot (element crop first, narrowest width first), with alt text and a caption.
+- Tab-walk findings now link the crop of the stop that was flagged.
+- `docs/platform-hints.md` lists the official vendor sources for the WordPress, Shopify, Webflow, Framer, Squarespace, Wix and React hints, checked 2026-11-15. Report cards link to it.
+- npm-ready package: explicit `files`, `bin`, `prepublishOnly` (check + tests) and `publishConfig`. It is not published to the registry; install with `npx github:eedgarivann/ada-audit-scripts#v4.2.1`.
+
+### Changed
+- Platform hints were corrected against vendor docs:
+  - Shopify, Webflow, Framer and Squarespace alt-text paths.
+  - Framer site language.
+  - Squarespace focus outline (built in).
+  - Wix focus and skip link (Accessibility Wizard).
+  - WordPress core skip link in block themes.
+  - React page title.
+- Lint is now clean (0 warnings, 0 errors) and CI fails on any warning (`--max-warnings 0`). Unused variables were removed from journeys; no behaviour change.
+
 ## 4.2.0 — 2026-11-15
 
 ### Added

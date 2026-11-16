@@ -20,6 +20,13 @@ npx ada-audit https://example.org/ https://example.org/about https://example.org
   --journey "Contact=https://example.org/contact" --journeys --goal contact \
   --platform wordpress --format json,md,html,sarif,csv
 ```
+**Without cloning** (installs this tagged release from GitHub; the package is not on the npm registry):
+```sh
+npx -y playwright@1.65.1 install chromium       # once; same Playwright version the tools pin
+npx -y github:eedgarivann/ada-audit-scripts#v4.2.1 https://example.org/ https://example.org/contact --format json,md,html
+```
+Pin the tag (`#v4.2.1`) so audits are reproducible.
+
 Open `audit-output/report.html` (or `report.md`). See a full [sample report](docs/sample-report/report.md) ([HTML](docs/sample-report/report.html), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
 
 ## What you get
@@ -78,7 +85,7 @@ npm run sample-report  # regenerate docs/sample-report from test/data (no networ
 - Server-side validation, logins, checkouts and payments are not exercised (read-only by design).
 - Pages behind bot protection may render differently in headless Chromium. Tools print `WARNING: … bot-challenge or block page`; discard that output.
 - Multi-page checks are only as good as the sample: pick ≥3 pages per template and every step of a process (WCAG-EM).
-- Platform fix hints describe common settings and patterns; themes, apps and plans differ, so check them against your own setup.
+- Platform fix hints describe common settings and patterns; themes, apps and plans differ, so check them against your own setup. Menu paths were checked against official vendor docs on 2026-11-15: [docs/platform-hints.md](docs/platform-hints.md).
 
 ## Accuracy notes (15 Nov 2026; estimates, not guarantees)
 **W3C BAD demo.** Script-only recall against W3C's published failure lists for the four "before" pages (home, news, tickets, survey; WCAG 2.0 A/AA, 4.1.1 excluded; 73 page/criterion pairs): **67/73 (92%)** with 4.1.0, up from 59/73 (81%) in 4.0.0 and 31/73 (42%) in 3.x. New in 4.1.0: 1.3.2 and 2.4.1 found on all four pages (`bypass-order`, run with `--scope "#page"` to skip the demo's wrapper). Still missed: some 1.4.1, 1.4.3, 2.4.3, 2.4.6 cases. The four "after" pages raise no WCAG 2.0 A/AA candidates (only advisories such as "no `<main>`").

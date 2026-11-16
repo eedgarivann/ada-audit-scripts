@@ -175,7 +175,15 @@ export const ADAPTERS = {
         skip: (l) => /\t""\t.*\tTEXT \d/.test(l) && !/NO-RING|COVERED|OFFSCREEN|REPEAT/.test(l),
       });
       // TEXT contrast on an element with no text is meaningless: drop it
-      for (const c of r.candidates) if (!(c.ruleId === 'tab-walk/text' && / ""$/.test(c.target || ''))) out.push(c);
+      // Element crop for the stop (tab-walk writes <tsv name>/<NN>.png for flagged stops).
+      const crops = file.replace(/\.tsv$/, '');
+      for (const c of r.candidates) {
+        if (c.ruleId === 'tab-walk/text' && / ""$/.test(c.target || '')) continue;
+        const n = /^(\d+)\t/.exec(c.detail);
+        const png = n && path.join(crops, `${n[1].padStart(2, '0')}.png`);
+        if (png && fs.existsSync(png)) c.screenshot = png;
+        out.push(c);
+      }
       if (r.lines.some((l) => /WRAPPED to first stop: walk complete|END-OF-TAB-ORDER/.test(l)))
         out.push({
           tool: 'tab-walk',

@@ -3,14 +3,14 @@
   "schemaVersion": "1.0.0",
   "generator": {
     "name": "ada-audit-scripts",
-    "version": "4.2.0",
+    "version": "4.2.1",
     "url": "https://github.com/eedgarivann/ada-audit-scripts"
   },
   "run": {
-    "startedAt": "2026-11-15T12:00:00.000Z",
-    "finishedAt": "2026-11-15T12:01:00.000Z",
-    "widths": [
-      390
+    "startedAt": "2026-11-15T18:00:00.000Z",
+    "finishedAt": "2026-11-15T18:00:00.000Z",
+    "pages": [
+      "http://127.0.0.1:4177/checkout-bad.html"
     ],
     "tools": [
       "inventory",
@@ -21,26 +21,29 @@
       "motion",
       "sr-transcript",
       "context-change",
-      "bypass-order"
+      "bypass-order",
+      "journeys"
+    ],
+    "widths": [
+      390,
+      1440
     ],
     "versions": {
-      "tool": "4.2.0",
+      "tool": "4.2.1",
+      "node": null,
       "playwright": "1.65.1",
       "axe": "4.14.0",
       "vsr": "0.33.0"
     },
     "readOnly": true,
-    "platform": "shopify",
-    "pages": [
-      "http://127.0.0.1:4176/checkout-bad.html"
-    ]
+    "platform": "shopify"
   },
   "criticalJourneys": [
     {
-      "name": "Checkout (assumed)",
+      "name": "Checkout",
       "goal": "checkout",
       "urls": [
-        "http://127.0.0.1:4176/checkout-bad.html"
+        "http://127.0.0.1:4177/checkout-bad.html"
       ]
     }
   ],
@@ -78,7 +81,35 @@
     "pagesWithFindings": 1,
     "suppressedCandidates": 0
   },
-  "journeys": [],
+  "journeys": [
+    {
+      "url": "http://127.0.0.1:4177/checkout-bad.html",
+      "persona": "keyboard",
+      "personaLabel": "Keyboard-only user",
+      "outcome": "reached",
+      "steps": 12,
+      "simSeconds": 17,
+      "friction": "1.0x"
+    },
+    {
+      "url": "http://127.0.0.1:4177/checkout-bad.html",
+      "persona": "sr",
+      "personaLabel": "Screen-reader user (simulated)",
+      "outcome": "reached",
+      "steps": 30,
+      "simSeconds": 34,
+      "friction": "3.0x"
+    },
+    {
+      "url": "http://127.0.0.1:4177/checkout-bad.html",
+      "persona": "zoom",
+      "personaLabel": "Low-vision user (320 px + 200% text)",
+      "outcome": "reached",
+      "steps": 2,
+      "simSeconds": 7,
+      "friction": "2.0x"
+    }
+  ],
   "findings": [
     {
       "id": "F-001",
@@ -144,19 +175,23 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#name",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/label",
               "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"name\" name=\"name\" required=\"\">"
             },
@@ -164,26 +199,30 @@
               "tool": "forms",
               "rule": "forms/no-label",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 5
             }
           ],
-          "fingerprint": "dc52d386dd177a5f"
+          "fingerprint": "43499889f61ea1a8"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#phone",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/label",
               "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"phone\" name=\"phone\" type=\"tel\">"
             },
@@ -191,30 +230,30 @@
               "tool": "forms",
               "rule": "forms/no-label",
               "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 7
             }
           ],
-          "fingerprint": "ee4daa7ed46ecbbd"
+          "fingerprint": "a4dfd350c8e181dd"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#email",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/placeholder-only",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 6
             }
           ],
-          "fingerprint": "d6363c1d419e3491"
+          "fingerprint": "37edf81413599f7f"
         }
       ],
       "remediation": {
@@ -298,60 +337,64 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "img",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/image-alt",
               "detail": "Images must have alternative text: Fix any of the following:   Element does not have an alt attribute",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<img src=\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23234'/%3E%3C/svg%3E\" width=\"40\" height=\"40\">"
             }
           ],
-          "fingerprint": "4400d6bbaea0bda7"
+          "fingerprint": "a4664ec9e73a115a"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "img svg%3E alt=(none)",
           "widths": [],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "inventory",
               "rule": "inventory/alt-missing",
               "detail": "ALT-MISSING\timg svg%3E alt=(none)",
-              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
               "line": 15
             }
           ],
-          "fingerprint": "7a0d886f5841c2c8"
+          "fingerprint": "5946a0f280d86bd6"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/img-filename",
               "detail": "-\tIMG-FILENAME(?)\tno alt; real SR may say \"svg%3E\"",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 10
             }
           ],
-          "fingerprint": "c5b49d1f87b0285c"
+          "fingerprint": "1684a1bad7e2ed41"
         }
       ],
       "remediation": {
@@ -366,11 +409,11 @@
         "before": "<img src=\"IMG_2041.jpg\">",
         "after": "<img src=\"IMG_2041.jpg\" alt=\"Red trail lantern on a picnic table\">",
         "platforms": {
-          "wordpress": "Media Library > image > Alternative Text; decorative: leave blank and the theme must output alt=\"\".",
-          "shopify": "Products > Media > Edit alt text; theme Liquid: {{ image | image_tag: alt: image.alt }}.",
-          "webflow": "Asset panel > settings > Alt text (or \"Decorative\").",
-          "framer": "Image > Accessibility > Alt text.",
-          "squarespace": "Image block > Design/Content > Image alt text (filename is the default: replace it).",
+          "wordpress": "Media > Library > image > Alternative Text (or the Image block alt field); decorative: leave blank so the output is alt=\"\".",
+          "shopify": "Products > open the product > click the media item > Add alt text; theme section images: theme editor > section > image > Edit; custom Liquid: {{ image | image_tag: alt: image.alt }}.",
+          "webflow": "Assets panel > image cog > Descriptive (or Decorative); per instance: Element settings > Image settings > Alt text > Custom description.",
+          "framer": "Select the image > Styles panel > Fill > alt text field (or the Accessibility section); CMS images: alt text when choosing the image.",
+          "squarespace": "Image block > pencil > Content tab > Image alt text (image blocks have no alt unless you add it); products: Edit metadata > Alt text; galleries use the image description.",
           "wix": "Image settings > \"What's in the image?\".",
           "react": "<img alt>; jsx-a11y/alt-text rule; CMS field required."
         },
@@ -428,42 +471,42 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "select \"Shipping speed\"",
           "widths": [
             1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "context-change",
               "rule": "context-change/change-on-input",
-              "detail": "CHANGE-ON-INPUT\tselect 0 \"Shipping speed\" ArrowDown -> GET http://127.0.0.1:4176/checkout-bad.html?ship=exp (3.2.2; aborted, not followed)",
-              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "detail": "CHANGE-ON-INPUT\tselect 0 \"Shipping speed\" ArrowDown -> GET http://127.0.0.1:4177/checkout-bad.html?ship=exp (3.2.2; aborted, not followed)",
+              "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
               "line": 6
             }
           ],
-          "fingerprint": "7c5c231cc715634b"
+          "fingerprint": "e8b949957c53157b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "select#ship",
           "widths": [
             1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "context-change",
               "rule": "context-change/onchange-nav",
               "detail": "ONCHANGE-NAV?\tselect#ship \"Standard Express Overnight\" location.href='checkout-bad.html?ship='+this.value\t(3.2.2 candidate; confirm below)",
-              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
               "line": 4
             }
           ],
-          "fingerprint": "a0cc3078154d396b"
+          "fingerprint": "fffd4e74eb158f82"
         }
       ],
       "remediation": {
@@ -531,62 +574,66 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "button",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/no-name",
               "detail": "10\tNO-NAME\tbutton",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 6
             }
           ],
-          "fingerprint": "8cdc30f38e4bd6d1"
+          "fingerprint": "50301d48aa375d56"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "button[onclick=\"location.href='cart.html'\"]",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/button-name",
               "detail": "Buttons must have discernible text: Fix any of the following:   Element does not have inner text that is visible to screen readers",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<button class=\"icon\" onclick=\"location.href='cart.html'\"></button>"
             }
           ],
-          "fingerprint": "3d30e3058ad4d217"
+          "fingerprint": "075e7fb2997c9542"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "image",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/no-name",
               "detail": "2\tNO-NAME\timage",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 5
             }
           ],
-          "fingerprint": "c24dd214ed8eda18"
+          "fingerprint": "2207adccc1780f70"
         }
       ],
       "remediation": {
@@ -659,24 +706,28 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": ".muted",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/color-contrast",
               "detail": "Elements must meet minimum color contrast ratio thresholds: Fix any of the following:   Element has insufficient color contrast of 2.16 (foreground color: #b0b0b0, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<p class=\"muted\">Free shipping on orders over $50. Prices include tax.</p>"
             }
           ],
-          "fingerprint": "3f7a89d9ba36293d"
+          "fingerprint": "07ca93040f2dbfbc"
         }
       ],
       "remediation": {
@@ -754,41 +805,45 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "html",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/html-has-lang",
               "detail": "<html> element must have a lang attribute: Fix any of the following:   The <html> element does not have a lang attribute",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<html>"
             }
           ],
-          "fingerprint": "11ace1186b9af02b"
+          "fingerprint": "15ca94b852aab82b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "inventory",
               "rule": "inventory/no-lang",
               "detail": "lang: null xml:lang: null  NO-LANG (3.1.1 candidate)",
-              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
               "line": 5
             }
           ],
-          "fingerprint": "ea5d711c54ce23b7"
+          "fingerprint": "c1f365362e18af1f"
         }
       ],
       "remediation": {
@@ -803,7 +858,7 @@
           "wordpress": "Settings > General > Site Language.",
           "shopify": "Settings > Languages (theme outputs request.locale.iso_code).",
           "webflow": "Site Settings > General > Language.",
-          "framer": "Site Settings > General > Language.",
+          "framer": "Site Settings > Site Language (localized locales switch lang automatically).",
           "squarespace": "Settings > Language & Region.",
           "wix": "Settings > Language & Region.",
           "react": "<html lang> in the root document/layout."
@@ -861,23 +916,24 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "bypass-order",
               "rule": "bypass-order/bypass-none",
               "detail": "BYPASS-NONE(2.4.1,high)\t14 focusable(s) before the content and no working skip link, main landmark or headings",
-              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null
             }
           ],
-          "fingerprint": "272c274000f246cf"
+          "fingerprint": "ccdeb760b9042856"
         }
       ],
       "remediation": {
@@ -891,12 +947,12 @@
         "before": "<a href=\"#content\" class=\"hidden\">Skip</a> <!-- #content does not exist -->",
         "after": "<a class=\"skip-link\" href=\"#main\">Skip to main content</a>\n...\n<main id=\"main\" tabindex=\"-1\">\n<style>.skip-link{position:absolute;left:-9999px}.skip-link:focus{left:1rem;top:1rem}</style>",
         "platforms": {
-          "wordpress": "Most block themes include one: check header.php or the theme's \"skip link\" option; make sure <main id> matches.",
+          "wordpress": "Block themes: core adds a skip link when the template has a <main> element (set the content Group to <main> in the Site Editor); classic themes: add it in header.php.",
           "shopify": "Dawn-based themes include `skip-to-content-link` in layout/theme.liquid; check the target id after customising.",
           "webflow": "Add a Link block first in the Navbar symbol pointing to a #main section ID; style it visible on focus.",
           "framer": "Add a link in the top layer pointing to the main section ID; set focus-visible styles.",
           "squarespace": "7.1 sites include a \"Skip to content\" link: confirm it is the first Tab stop and lands on the main content; custom headers built in code blocks may need one added.",
-          "wix": "Wix adds a \"Skip to Main Content\" link; confirm it appears first.",
+          "wix": "Accessibility Wizard checks the \"Skip to Main Content\" link; confirm it is the first Tab stop.",
           "react": "Render the skip link in the root layout and focus the <main> on route change."
         },
         "verify": "Load the page, press Tab once: the skip link appears; press Enter, then Tab: focus lands on the first item inside the main content.",
@@ -951,175 +1007,217 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"About\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__02.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__02.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "2\ta\t\"About\"\tabout.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 5
             }
           ],
-          "fingerprint": "0d021af7484de86b"
+          "fingerprint": "1d86d5ecef5a2c7c"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Help\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__05.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__05.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "5\ta\t\"Help\"\thelp.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 8
             }
           ],
-          "fingerprint": "f091c57433ddfa60"
+          "fingerprint": "2a1f6396974ba57b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Home\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__01.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__01.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "1\ta\t\"Home\"\tindex-good.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 4
             }
           ],
-          "fingerprint": "dba91e92197041fc"
+          "fingerprint": "4c55c4487a2d6881"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Journal\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__04.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__04.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "4\ta\t\"Journal\"\tblog.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 7
             }
           ],
-          "fingerprint": "a8e762e9cc99280f"
+          "fingerprint": "da4c04650ddba62b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Privacy\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__14.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__14.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "14\ta\t\"Privacy\"\tprivacy.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 17
             }
           ],
-          "fingerprint": "55945fceb4f180e0"
+          "fingerprint": "2bc89900f21dd019"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Read more\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__13.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__13.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "13\ta\t\"Read more\"\tabout.html#returns\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 16
             }
           ],
-          "fingerprint": "b5128b82afe4cca6"
+          "fingerprint": "1d83d1594b45a58b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "a \"Stores\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__03.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__03.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "3\ta\t\"Stores\"\tstores.html\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 6
             }
           ],
-          "fingerprint": "e474ca19685bcc96"
+          "fingerprint": "22d19ae44b54b424"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "button \"\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__06.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
+              "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? TEXT 1.66:1",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
+              "line": 9
+            },
+            {
+              "tool": "tab-walk",
+              "rule": "tab-walk/no-ring",
               "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_390.tsv",
               "line": 9
             }
           ],
-          "fingerprint": "512968e12909ff79"
+          "fingerprint": "237baa22216876f9"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "button \"Place order\"",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_1440__12.png",
+            "screenshots/tab-walk__127_0_0_1_4177_checkout_bad_html_390__12.png"
+          ],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/no-ring",
               "detail": "12\tbutton\t\"Place order\"\t\tring=NONE\tNO-RING?",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
               "line": 15
             }
           ],
-          "fingerprint": "54ff3b9f16beb8ae"
+          "fingerprint": "bcbcbbfd6cd2f6b0"
         }
       ],
       "remediation": {
@@ -1136,8 +1234,8 @@
           "shopify": "assets/base.css (Dawn uses :focus-visible; check custom CSS overrides).",
           "webflow": "Select the element > States > \"Focused (keyboard)\" and set an outline.",
           "framer": "Site Settings > Custom code: add the CSS, or set focus variants.",
-          "squarespace": "Design > Custom CSS.",
-          "wix": "Settings > Accessibility: turn on the visual focus indicator; custom-coded elements still need their own focus style.",
+          "squarespace": "Squarespace shows a keyboard focus outline automatically; if custom CSS removed it, restore it in Custom CSS.",
+          "wix": "Settings > Accessibility Wizard: keep visual (focus) indicators on; custom-coded elements still need their own focus style.",
           "react": "Global stylesheet; never reset outline in component CSS."
         },
         "verify": "Tab through the page: every focused item shows a visible ring.",
@@ -1205,47 +1303,48 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "content sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
           "widths": [],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "inventory",
               "rule": "inventory/no-real-headings",
               "detail": "NO-REAL-HEADINGS\tcontent sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
-              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
               "line": 17
             }
           ],
-          "fingerprint": "998d49ddae60c064"
+          "fingerprint": "380f21dcb032d959"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "bypass-order",
               "rule": "bypass-order/no-headings",
               "detail": "NO-HEADINGS(2.4.1/1.3.1,medium)\tno headings to navigate by",
-              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null
             },
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/no-headings",
               "detail": "-\tNO-HEADINGS",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 8
             }
           ],
-          "fingerprint": "efddea3d90f193ce"
+          "fingerprint": "f031b8d856499017"
         }
       ],
       "remediation": {
@@ -1319,80 +1418,80 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#email",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/no-autocomplete",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 6
             }
           ],
-          "fingerprint": "592a76ef3d07e7a8"
+          "fingerprint": "1de7dc52aa223b37"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#name",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/no-autocomplete",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 5
             }
           ],
-          "fingerprint": "3c0928875893b80b"
+          "fingerprint": "aaf746f73be20f26"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#phone",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/no-autocomplete",
               "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 7
             }
           ],
-          "fingerprint": "8997cd6bdec775b4"
+          "fingerprint": "9b347ea3d397bfaf"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#zip",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/no-autocomplete",
               "detail": "input[text] id=zip name=zip label=\"ZIP code\" placeholder=\"\" required=false autocomplete=\"off\" NO-AUTOCOMPLETE(postal-code; 1.3.5)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 8
             }
           ],
-          "fingerprint": "13d02a9a09d7dfc9"
+          "fingerprint": "2d202ad5c3877604"
         }
       ],
       "remediation": {
@@ -1466,42 +1565,42 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#email",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/required-not-shown",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 6
             }
           ],
-          "fingerprint": "aeb7fc25ade4056f"
+          "fingerprint": "f7809286dc587539"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "input#name",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "forms",
               "rule": "forms/required-not-shown",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
-              "file": "test/data/raw-checkout/forms/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 5
             }
           ],
-          "fingerprint": "eacc77dc8bd3a710"
+          "fingerprint": "0e340ea58032142c"
         }
       ],
       "remediation": {
@@ -1574,23 +1673,23 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "div.icon",
           "widths": [
             1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "context-change",
               "rule": "context-change/mouse-only",
               "detail": "MOUSE-ONLY\tdiv.icon \"\" role=presentation\t(2.1.1/4.1.2 candidate: not keyboard reachable)",
-              "file": "test/data/raw-checkout/context-change/127_0_0_1_4176_checkout_bad_html_1440.txt",
+              "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
               "line": 5
             }
           ],
-          "fingerprint": "9c2e9419e35a9e4d"
+          "fingerprint": "998feaa6525be9b3"
         }
       ],
       "remediation": {
@@ -1664,23 +1763,23 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "button \"\"",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "tab-walk",
               "rule": "tab-walk/offscreen",
               "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
-              "file": "test/data/raw-checkout/tab-walk/127_0_0_1_4176_checkout_bad_html_390.tsv",
+              "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_390.tsv",
               "line": 9
             }
           ],
-          "fingerprint": "fa195e83bebd3b46"
+          "fingerprint": "3425fbc24170d97b"
         }
       ],
       "remediation": {
@@ -1752,21 +1851,21 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "div \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
           "widths": [],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "inventory",
               "rule": "inventory/fake-heading",
               "detail": "FAKE-HEADING?\tdiv \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
-              "file": "test/data/raw-checkout/inventory/127_0_0_1_4176_checkout_bad_html.txt",
+              "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
               "line": 16
             }
           ],
-          "fingerprint": "bc57a134bcf72635"
+          "fingerprint": "b3793151cdb20496"
         }
       ],
       "remediation": {
@@ -1832,23 +1931,23 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "link, Read more",
           "widths": [
             390
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/vague-link",
               "detail": "33\tVAGUE-LINK\tlink, Read more",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 7
             }
           ],
-          "fingerprint": "5cb139769609ced1"
+          "fingerprint": "9b3cddea79af84f3"
         }
       ],
       "remediation": {
@@ -1871,7 +1970,7 @@
       "id": "F-016",
       "fingerprint": "5fde57db9bba0084",
       "group": "reflow",
-      "title": "Page scrolls sideways at 320 px",
+      "title": "Content does not reflow on small screens or zoom",
       "kind": "failure",
       "wcag": [
         {
@@ -1884,11 +1983,11 @@
       ],
       "severity": "serious",
       "confidence": "needs-review",
-      "corroborated": false,
+      "corroborated": true,
       "priority": {
         "plan": "fix-next",
         "rung": 5,
-        "score": 3.5,
+        "score": 4.2,
         "quickWin": false
       },
       "effort": "medium",
@@ -1899,37 +1998,53 @@
       "occurrences": 1,
       "impact": {
         "who": "Low-vision users who zoom to 400% (≈320 px wide) must scroll sideways on every line.",
-        "personas": [],
-        "simulatedOutcomes": []
+        "personas": [
+          "zoom"
+        ],
+        "simulatedOutcomes": [
+          "zoom: reached"
+        ]
       },
       "howFound": [
+        "Simulated persona journey (scripted; not user testing)",
         "Zoom/reflow (scripted 320 px + text spacing)"
       ],
       "rules": [
+        "journeys/zoom-hscroll",
         "reflow/h-overflow"
       ],
       "tools": [
+        "journeys",
         "reflow"
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [
             320
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/journeys__127_0_0_1_4177_checkout_bad_html__zoom_01_horizontal-scroll.png"
+          ],
           "evidence": [
+            {
+              "tool": "journeys",
+              "rule": "journeys/zoom-hscroll",
+              "detail": "page is 916px wide at 320 CSS px (= 400% zoom): two-direction scrolling",
+              "file": "journeys/127_0_0_1_4177_checkout_bad_html/journeys.json",
+              "line": null
+            },
             {
               "tool": "reflow",
               "rule": "reflow/h-overflow",
               "detail": "320px: scrollWidth=916 H-OVERFLOW (1.4.10 candidate at 320) offenders=3",
-              "file": "test/data/raw-checkout/reflow/127_0_0_1_4176_checkout_bad_html.txt",
+              "file": "reflow/127_0_0_1_4177_checkout_bad_html.txt",
               "line": 4
             }
           ],
-          "fingerprint": "d1a6cd1ba1c0806f"
+          "fingerprint": "eba2b75a85524285"
         }
       ],
       "remediation": {
@@ -1986,24 +2101,28 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "html",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/page-has-heading-one",
               "detail": "Page should contain a level-one heading: Fix all of the following:   Page must have a level-one heading",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<html>"
             }
           ],
-          "fingerprint": "bd2ad8f11c6a5882"
+          "fingerprint": "de29a69bd9ab3bfc"
         }
       ],
       "remediation": {
@@ -2075,290 +2194,343 @@
       ],
       "locations": [
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": ".muted",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<p class=\"muted\">Free shipping on orders over $50. Prices include tax.</p>"
             }
           ],
-          "fingerprint": "abfcd9957d589862"
+          "fingerprint": "31f29085a2bd5148"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": ".req",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<label class=\"req\">Full name</label>"
             }
           ],
-          "fingerprint": "4f54960908fda603"
+          "fingerprint": "036f4f7eeb7192df"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": ".title",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<div class=\"title\">Checkout</div>"
             }
           ],
-          "fingerprint": "519e7589797126a7"
+          "fingerprint": "80c59c3e06697ccd"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": ".wide",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<div class=\"wide\">Order summary: 1 × Trail Lantern — $39.00</div>"
             }
           ],
-          "fingerprint": "4b233838fe110314"
+          "fingerprint": "76357c68f9f52f90"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#email",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"email\" name=\"email\" type=\"email\" placeholder=\"Email\" required=\"\">"
             }
           ],
-          "fingerprint": "ecbcb1e580232101"
+          "fingerprint": "45ef74d89d9d67d4"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#name",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"name\" name=\"name\" required=\"\">"
             }
           ],
-          "fingerprint": "a6876bf163603a9b"
+          "fingerprint": "a99bf987338dabe3"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#phone",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"phone\" name=\"phone\" type=\"tel\">"
             }
           ],
-          "fingerprint": "1d29d36ca2902ef6"
+          "fingerprint": "aba37f72f121537c"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#ship",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<select id=\"ship\" name=\"ship\" onchange=\"location.href='checkout-bad.html?ship='+this.value\">\n      <option value=\"std\">Standard</option><option value=\"exp\">Express</option><option value=\"ovn\">Overnight</option>\n    </select>"
             }
           ],
-          "fingerprint": "72b9fdbbb5965dfc"
+          "fingerprint": "71a932c3aec8429e"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "#zip",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<input id=\"zip\" name=\"zip\" autocomplete=\"off\">"
             }
           ],
-          "fingerprint": "d5f2088747014d80"
+          "fingerprint": "d09df265d1adf99e"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "html",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/landmark-one-main",
               "detail": "Document should have one main landmark: Fix all of the following:   Document does not have a main landmark",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<html>"
             }
           ],
-          "fingerprint": "57653544e8d38d8a"
+          "fingerprint": "313b949cf910ba63"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "label[for=\"ship\"]",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<label for=\"ship\">Shipping speed</label>"
             }
           ],
-          "fingerprint": "9aa3cb7999939bb5"
+          "fingerprint": "cbe54e53229d5389"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "label[for=\"zip\"]",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<label for=\"zip\">ZIP code</label>"
             }
           ],
-          "fingerprint": "a2cfc96908f37834"
+          "fingerprint": "473b0501620b063b"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": null,
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
+          "journey": "Checkout",
           "screenshots": [],
           "evidence": [
             {
               "tool": "bypass-order",
               "rule": "bypass-order/no-main-landmark",
               "detail": "NO-MAIN-LANDMARK(2.4.1/1.3.1 advisory,low)\tno <main> or role=main",
-              "file": "test/data/raw-checkout/bypass-order/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null
             },
             {
               "tool": "sr-transcript",
               "rule": "sr-transcript/no-main",
               "detail": "-\tNO-MAIN",
-              "file": "test/data/raw-checkout/sr-transcript/127_0_0_1_4176_checkout_bad_html_390.txt",
+              "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
               "line": 9
             }
           ],
-          "fingerprint": "1383fdec5635c698"
+          "fingerprint": "7d9d2bd328431f26"
         },
         {
-          "url": "http://127.0.0.1:4176/checkout-bad.html",
+          "url": "http://127.0.0.1:4177/checkout-bad.html",
           "target": "p:nth-child(5)",
           "widths": [
-            390
+            390,
+            1440
           ],
-          "journey": "Checkout (assumed)",
-          "screenshots": [],
+          "journey": "Checkout",
+          "screenshots": [
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_1440.png",
+            "screenshots/axe__127_0_0_1_4177_checkout_bad_html_390.png"
+          ],
           "evidence": [
             {
               "tool": "axe",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
-              "file": "test/data/raw-checkout/axe/127_0_0_1_4176_checkout_bad_html_390.json",
+              "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
               "line": null,
               "html": "<p><a href=\"about.html#returns\">Read more</a> about returns.</p>"
             }
           ],
-          "fingerprint": "a01c5f399639d323"
+          "fingerprint": "4d4da694a965e456"
         }
       ],
       "remediation": {
@@ -2391,10 +2563,15 @@
   "errors": [],
   "conformance": {
     "target": "WCAG 2.2 Level AA",
-    "statement": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks, in headless Chromium (Playwright 1.65.1) at 390 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\".",
+    "statement": "16 candidate WCAG 2.2 Level A/AA failures (7 detected by deterministic automated rules, 9 needing human review) were found on the 1 page listed in Scope, using DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks; simulated persona journeys (scripted models, not real users), in headless Chromium (Playwright 1.65.1) at 390 and 1440 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users. Date: 2026-11-15. At least one rule-confirmed failure means these pages do not currently meet WCAG 2.2 AA. Do not describe the site as \"compliant\" or \"conformant\".",
     "claim": false
   },
   "manualChecklist": [
+    {
+      "sc": "-",
+      "check": "Re-walk each journey a simulated persona failed, as that kind of user would (keyboard only; screen reader; 320 px + 200% text; large touch targets).",
+      "priority": true
+    },
     {
       "sc": "3.3.1, 3.3.3, 4.1.3",
       "check": "On staging or with one owner-approved test entry: submit each journey form empty and with invalid values. Errors must be text, linked to the field, announced, and focus must move to them. Read-only runs cannot test server-side errors.",

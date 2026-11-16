@@ -155,13 +155,14 @@ export const REMEDIES = {
     after:
       '<a class="skip-link" href="#main">Skip to main content</a>\n...\n<main id="main" tabindex="-1">\n<style>.skip-link{position:absolute;left:-9999px}.skip-link:focus{left:1rem;top:1rem}</style>',
     platforms: {
-      wordpress: 'Most block themes include one: check header.php or the theme\'s "skip link" option; make sure <main id> matches.',
+      wordpress:
+        'Block themes: core adds a skip link when the template has a <main> element (set the content Group to <main> in the Site Editor); classic themes: add it in header.php.',
       shopify: 'Dawn-based themes include `skip-to-content-link` in layout/theme.liquid; check the target id after customising.',
       webflow: 'Add a Link block first in the Navbar symbol pointing to a #main section ID; style it visible on focus.',
       framer: 'Add a link in the top layer pointing to the main section ID; set focus-visible styles.',
       squarespace:
         '7.1 sites include a "Skip to content" link: confirm it is the first Tab stop and lands on the main content; custom headers built in code blocks may need one added.',
-      wix: 'Wix adds a "Skip to Main Content" link; confirm it appears first.',
+      wix: 'Accessibility Wizard checks the "Skip to Main Content" link; confirm it is the first Tab stop.',
       react: 'Render the skip link in the root layout and focus the <main> on route change.',
     },
     verify:
@@ -264,8 +265,8 @@ export const REMEDIES = {
       shopify: 'assets/base.css (Dawn uses :focus-visible; check custom CSS overrides).',
       webflow: 'Select the element > States > "Focused (keyboard)" and set an outline.',
       framer: 'Site Settings > Custom code: add the CSS, or set focus variants.',
-      squarespace: 'Design > Custom CSS.',
-      wix: 'Settings > Accessibility: turn on the visual focus indicator; custom-coded elements still need their own focus style.',
+      squarespace: 'Squarespace shows a keyboard focus outline automatically; if custom CSS removed it, restore it in Custom CSS.',
+      wix: 'Settings > Accessibility Wizard: keep visual (focus) indicators on; custom-coded elements still need their own focus style.',
       react: 'Global stylesheet; never reset outline in component CSS.',
     },
     verify: 'Tab through the page: every focused item shows a visible ring.',
@@ -374,11 +375,16 @@ export const REMEDIES = {
     before: '<img src="IMG_2041.jpg">',
     after: '<img src="IMG_2041.jpg" alt="Red trail lantern on a picnic table">',
     platforms: {
-      wordpress: 'Media Library > image > Alternative Text; decorative: leave blank and the theme must output alt="".',
-      shopify: 'Products > Media > Edit alt text; theme Liquid: {{ image | image_tag: alt: image.alt }}.',
-      webflow: 'Asset panel > settings > Alt text (or "Decorative").',
-      framer: 'Image > Accessibility > Alt text.',
-      squarespace: 'Image block > Design/Content > Image alt text (filename is the default: replace it).',
+      wordpress:
+        'Media > Library > image > Alternative Text (or the Image block alt field); decorative: leave blank so the output is alt="".',
+      shopify:
+        'Products > open the product > click the media item > Add alt text; theme section images: theme editor > section > image > Edit; custom Liquid: {{ image | image_tag: alt: image.alt }}.',
+      webflow:
+        'Assets panel > image cog > Descriptive (or Decorative); per instance: Element settings > Image settings > Alt text > Custom description.',
+      framer:
+        'Select the image > Styles panel > Fill > alt text field (or the Accessibility section); CMS images: alt text when choosing the image.',
+      squarespace:
+        'Image block > pencil > Content tab > Image alt text (image blocks have no alt unless you add it); products: Edit metadata > Alt text; galleries use the image description.',
       wix: 'Image settings > "What\'s in the image?".',
       react: '<img alt>; jsx-a11y/alt-text rule; CMS field required.',
     },
@@ -432,7 +438,7 @@ export const REMEDIES = {
       framer: 'Page settings > Title.',
       squarespace: 'Page settings > SEO > Page title.',
       wix: 'Page SEO > Title tag.',
-      react: 'next/head or document.title on route change.',
+      react: 'React 19: render <title> in the route component; Next.js: the metadata export; otherwise set document.title on route change.',
     },
     verify: 'Open three pages: each tab title is unique and names the page.',
   },
@@ -448,7 +454,7 @@ export const REMEDIES = {
       wordpress: 'Settings > General > Site Language.',
       shopify: 'Settings > Languages (theme outputs request.locale.iso_code).',
       webflow: 'Site Settings > General > Language.',
-      framer: 'Site Settings > General > Language.',
+      framer: 'Site Settings > Site Language (localized locales switch lang automatically).',
       squarespace: 'Settings > Language & Region.',
       wix: 'Settings > Language & Region.',
       react: '<html lang> in the root document/layout.',

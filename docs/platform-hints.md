@@ -1,0 +1,27 @@
+# Platform hints: sources
+
+Every finding card has a "Where to change it" hint for seven platforms (`src/findings/remediation.mjs`). They give the **usual** place to make the change. Themes, apps, plans and editor versions differ, so check your own setup and the vendor's current docs before you promise a fix. When a platform can't make the fix, log it as a platform dependency and give people a working alternative, such as a staffed phone or email.
+
+The menu paths below were checked against the vendor's official docs on **2026-11-15**. Hints with no listed source describe general patterns (for example, "fix it in the theme form snippet") and are not menu paths.
+
+| Platform | What was checked | Official sources (checked 2026-11-15) |
+|---|---|---|
+| WordPress | Media Library alternative text; Settings > General > Site Language; block themes get a core skip link when the template has `<main>` | [Edit Media](https://wordpress.org/documentation/article/edit-media/), [Settings General screen](https://wordpress.org/documentation/article/settings-general-screen/), [core block-template skip link](https://github.com/WordPress/wordpress-develop/blob/trunk/src/wp-includes/block-template.php), [Skip links (Make WordPress Accessible)](https://make.wordpress.org/accessibility/handbook/best-practices/skip-links/) |
+| Shopify | Product media alt text (Products > media > Add alt text); theme editor image alt; skip link, focus and contrast in themes | [Adding alt text to media](https://help.shopify.com/en/manual/products/product-media/add-alt-text), [Alt text for theme images](https://help.shopify.com/en/manual/online-store/themes/customizing-themes/accessibility/adding-alt-text), [Accessibility best practices for themes](https://shopify.dev/docs/storefronts/themes/best-practices/accessibility) |
+| Webflow | Assets panel Descriptive/Decorative alt and per-image Custom description; the **Focused (keyboard)** state (`:focus-visible`); which elements need focus styles | [Include alt text on images](https://help.webflow.com/hc/en-us/articles/33961330170643-Include-alt-text-on-images), [States](https://help.webflow.com/hc/en-us/articles/33961301727251-States), [Accessible elements](https://help.webflow.com/hc/en-us/articles/33961346219923-Accessible-elements-in-Webflow) |
+| Framer | Image alt text (Styles > Fill or the Accessibility section); Accessibility > Tag for nav, footer and other landmarks; text-style heading tags; Site Language | [Add alt tags to images](https://www.framer.com/help/articles/how-to-add-alt-tags-to-images/), [Guide to web accessibility](https://www.framer.com/help/articles/guide-to-web-accessibility-in-framer/), [Semantic tags](https://www.framer.com/help/articles/semantic-tags-navigation-footer/), [Language attribute](https://www.framer.com/help/articles/language-attribute/) |
+| Squarespace | Automatic "Skip to Content" link and keyboard focus outline (7.1); image block alt text (Content tab), product alt text, and the fields galleries use as alt | [Built-in accessibility features](https://support.squarespace.com/hc/en-us/articles/215129127-Make-your-site-accessible-with-built-in-features), [Add alt text to images](https://support.squarespace.com/hc/en-us/articles/206542357-Add-alt-text-to-images-for-accessibility-and-SEO) |
+| Wix | Image Settings > "What's in the image?"; Accessibility Wizard tasks (alt text, visual indicators, Skip to Main Content) | [Preparing images and galleries](https://support.wix.com/en/article/accessibility-preparing-your-images-and-galleries), [Studio: adding alt text](https://support.wix.com/en/article/studio-editor-adding-alt-text-to-images) |
+| React | `htmlFor` and `autoComplete` on form controls; React 19 `<title>`; jsx-a11y rule names | [`<input>`](https://react.dev/reference/react-dom/components/input), [`<title>`](https://react.dev/reference/react-dom/components/title), [eslint-plugin-jsx-a11y rules](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y#supported-rules) |
+
+## Corrections made on 2026-11-15
+- **Shopify alt text:** the path is now Products > the product > its media > Add alt text, plus the theme editor path for section images. Before, it was a vague "Products > Media > Edit alt text".
+- **Webflow alt text:** now names the Assets panel options Descriptive and Decorative, and the per-image "Custom description".
+- **Framer alt text:** now points to Styles > Fill or the Accessibility section, not an "Image > Accessibility" menu. Framer language: Site Settings > Site Language.
+- **Squarespace alt text:** now says image block alt is on the Content tab and stays empty unless you add it. Before, it claimed the filename is the default. Added product and gallery sources.
+- **Squarespace focus:** a focus outline is built in. The fix is to restore it if custom CSS removed it, not to add CSS from scratch.
+- **Squarespace skip link** (fixed in 4.2.0): it is built in. The old hint said it was "not configurable".
+- **Wix focus and skip link:** both now point to the Accessibility Wizard checks. They used to say Wix "adds" these as a fixed setting.
+- **WordPress skip link:** in block themes, core adds the skip link when the template has `<main>`. In classic themes it goes in header.php.
+- **WordPress page builders:** "reverse on mobile" options are a page-builder feature, not part of the core Columns block (fixed in 4.2.0).
+- **React page title:** now React 19 `<title>`, the Next.js metadata export, or `document.title`. It was `next/head` only.

@@ -111,3 +111,23 @@ test('manual checklist puts server-side form testing first when forms were check
   assert.equal(doc.manualChecklist[0].priority, true);
   assert.match(doc.manualChecklist[0].check, /staging|test entry/);
 });
+
+test('keyScreenshot prefers element crops, then the narrowest width, and writes alt text', async () => {
+  const { keyScreenshot } = await import('../../src/report/guidance.mjs');
+  const f = {
+    id: 'F-009',
+    title: 'No visible focus indicator',
+    locations: [
+      {
+        url: 'http://x.test/a',
+        target: 'a "Home"',
+        widths: [390, 1440],
+        screenshots: ['o/axe/x_390.png', 'o/tab-walk/x_1440/01.png', 'o/tab-walk/x_390/01.png'],
+      },
+    ],
+  };
+  const s = keyScreenshot(f);
+  assert.equal(s.file, 'o/tab-walk/x_390/01.png');
+  assert.match(s.alt, /^Cropped screenshot of the focused control on \/a at 390 px wide, element a "Home"/);
+  assert.equal(keyScreenshot({ ...f, locations: [{ ...f.locations[0], screenshots: [] }] }), null);
+});
