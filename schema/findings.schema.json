@@ -93,6 +93,40 @@
         }
       }
     },
+    "realScreenReader": {
+      "type": "array",
+      "description": "One entry per real screen-reader transcript (ada-audit sr). Absent or empty when no real screen reader ran.",
+      "items": {
+        "type": "object",
+        "required": ["screenReader", "browser", "url", "transcript", "passes"],
+        "properties": {
+          "screenReader": { "type": "string" },
+          "screenReaderVersion": { "type": ["string", "null"] },
+          "browser": { "type": "string" },
+          "browserVersion": { "type": ["string", "null"] },
+          "os": { "type": ["string", "null"] },
+          "guidepup": { "type": ["string", "null"] },
+          "url": { "type": "string" },
+          "journey": { "type": ["string", "null"] },
+          "transcript": { "type": "string" },
+          "ok": { "type": "boolean" },
+          "passes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["pass", "steps"],
+              "properties": {
+                "pass": { "type": "string" },
+                "steps": { "type": "integer" },
+                "endReason": { "type": ["string", "null"] },
+                "error": { "type": ["string", "null"] }
+              }
+            }
+          },
+          "stats": { "type": "object" }
+        }
+      }
+    },
     "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
     "suppressed": {
       "type": "array",
@@ -191,6 +225,11 @@
           }
         },
         "howFound": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "methods": {
+          "type": "array",
+          "description": "How the evidence was gathered. real-screen-reader = NVDA/VoiceOver driven by Guidepup; simulated-screen-reader = Guidepup Virtual Screen Reader.",
+          "items": { "enum": ["automated-rules", "scripted-browser", "simulated-screen-reader", "simulated-persona", "real-screen-reader"] }
+        },
         "rules": { "type": "array", "minItems": 1, "items": { "type": "string" } },
         "tools": { "type": "array", "minItems": 1, "items": { "type": "string" } },
         "locations": {
@@ -213,6 +252,9 @@
                   "required": ["tool", "rule", "detail"],
                   "properties": {
                     "tool": { "type": "string" },
+                    "method": {
+                      "enum": ["automated-rules", "scripted-browser", "simulated-screen-reader", "simulated-persona", "real-screen-reader"]
+                    },
                     "rule": { "type": "string" },
                     "detail": { "type": "string" },
                     "file": { "type": "string" },

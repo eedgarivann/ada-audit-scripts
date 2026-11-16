@@ -1,7 +1,7 @@
 // Accessible HTML report (no JavaScript): lang, skip link, landmarks, one h1, heading outline, captioned tables
 // with th scope, text labels (never colour alone), visible focus, 4.5:1+ colours, reflows at 320 px, print styles.
 import path from 'node:path';
-import { executiveSummary, keyScreenshot, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
+import { executiveSummary, keyScreenshot, methodsSentence, notTestedFor, realSrRows, shortUrl } from './guidance.mjs';
 import { PLAN_LABEL, CONF_LABEL, KIND_LABEL, PLATFORM_LABEL, rel, platformOrder } from './markdown.mjs';
 
 const e = (s) =>
@@ -110,6 +110,18 @@ export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 
     );
     H.push('</tbody></table></div></section>');
   }
+  const sr = realSrRows(doc);
+  if (sr.length) {
+    H.push(
+      '<section aria-labelledby="realsr"><h2 id="realsr">5a. Real screen-reader runs</h2><p class="note">NVDA or VoiceOver driven by Guidepup: real speech output from scripted navigation (quick-nav and Tab). Not a human listener, and nothing was submitted. Failed passes are missing, not clean.</p><div class="tbl" tabindex="0" role="region" aria-label="TBL_LABEL"><table><caption>Real screen-reader transcripts</caption><thead><tr><th scope="col">Screen reader + browser</th><th scope="col">Page</th><th scope="col">Passes (steps)</th><th scope="col">Ran fully</th><th scope="col">Transcript</th></tr></thead><tbody>',
+    );
+    sr.forEach((r) =>
+      H.push(
+        `<tr><td>${e(r.who)}</td><td>${e(shortUrl(r.url))}</td><td>${e(r.passes)}</td><td>${r.ok ? 'yes' : '<strong>no</strong>'}</td><td><a href="${e(r.transcript.split(String.fromCharCode(92)).join('/'))}">${e(r.transcript)}</a></td></tr>`,
+      ),
+    );
+    H.push('</tbody></table></div></section>');
+  }
   H.push(
     '<section aria-labelledby="other"><h2 id="other">6. Best practices, AAA and advisories</h2><p>These are not WCAG 2.2 AA failures.</p>',
   );
@@ -139,7 +151,7 @@ export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 
       )}. ${e(f.remediation.steps[0])}</li>`,
     ),
   );
-  NOT_TESTED.forEach((t) => H.push(`<li>${e(t)}</li>`));
+  notTestedFor(doc.run).forEach((t) => H.push(`<li>${e(t)}</li>`));
   H.push('</ul><h3>Manual testing checklist</h3><ul class="check">');
   doc.manualChecklist.forEach((m) =>
     H.push(`<li>${m.priority ? '<strong>Priority:</strong> ' : ''}${e(m.check)} <span class="note">(WCAG ${e(m.sc)})</span></li>`),

@@ -1,6 +1,6 @@
 // Markdown report: executive summary -> fix plan -> table -> per-finding cards -> journeys -> non-failures -> manual checklist -> scope.
 import path from 'node:path';
-import { executiveSummary, keyScreenshot, methodsSentence, NOT_TESTED, shortUrl } from './guidance.mjs';
+import { executiveSummary, keyScreenshot, methodsSentence, notTestedFor, realSrRows, shortUrl } from './guidance.mjs';
 
 export const PLAN_LABEL = { 'fix-now': 'Fix now', 'fix-next': 'Fix next', monitor: 'Monitor' };
 export const CONF_LABEL = {
@@ -129,6 +129,21 @@ export function renderMarkdown(doc, { outDir = '.', platform = null, maxLocation
     );
     L.push('');
   }
+  const sr = realSrRows(doc);
+  if (sr.length) {
+    L.push(
+      '## 5a. Real screen-reader runs',
+      '',
+      '_NVDA or VoiceOver driven by Guidepup: real speech output from scripted navigation (quick-nav and Tab). Not a human listener, and never submitted anything. Steps per pass; FAILED passes are missing, not clean._',
+      '',
+      '| Screen reader + browser | Page | Passes (steps) | Ran fully | Transcript |',
+      '|---|---|---|---|---|',
+    );
+    sr.forEach((r) =>
+      L.push(`| ${esc(r.who)} | ${esc(shortUrl(r.url))} | ${esc(r.passes)} | ${r.ok ? 'yes' : '**no**'} | \`${r.transcript}\` |`),
+    );
+    L.push('');
+  }
   L.push('## 6. Best practices, AAA and advisories (not WCAG AA failures)', '');
   if (others.length) {
     L.push('| ID | Item | Type | Pages | Suggested fix |', '|---|---|---|---|---|');
@@ -145,7 +160,7 @@ export function renderMarkdown(doc, { outDir = '.', platform = null, maxLocation
         .join(', ')}. ${f.remediation.steps[0]}`,
     ),
   );
-  NOT_TESTED.forEach((t) => L.push(`- ${t}`));
+  notTestedFor(doc.run).forEach((t) => L.push(`- ${t}`));
   L.push('', '**Manual testing checklist** (automation cannot judge these)', '');
   doc.manualChecklist.forEach((m) => L.push(`- [ ] ${m.priority ? '**Priority:** ' : ''}${m.check} _(WCAG ${m.sc})_`));
   L.push('');

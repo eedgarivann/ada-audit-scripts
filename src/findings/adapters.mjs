@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RULES, rulesFor, ruleRegex } from './rules.mjs';
 import { scFromAxeTag, SC } from './wcag.mjs';
+import { analyzeTranscript } from '../sr/analyze.mjs';
 
 /** @typedef {{tool:string, ruleId:string, url:string|null, width:number|null, target:string|null, detail:string, toolConfidence?:string, file:string, line?:number, screenshot?:string|null, persona?:string, outcome?:string, journeyGoal?:string, axe?:object, helpUrl?:string}} RawCandidate */
 
@@ -256,6 +257,36 @@ export const ADAPTERS = {
           },
         }).candidates,
     );
+  },
+  // Real screen readers: re-analyse every recorded transcript (so analysis fixes apply to old runs too).
+  'real-sr'(dir) {
+    const out = [];
+    const rules = rulesFor('real-sr');
+    for (const file of listFiles(path.join(dir, 'real-sr'), /\.json$/)) {
+      const t = JSON.parse(fs.readFileSync(file, 'utf8'));
+      if (t.schema !== 'ada-real-sr/1') continue;
+      const { flags, errors } = analyzeTranscript(t);
+      const sr = `${t.screenReader?.name || 'screen reader'}${t.screenReader?.version ? ' ' + t.screenReader.version : ''} + ${t.browser?.name || '?'}${t.browser?.version ? ' ' + t.browser.version : ''}`;
+      for (const e of errors)
+        out.push({ tool: 'real-sr', ruleId: '_meta/adapter-error', url: t.url, width: null, target: null, detail: e, file });
+      for (const f of flags) {
+        const r = rules.find((x) => x.code === f.code);
+        if (!r) continue;
+        out.push({
+          tool: 'real-sr',
+          ruleId: r.id,
+          url: t.url,
+          width: null,
+          target: f.target || null,
+          detail: f.detail,
+          file: file.replace(/\.json$/, '.txt'),
+          line: null,
+          sr,
+          method: 'real-screen-reader',
+        });
+      }
+    }
+    return out;
   },
   'context-change'(dir) {
     const tgt = (l) => {

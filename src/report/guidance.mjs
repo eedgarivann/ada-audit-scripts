@@ -14,13 +14,19 @@ const TOOL_METHOD = {
   'sample-compare': () => 'cross-page consistency checks',
   'bypass-order': () => 'skip-link and reading-order checks',
   journeys: () => 'simulated persona journeys (scripted models, not real users)',
+  'real-sr': (v) =>
+    `real screen readers (${v.realScreenReaders || 'NVDA/VoiceOver'}) driven by Guidepup ${v.guidepup || ''}`.replace(/ $/, ''),
 };
 
 export function methodsSentence(run) {
   const v = run.versions || {};
   const parts = (run.tools || []).map((t) => (TOOL_METHOD[t] || (() => t))(v));
   const widths = run.widths?.length ? ` at ${run.widths.join(' and ')} px` : '';
-  return `${parts.join('; ')}, in headless Chromium (Playwright ${v.playwright || '?'})${widths}. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users.`;
+  const real = (run.tools || []).includes('real-sr');
+  const tail = real
+    ? 'The real screen-reader passes are scripted (headings, landmarks, fields, buttons, links, graphics, Tab); no human listened, JAWS and TalkBack were not run, and there was no testing with disabled users.'
+    : 'No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users.';
+  return `${parts.join('; ')}, in headless Chromium (Playwright ${v.playwright || '?'})${widths}. ${tail}`;
 }
 
 export function conformanceStatement(doc) {
@@ -94,8 +100,9 @@ export function manualChecklist(doc) {
     },
     {
       sc: '1.1.1, 1.3.1, 4.1.2, 4.1.3',
-      check:
-        'Real screen reader pass on each journey: NVDA or JAWS with Chrome (Windows), VoiceOver with Safari (macOS and iOS), TalkBack with Chrome (Android). Listen to headings, landmarks, form labels, errors and status messages. Record AT, browser, OS and versions.',
+      check: tools.has('real-sr')
+        ? 'Listen to the real screen-reader transcripts (real-sr/*.txt) and confirm each flagged announcement by ear. Then finish what the scripted passes cannot: complete each journey end to end (including errors and status messages on a staging copy) with JAWS, VoiceOver on iOS and TalkBack, and record AT, browser, OS and versions.'
+        : 'Real screen reader pass on each journey: NVDA or JAWS with Chrome (Windows), VoiceOver with Safari (macOS and iOS), TalkBack with Chrome (Android). Listen to headings, landmarks, form labels, errors and status messages. Record AT, browser, OS and versions.',
     },
     {
       sc: '1.1.1',
@@ -163,6 +170,25 @@ export const NOT_TESTED = [
   'Real screen readers and other assistive technology; testing with disabled users.',
   'Native mobile apps, PDFs and documents, canvas or WebGL content, media captions quality.',
 ];
+/** NOT_TESTED for this run: when real screen readers ran, say exactly what they did not cover. */
+export function notTestedFor(run = {}) {
+  if (!(run.tools || []).includes('real-sr')) return NOT_TESTED;
+  return NOT_TESTED.map((t) =>
+    t.startsWith('Real screen readers')
+      ? 'Screen readers beyond the scripted NVDA/VoiceOver passes (JAWS, TalkBack, VoiceOver on iOS), a human listening end to end, and testing with disabled users.'
+      : t,
+  );
+}
+/** Rows for the "Real screen-reader runs" section. */
+export function realSrRows(doc) {
+  return (doc.realScreenReader || []).map((r) => ({
+    who: `${r.screenReader}${r.screenReaderVersion ? ' ' + r.screenReaderVersion : ''} + ${r.browser}${r.browserVersion ? ' ' + r.browserVersion : ''}`,
+    url: r.url,
+    passes: r.passes.map((p) => `${p.pass} ${p.error ? 'FAILED' : p.steps}`).join(', '),
+    ok: r.ok,
+    transcript: r.transcript,
+  }));
+}
 
 /**
  * Pick the most specific screenshot for a finding (element crop > journey step > viewport) and describe it.

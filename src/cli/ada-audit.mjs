@@ -12,6 +12,7 @@ import { writeReports, FORMATS } from '../report/index.mjs';
 import { validateDocument } from '../findings/validate.mjs';
 import { RULES } from '../findings/rules.mjs';
 import { slug } from '../core/lib.mjs';
+import { srMain } from './sr.mjs';
 
 const require = createRequire(import.meta.url);
 const ver = (p) => {
@@ -32,6 +33,7 @@ Usage:
   ada-audit [run] <url...> [options]     run the tools, then write findings + reports
   ada-audit report <dir> [options]       rebuild findings + reports from an existing output folder
   ada-audit validate <findings.json>     check a findings file against schema v1
+  ada-audit sr --url <url> [--journey f] record a REAL screen-reader transcript (NVDA/VoiceOver; see ada-audit sr --help)
   ada-audit tools | rules [--json]       list tools / the rule catalog
 
 Options:
@@ -323,6 +325,7 @@ export function gate(doc, failOn) {
 }
 
 export async function main(argv = process.argv.slice(2), { stdout = (s) => process.stdout.write(s), log = console.error } = {}) {
+  if (argv[0] === 'sr') return srMain(argv.slice(1), { stdout, log, EXIT });
   try {
     const { values, positionals } = parseArgs({ args: argv, options: OPTIONS, allowPositionals: true, strict: true });
     if (values.version) {

@@ -1,0 +1,10 @@
+{
+  "name": "W3C BAD benchmark: orient on the home page (before and after) and the tickets form",
+  "urls": [
+    "https://www.w3.org/WAI/demos/bad/before/home.html",
+    "https://www.w3.org/WAI/demos/bad/after/home.html",
+    "https://www.w3.org/WAI/demos/bad/before/tickets.html"
+  ],
+  "steps": ["headings", "landmarks", "formFields", "buttons", { "pass": "links", "max": 50 }, "graphics", { "pass": "tab", "max": 40 }],
+  "max": 40
+}

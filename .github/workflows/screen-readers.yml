@@ -1,0 +1,94 @@
+name: Real screen readers
+# Runs NVDA (Windows) and VoiceOver (macOS) through Guidepup against a journey, read-only, then merges the
+# transcripts with the Linux suite into one findings.json and scores it against the W3C BAD answer key.
+on:
+  workflow_dispatch:
+    inputs:
+      journey:
+        description: Journey JSON in the repo
+        default: bench/bad-journey.json
+  push:
+    paths:
+      - 'src/sr/**'
+      - 'src/cli/sr.mjs'
+      - 'bench/**'
+      - 'scripts/bench-bad.mjs'
+      - '.github/workflows/screen-readers.yml'
+permissions:
+  contents: read
+concurrency:
+  group: screen-readers-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  JOURNEY: ${{ inputs.journey || 'bench/bad-journey.json' }}
+  GUIDEPUP_SETUP: '@guidepup/setup@0.29.3'
+jobs:
+  screen-reader:
+    name: ${{ matrix.sr }} + ${{ matrix.browser }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { sr: nvda, os: windows-2025, browser: chromium }
+          - { sr: voiceover, os: macos-15, browser: webkit }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Set up the OS for screen-reader automation
+        run: npx -y ${{ env.GUIDEPUP_SETUP }} setup --ci ${{ matrix.sr == 'voiceover' && '--macos-record' || '' }}
+      - run: npm ci
+      - run: npx playwright install ${{ matrix.browser }}
+      - name: Install screen-reader assets
+        run: npx -y ${{ env.GUIDEPUP_SETUP }} install
+      - name: Record real screen-reader transcripts (read-only)
+        run: node bin/ada-audit.mjs sr --journey ${{ env.JOURNEY }} --sr ${{ matrix.sr }} --browser ${{ matrix.browser }} -o sr-out --format json,md
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-sr-${{ matrix.sr }}-${{ matrix.browser }}
+          path: |
+            sr-out/
+            recordings/
+          retention-days: 30
+  merge-and-benchmark:
+    name: Merge with suite + BAD benchmark
+    needs: screen-reader
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Linux suite on the benchmark pages (simulated SR, axe, keyboard scripts)
+        run: node bin/ada-audit.mjs https://www.w3.org/WAI/demos/bad/before/home.html https://www.w3.org/WAI/demos/bad/after/home.html -o bench-out --format json || test $? -eq 1
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: real-sr-*
+          path: artifacts
+      - name: Merge real screen-reader transcripts
+        run: |
+          mkdir -p bench-out/real-sr
+          find artifacts -path '*/real-sr/*' -type f \( -name '*.json' -o -name '*.txt' \) -exec cp {} bench-out/real-sr/ \;
+          ls -la bench-out/real-sr
+      - run: node bin/ada-audit.mjs report bench-out --format json,md,html
+      - run: node bin/ada-audit.mjs validate bench-out/findings.json
+      - name: Score against the W3C answer key
+        run: |
+          node scripts/bench-bad.mjs bench-out/findings.json --out bench-out/bench.md
+          cat bench-out/bench.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bench-bad-merged
+          path: bench-out/
+          retention-days: 30

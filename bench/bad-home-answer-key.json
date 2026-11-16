@@ -1,0 +1,43 @@
+{
+  "name": "W3C BAD: Inaccessible Home Page Report (WCAG 2.0)",
+  "source": "https://www.w3.org/WAI/demos/bad/before/reports/home.html",
+  "before": "https://www.w3.org/WAI/demos/bad/before/home.html",
+  "after": "https://www.w3.org/WAI/demos/bad/after/home.html",
+  "note": "Level A/AA criteria W3C marks Fail on the before page. 4.1.1 Parsing is excluded (obsolete in WCAG 2.2). AAA failures (1.4.6, 1.4.8, 1.4.9, 2.1.3, 2.4.8, 2.4.9, 2.4.10, 3.2.5) are out of scope.",
+  "fail": [
+    "1.1.1",
+    "1.3.1",
+    "1.3.2",
+    "1.4.1",
+    "1.4.3",
+    "1.4.5",
+    "2.1.1",
+    "2.4.1",
+    "2.4.2",
+    "2.4.4",
+    "2.4.6",
+    "2.4.7",
+    "3.1.1",
+    "3.2.1",
+    "3.2.2",
+    "3.2.4",
+    "3.3.2",
+    "4.1.2"
+  ],
+  "screenReaderAudible": [
+    "1.1.1",
+    "1.3.1",
+    "1.3.2",
+    "2.1.1",
+    "2.4.1",
+    "2.4.2",
+    "2.4.4",
+    "2.4.6",
+    "2.4.7",
+    "3.1.1",
+    "3.2.1",
+    "3.3.2",
+    "4.1.2"
+  ],
+  "screenReaderAudibleNote": "Criteria a screen-reader user can in principle notice by listening (judgement of the benchmark author, not W3C). Contrast, colour, images of text, on-input and cross-page consistency are not audible on one page."
+}

@@ -5,7 +5,7 @@ import { RULES, AXE_CONCEPT, AXE_GROUP, AXE_IMPACT, groupOf } from './rules.mjs'
 import { REMEDIES } from './remediation.mjs';
 import { scRef } from './wcag.mjs';
 
-export const SCHEMA_VERSION = '1.0.0';
+export const SCHEMA_VERSION = '1.1.0';
 export const SEVERITIES = ['blocker', 'critical', 'serious', 'moderate', 'minor'];
 export const CONFIDENCES = ['automated-certain', 'needs-review', 'inferred'];
 export const PLANS = ['fix-now', 'fix-next', 'monitor'];
@@ -42,7 +42,18 @@ const HOW_FOUND = {
   'context-change': () => 'Keyboard/DOM test (scripted, navigations aborted)',
   'sample-compare': () => 'Cross-page comparison (scripted)',
   'bypass-order': () => 'Keyboard + layout test (scripted)',
+  'real-sr': (v, srs = []) =>
+    `Real screen reader (${srs.length ? srs.join('; ') : 'NVDA/VoiceOver'}) driven by Guidepup${v.guidepup ? ' ' + v.guidepup : ''}; scripted navigation, not a human listener`,
 };
+/** How each tool gathers evidence. "real-screen-reader" is never mixed up with the simulated screen reader. */
+export const METHODS = ['automated-rules', 'scripted-browser', 'simulated-screen-reader', 'simulated-persona', 'real-screen-reader'];
+export const TOOL_METHOD = {
+  axe: 'automated-rules',
+  'sr-transcript': 'simulated-screen-reader',
+  journeys: 'simulated-persona',
+  'real-sr': 'real-screen-reader',
+};
+export const methodOf = (tool) => TOOL_METHOD[tool] || 'scripted-browser';
 
 /** Resolve the catalog rule for a raw candidate (axe rules are synthesised from axe tags). */
 export function resolveRule(raw) {
@@ -115,10 +126,12 @@ export function buildFindings(raws, ctx = {}) {
         helpUrls: new Set(),
         personas: new Set(),
         outcomes: new Set(),
+        srs: new Set(),
       });
     const g = groups.get(key);
     g.rules.set(rule.id, rule);
     g.tools.add(raw.tool);
+    if (raw.sr) g.srs.add(raw.sr);
     rule.sc.forEach((s) => g.sc.add(s));
     g.severity = sevMax(g.severity, severity);
     if (CONFIDENCES.indexOf(confidence) < CONFIDENCES.indexOf(g.confidence)) g.confidence = confidence;
@@ -141,9 +154,12 @@ export function buildFindings(raws, ctx = {}) {
     const loc = g.locations.get(lk);
     if (raw.width) loc.widths.add(raw.width);
     if (raw.screenshot) loc.screenshots.add(raw.screenshot);
-    if (loc.evidence.length < 3 && !loc.evidence.some((e) => e.detail === raw.detail))
+    // Keep up to 3 pieces of evidence per place, but always keep the first real screen-reader announcement.
+    const firstOfMethod = !loc.evidence.some((e) => e.method === methodOf(raw.tool));
+    if ((loc.evidence.length < 3 || (raw.tool === 'real-sr' && firstOfMethod)) && !loc.evidence.some((e) => e.detail === raw.detail))
       loc.evidence.push({
         tool: raw.tool,
+        method: methodOf(raw.tool),
         rule: rule.id,
         detail: raw.detail,
         file: raw.file,
@@ -198,7 +214,8 @@ export function buildFindings(raws, ctx = {}) {
         evidence: l.evidence,
         fingerprint: sha(`${g.key}|${l.url}|${targetKey(l.target)}`),
       }));
-    const howFound = [...g.tools].sort().map((t) => (HOW_FOUND[t] || (() => `Automated (${t})`))(versions));
+    const howFound = [...g.tools].sort().map((t) => (HOW_FOUND[t] || (() => `Automated (${t})`))(versions, [...g.srs].sort()));
+    const methods = [...new Set([...g.tools].map(methodOf))].sort((a, b) => METHODS.indexOf(a) - METHODS.indexOf(b));
     return {
       id: '',
       fingerprint: sha(g.key),
@@ -218,6 +235,7 @@ export function buildFindings(raws, ctx = {}) {
       occurrences: locations.length,
       impact: { who: remedy.who, personas: [...g.personas].sort(), simulatedOutcomes: [...g.outcomes].sort() },
       howFound,
+      methods,
       rules: rules.map((r) => r.id).sort(),
       tools: [...g.tools].sort(),
       locations,

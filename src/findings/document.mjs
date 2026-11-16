@@ -4,6 +4,47 @@ import path from 'node:path';
 import { collectRaw } from './adapters.mjs';
 import { buildFindings, summarize, SCHEMA_VERSION, normUrl } from './model.mjs';
 import { conformanceStatement, manualChecklist } from '../report/guidance.mjs';
+import { analyzeTranscript } from '../sr/analyze.mjs';
+
+/** One summary row per real screen-reader transcript in <dir>/real-sr (written by `ada-audit sr`). */
+export function realScreenReaderRuns(dir) {
+  const d = path.join(dir, 'real-sr');
+  if (!fs.existsSync(d)) return [];
+  return fs
+    .readdirSync(d)
+    .filter((f) => f.endsWith('.json'))
+    .sort()
+    .map((f) => {
+      let t;
+      try {
+        t = JSON.parse(fs.readFileSync(path.join(d, f), 'utf8'));
+      } catch {
+        return null;
+      }
+      if (t.schema !== 'ada-real-sr/1') return null;
+      const { stats } = analyzeTranscript(t);
+      return {
+        screenReader: t.screenReader?.name || '?',
+        screenReaderVersion: t.screenReader?.version || null,
+        browser: t.browser?.name || '?',
+        browserVersion: t.browser?.version || null,
+        os: t.os ? `${t.os.platform} ${t.os.release}` : null,
+        guidepup: t.guidepup || null,
+        url: normUrl(t.url),
+        journey: t.journey || null,
+        transcript: path.join('real-sr', f.replace(/\.json$/, '.txt')),
+        ok: !t.error && (t.passes || []).every((p) => !p.error),
+        passes: (t.passes || []).map((p) => ({
+          pass: p.pass,
+          steps: (p.steps || []).length,
+          endReason: p.endReason || null,
+          error: p.error || null,
+        })),
+        stats,
+      };
+    })
+    .filter(Boolean);
+}
 
 const PERSONA = {
   keyboard: 'Keyboard-only user',
@@ -54,7 +95,16 @@ export function buildDocument(dir, opts = {}) {
     ? [...new Set(run.pages.map(normUrl))].sort()
     : [...new Set(raws.map((r) => normUrl(r.url)).filter(Boolean))].sort();
   run.tools = run.tools?.length ? run.tools : [...new Set(raws.map((r) => r.tool))].sort();
-  run.versions = run.versions || {};
+  run.versions = { ...(run.versions || {}) };
+  const realSr = realScreenReaderRuns(dir);
+  if (realSr.length) {
+    // A real screen-reader run is its own method: list it as a tool and record its versions.
+    if (!run.tools.includes('real-sr')) run.tools = [...run.tools, 'real-sr'];
+    run.versions.guidepup = realSr.find((r) => r.guidepup)?.guidepup || null;
+    run.versions.realScreenReaders = [
+      ...new Set(realSr.map((r) => `${r.screenReader}${r.screenReaderVersion ? ' ' + r.screenReaderVersion : ''} + ${r.browser}`)),
+    ].join('; ');
+  }
   const { findings, suppressed, errors } = buildFindings(raws, { journeys: opts.journeys, versions: run.versions });
   const doc = {
     $schema: 'https://raw.githubusercontent.com/eedgarivann/ada-audit-scripts/main/schema/findings.schema.json',
@@ -65,6 +115,7 @@ export function buildDocument(dir, opts = {}) {
     journeysAssumed: !(opts.journeys && opts.journeys.length),
     summary: summarize(findings, suppressed),
     journeys: journeyOutcomes(dir),
+    realScreenReader: realSr,
     findings,
     suppressed,
     errors: [...(opts.errors || []), ...errors],
