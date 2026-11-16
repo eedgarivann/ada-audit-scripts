@@ -1,4 +1,4 @@
-# Findings schema v1
+# Findings schema v1 (current: 1.1.0)
 
 `findings.json` is the single machine-readable output of a run. Every tool's raw output is converted into it by `src/findings/adapters.mjs` and `src/findings/model.mjs`. JSON Schema (draft 2020-12): [`schema/findings.schema.json`](../schema/findings.schema.json). Validate with `npx ada-audit validate findings.json`.
 
@@ -9,7 +9,8 @@
 |---|---|
 | `schemaVersion` | `1.x.y` |
 | `generator` | tool name, version, URL |
-| `run` | `startedAt`, `finishedAt`, `pages[]`, `tools[]`, `widths[]`, `versions{tool,node,playwright,axe,vsr}`, `readOnly`, `platform` |
+| `run` | `startedAt`, `finishedAt`, `pages[]`, `tools[]`, `widths[]`, `versions{tool,node,playwright,axe,vsr,guidepup?,realScreenReaders?}`, `readOnly`, `platform` |
+| `realScreenReader[]` | *1.1.0, optional.* One entry per real screen-reader transcript merged into the run (`ada-audit sr`): `screenReader`, `screenReaderVersion`, `browser`, `browserVersion`, `os`, `guidepup`, `url`, `journey`, `transcript` (path of the `.txt`), `ok`, `passes[{pass, steps, endReason, …}]`. |
 | `criticalJourneys[]` / `journeysAssumed` | the named journeys (`--journey` / config). If none were named, every page counts as a journey page and `journeysAssumed` is `true`. |
 | `summary` | counts by kind, severity, confidence, plan; `quickWins`; `failuresConfirmedByRules` |
 | `journeys[]` | simulated persona outcomes per start page (`reached`, `ok`, `at risk`, `gave up`, `stuck`) |
@@ -36,7 +37,8 @@
 | `impact` | `who` it hurts (plain sentence), simulated `personas` and `simulatedOutcomes` |
 | `howFound[]` | evidence type per tool: *Automated (axe-core x)*, *Keyboard test (scripted)*, *Simulated SR*, *Simulated persona journey*… Never "tested with a screen reader". |
 | `rules[]`, `tools[]` | contributing rule ids (`ada-audit rules`) and tools |
-| `locations[]` | `{ url, target (selector or element), widths[], journey, screenshots[], evidence[{tool, rule, detail, file, line, html}], fingerprint }` |
+| `methods[]` | *1.1.0.* How the barrier was found, one or more of `automated-rules`, `scripted-browser`, `simulated-screen-reader`, `simulated-persona`, `real-screen-reader`. `real-screen-reader` means NVDA or VoiceOver actually spoke the evidence (driven by Guidepup, scripted navigation, not a human listener); `simulated-screen-reader` is the Virtual Screen Reader in `sr-transcript`. |
+| `locations[]` | `{ url, target (selector or element), widths[], journey, screenshots[], evidence[{tool, method, rule, detail, file, line, html}], fingerprint }` |
 | `remediation` | `{ concept, summary, steps[], before, after, platforms{wordpress,shopify,webflow,framer,squarespace,wix,react}, verify, references[] }` |
 
 ## Scoring and plan

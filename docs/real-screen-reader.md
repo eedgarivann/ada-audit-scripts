@@ -15,9 +15,9 @@ For each page in the journey, in a headed browser (NVDA + Chromium, VoiceOver + 
 | `buttons` | B | find next button | `NO-NAME` (4.1.2) |
 | `links` | K | VO-Cmd-L | `NO-NAME` (4.1.2), `LINK-FILENAME` (2.4.4, 1.1.1), `VAGUE-LINK` (2.4.4), `DUPLICATE-LINK-NAMES` (2.4.4; inferred unless the Tab pass saw different targets) |
 | `graphics` | G | VO-Cmd-G | `IMG-NO-ALT`, `IMG-FILENAME` (1.1.1), `IMG-VAGUE-ALT` (1.1.1, inferred) |
-| `tab` | Tab | Tab | `FOCUS-REMOVED` (2.4.7, 2.1.1, 3.2.1: focus falls to the page body, then resumes past skipped controls), `NO-NAME`, `FIELD-NO-LABEL`, `ERROR-NOT-ANNOUNCED`, `REPEAT` (2.1.2), `FOCUS-CHANGES-CONTEXT` (3.2.1) |
+| `tab` | Tab | Option-Tab in WebKit (plain Tab skips links there), Tab elsewhere | `FOCUS-REMOVED` (2.4.7, 2.1.1, 3.2.1: focus falls to the page body, then resumes past skipped controls), `NO-NAME`, `FIELD-NO-LABEL`, `ERROR-NOT-ANNOUNCED`, `REPEAT` (2.1.2), `FOCUS-CHANGES-CONTEXT` (3.2.1) |
 
-Each pass starts at the top of the page and stops when the screen reader says there is nothing more (`no next heading`), repeats itself, or reaches the pass's step cap. During the Tab pass the tool also records the focused element (selector, whether a field has a programmatic label, `aria-invalid`), so an unlabeled `<select>` that NVDA announces by its current value is still caught.
+Each pass starts at the top of the page and stops when NVDA says there is nothing more (`no next heading`), when VoiceOver stalls (4 steps in a row with nothing new: silence, a phrase already heard, `Last …`, `… not found`; NVDA allows 12), when the Tab order wraps back to its first stop, at the pass's step cap, or at its time budget (`--pass-timeout`, default 240 s; `--page-timeout`, default 900 s). Every screen-reader command also has a 30 s timeout, so a stuck command fails that pass instead of hanging the job. During the Tab pass the tool also records the focused element (selector, whether a field has a programmatic label, `aria-invalid`), so an unlabeled `<select>` that NVDA announces by its current value is still caught.
 
 **Read-only.** Passes only move the screen-reader cursor or press Tab. Nothing is activated, typed or submitted, and the browser context aborts every non-GET request. That is why error messages are reported as `ERRORS-NOT-TESTED`: hearing them needs a submission, which belongs on a staging copy.
 
@@ -63,6 +63,23 @@ npx ada-audit sr --url https://example.org/contact -o out   # on Windows/macOS, 
 npx ada-audit report out
 ```
 `ada-audit run` never deletes `real-sr/`. One barrier found by both the scripts and the real screen reader becomes one finding marked *corroborated*, with both methods listed.
+
+## Benchmark: W3C BAD demo (16 Nov 2026)
+Workflow run [43809005716](https://github.com/eedgarivann/ada-audit-scripts/actions/runs/43809005716) on `before/home`, `after/home` and `before/tickets`: NVDA 2026.3 + Chromium 159 on windows-2025 (about 3 min), VoiceOver on macOS 15.8.2 + WebKit 27.2 on macos-15 (about 9 min). Every pass ran on all 6 page/screen-reader pairs. Scored against W3C's report for the inaccessible home page (18 A/AA criteria marked Fail, 4.1.1 excluded; `bench/bad-home-answer-key.json`, `scripts/bench-bad.mjs`). A method only gets credit for criteria its own rules map to.
+
+| Evidence method | SC recall (of 18) | Of the 13 a listener can notice | Flags on the after page |
+|---|---|---|---|
+| real NVDA | 8 (44%) | 62% | 0 |
+| real VoiceOver | 5 (28%) | 38% | 0 |
+| real screen readers (either) | 8 (44%): 1.1.1, 1.3.1, 2.1.1, 2.4.4, 2.4.7, 3.2.1, 3.3.2, 4.1.2 | 62% | 0 |
+| simulated screen reader (`sr-transcript`) | 3 (17%) | 23% | 0 |
+| axe-core | 7 (39%) | 46% | 1 |
+| scripted suite without real SR | 16 (89%) | 85% | 3 |
+| suite + real SR | 16 (89%) | 85% | 3 |
+
+Saved copies: [benchmark](real-sr-sample/bench-bad.md), [NVDA transcript](real-sr-sample/nvda-chromium-www_w3_org_WAI_demos_bad_before_home_html.txt), [VoiceOver transcript](real-sr-sample/voiceover-webkit-www_w3_org_WAI_demos_bad_before_home_html.txt) (before/home).
+
+What this means: real screen readers find far more than the simulated one (8 vs 3 criteria) and add independent, audible corroboration to 8 suite findings, with no flags on the fixed page. They did not add new criteria to the full suite. Both miss 2.4.1 (the demo's W3C wrapper has a skip link, so the page sounds bypassable) and 2.4.2 (the title is spoken but whether it describes the page is a human judgement). VoiceOver missed the focus problems NVDA caught (2.1.1, 2.4.7, 3.2.1) because WebKit's Option-Tab order differs and focus fell to the page body only at the end of the order. One benchmark page, tuned with the answers visible: not a promise for other sites.
 
 ## Limits
 - Speech is parsed from English NVDA/VoiceOver wording. Other speech languages are not supported yet.

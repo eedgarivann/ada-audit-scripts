@@ -1,0 +1,127 @@
+Real screen-reader transcript: NVDA 2026.3 with chromium 159.0.8154.6 on win32 10.0.26100
+Evidence label: real screen reader (scripted navigation through Guidepup 0.40.0, not a human listener)
+URL: https://www.w3.org/WAI/demos/bad/before/home.html
+Journey: W3C BAD benchmark: orient on the home page (before and after) and the tickets form   Started: 2026-11-16T05:16:31.179Z   Finished: 2026-11-16T05:17:49.252Z
+Read-only: nothing activated, typed or submitted; 0 non-GET request(s) blocked
+
+== Headings (quick-nav) (2 steps, ended by end) ==
+  1  Inaccessible Home Page-Before and After Demonstration, heading, level 1
+  2  no next heading
+
+== Landmarks (quick-nav) (1 steps, ended by end) ==
+  1  no next landmark
+
+== Form fields (quick-nav) (2 steps, ended by end) ==
+  1  combo box, collapsed, QUICKMENU ---- greater
+  2  no next form field
+
+== Buttons (quick-nav) (1 steps, ended by end) ==
+  1  no next button
+
+== Links (quick-nav) (50 steps, ended by max) ==
+  1  W 3C logo. To get missing image descriptions, open the context menu., Unlabeled graphic, link, W 3C Home
+  2  Web Accessibility Initiative (WAI) logo, graphic, link, WAI Home
+  3  list, with 6 items, Overview, link
+  4  list, with 2 items, Inaccessible Home Page Report, link
+  5  Accessible Home Page, link
+  6  Accessible Home Page Report, link
+  7  Show Annotations, link
+  8  News, link
+  9  Tickets, link
+ 10  Survey, link
+ 11  Template, link
+ 12  Red dot with a white letter C' that symbolizes a moon crescent as well as the sun. This logo is followed by a black banner that says CITYLIGHTS' which is the name of this online portal. Finally, the slogan of the portal, your access to the city', follows in a turquoise green handwriting style and with a slight slant across the top banner., graphic, same page, link
+ 13  nav home, Unlabeled graphic, link
+ 14  nav news, Unlabeled graphic, link
+ 15  nav facts, Unlabeled graphic, link
+ 16  nav survey, Unlabeled graphic, link
+ 17  Heat wave linked to temperatures, link
+ 18  Man Gets Nine Months in Violin Case, link
+ 19  Lack of brains hinders research, link
+ 20  news, link
+ 21  news, link
+ 22  news, link
+ 23  Click here, link
+ 24  Click here, link
+ 25  Read More..., link
+ 26  Read More..., link
+ 27  Copyright, link
+ 28  W 3C, link
+ 29  MIT, link
+ 30  ERCIM, link
+ 31  Keio, link
+ 32  changelog, link
+ 33  Shadi Abou-Zahra, link
+ 34  Education and Outreach Working Group (EOWG), link
+ 35  WAI-TIES, link
+ 36  WAI-AGE, link
+ 37  Acknowledgements, link
+ 38  WAI Site Map, link
+ 39  Help with WAI Website, link
+ 40  Search, link
+ 41  Contacting WAI, link
+ 42  wai-eo-editors at w 3 dot org, link
+ 43  wai at w 3 dot org, link
+ 44  Copyright, link
+ 45  W 3C, link
+ 46  MIT, link
+ 47  ERCIM, link
+ 48  Keio, link
+ 49  liability, link
+ 50  trademark, link
+
+== Graphics (quick-nav) (11 steps, ended by end) ==
+  1  W 3C logo. To get missing image descriptions, open the context menu., Unlabeled graphic, link, W 3C Home
+  2  Web Accessibility Initiative (WAI) logo, graphic, link, WAI Home
+  3  Red dot with a white letter C' that symbolizes a moon crescent as well as the sun. This logo is followed by a black banner that says CITYLIGHTS' which is the name of this online portal. Finally, the slogan of the portal, your access to the city', follows in a turquoise green handwriting style and with a slight slant across the top banner., graphic, same page, link
+  4  nav home, Unlabeled graphic, link
+  5  nav news, Unlabeled graphic, link
+  6  nav facts, Unlabeled graphic, link
+  7  nav survey, Unlabeled graphic, link
+  8  bullet, graphic
+  9  bullet, graphic
+ 10  1234 56789, Unlabeled graphic
+ 11  no next graphic
+
+== Tab order (keyboard focus) (40 steps, ended by max) ==
+  1  W 3C logo. To get missing image descriptions, open the context menu., Unlabeled graphic, link, W 3C Home   [focus: p#logos > a:nth-of-type(1)]
+  2  Web Accessibility Initiative (WAI) logo, graphic, link, WAI Home   [focus: p#logos > a:nth-of-type(2)]
+  3  list, with 6 items, Overview, link   [focus: div#mnav > ul > li:nth-of-type(1) > a]
+  4  list, with 2 items, Inaccessible Home Page Report, link   [focus: div > ul > li:nth-of-type(1) > a:nth-of-type(2)]
+  5  Accessible Home Page, link   [focus: div > ul > li:nth-of-type(2) > a:nth-of-type(1)]
+  6  Accessible Home Page Report, link   [focus: div > ul > li:nth-of-type(2) > a:nth-of-type(2)]
+  7  Show Annotations, link   [focus: ul > li:nth-of-type(2) > div > a]
+  8  News, link   [focus: div#mnav > ul > li:nth-of-type(3) > a]
+  9  Tickets, link   [focus: div#mnav > ul > li:nth-of-type(4) > a]
+ 10  Survey, link   [focus: div#mnav > ul > li:nth-of-type(5) > a]
+ 11  Template, link   [focus: div#mnav > ul > li:nth-of-type(6) > a]
+ 12  Red dot with a white letter C' that symbolizes a moon crescent as well as the sun. This logo is followed by a black banner that says CITYLIGHTS' which is the name of this online portal. Finally, the slogan of the portal, your access to the city', follows in a turquoise green handwriting style and with a slight slant across the top banner., graphic, same page, link   [focus: tr:nth-of-type(1) > td:nth-of-type(1) > div > a]
+ 13  QUICKMENU ---- greater, row 1, column 5   [focus: tbody > tr:nth-of-type(1) > td:nth-of-type(5) > select]
+ 14  Welcome to City Lights! Inaccessible Home Page, document, ￼   [focus: page body]
+ 15  (silence)   [focus: page body]
+ 16  (silence)   [focus: page body]
+ 17  (silence)   [focus: page body]
+ 18  (silence)   [focus: page body]
+ 19  (silence)   [focus: page body]
+ 20  (silence)   [focus: page body]
+ 21  (silence)   [focus: page body]
+ 22  (silence)   [focus: page body]
+ 23  (silence)   [focus: page body]
+ 24  (silence)   [focus: page body]
+ 25  (silence)   [focus: page body]
+ 26  (silence)   [focus: page body]
+ 27  (silence)   [focus: page body]
+ 28  Copyright, link   [focus: tr > td > font > a:nth-of-type(1)]
+ 29  W 3C, link   [focus: tr > td > font > a:nth-of-type(2)]
+ 30  MIT, link   [focus: tr > td > font > a:nth-of-type(3)]
+ 31  ERCIM, link   [focus: tr > td > font > a:nth-of-type(4)]
+ 32  Keio, link   [focus: tr > td > font > a:nth-of-type(5)]
+ 33  changelog, link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(1)]
+ 34  Shadi Abou-Zahra, link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(2)]
+ 35  Education and Outreach Working Group (EOWG), link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(3)]
+ 36  WAI-TIES, link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(4)]
+ 37  WAI-AGE, link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(5)]
+ 38  Acknowledgements, link   [focus: div#meta-footer > p:nth-of-type(1) > a:nth-of-type(6)]
+ 39  WAI Site Map, link   [focus: div#meta-footer > p:nth-of-type(2) > a:nth-of-type(1)]
+ 40  Help with WAI Website, link   [focus: div#meta-footer > p:nth-of-type(2) > a:nth-of-type(2)]
+

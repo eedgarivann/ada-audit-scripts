@@ -1,5 +1,21 @@
 # Changelog
 
+## 4.3.0 — 2026-11-16
+
+### Added
+- `ada-audit sr --url <url> [--journey file]`: drives **real NVDA (Windows) or VoiceOver (macOS)** with Guidepup 0.40 through a journey (headings, landmarks, form fields, buttons, links, graphics, Tab), records every spoken phrase to `real-sr/<sr>-<browser>-<page>.json|txt`, and maps problems into findings with method `real-screen-reader`, separate from the simulated `sr-transcript`. Options: `--sr`, `--browser`, `--max`, `--pass-timeout`, `--page-timeout`, `--dry-run`, `--format`. Read-only: nothing is activated or submitted and non-GET requests are aborted, so error announcements are reported as not tested.
+- `.github/workflows/screen-readers.yml` (*Real screen readers*): NVDA + Chromium on windows-2025 and VoiceOver + WebKit on macos-15, then merges both with the Linux suite, validates, and scores against the W3C BAD answer key in the job summary.
+- New rule family `real-sr` (no heading, empty heading, no main, no bypass, unlabeled field, unnamed button/link, file-name alt or link text, vague link, duplicate link names to different targets, missing alt, focus removed, focus changes context, repeat).
+- `bench/bad-home-answer-key.json`, `bench/bad-journey.json` and `scripts/bench-bad.mjs` (per-method recall and after-page false-positive candidates).
+- `docs/real-screen-reader.md`; report section "5a. Real screen-reader runs"; API exports `parsePhrase`, `analyzeTranscript`, `realScreenReaderRuns`.
+
+### Changed
+- Findings schema **1.1.0** (additive): `methods[]` per finding, `method` per evidence item, top-level `realScreenReader[]`, `run.versions.guidepup` / `realScreenReaders`.
+- Reports no longer say "no real screen reader was used" when real-SR transcripts are merged; the manual checklist then asks for a human listening check instead of a first screen-reader pass.
+
+### Benchmark
+W3C BAD before/home (18 A/AA failures): real NVDA 8/18, real VoiceOver 5/18, simulated SR 3/18, axe 7/18, suite 16/18 with or without real SR; real SR raised nothing on the after page. Run: https://github.com/eedgarivann/ada-audit-scripts/actions/runs/43809005716
+
 ## 4.2.1 — 2026-11-15
 
 ### Added

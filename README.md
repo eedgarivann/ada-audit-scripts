@@ -23,9 +23,9 @@ npx ada-audit https://example.org/ https://example.org/about https://example.org
 **Without cloning** (installs this tagged release from GitHub; the package is not on the npm registry):
 ```sh
 npx -y playwright@1.65.1 install chromium       # once; same Playwright version the tools pin
-npx -y github:eedgarivann/ada-audit-scripts#v4.2.1 https://example.org/ https://example.org/contact --format json,md,html
+npx -y github:eedgarivann/ada-audit-scripts#v4.3.0 https://example.org/ https://example.org/contact --format json,md,html
 ```
-Pin the tag (`#v4.2.1`) so audits are reproducible.
+Pin the tag (`#v4.3.0`) so audits are reproducible.
 
 Open `audit-output/report.html` (or `report.md`). See a full [sample report](docs/sample-report/report.md) ([HTML](docs/sample-report/report.html), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
 
@@ -49,6 +49,7 @@ Each candidate from each tool is mapped by a rule catalog (`npx ada-audit rules`
 ada-audit [run] <url...> [options]      run the audit and write reports
 ada-audit report <dir>                  rebuild reports from existing raw output (also v4 output folders)
 ada-audit validate <findings.json>      check a findings file against schema v1
+ada-audit sr --url <url> [--journey f]  REAL NVDA/VoiceOver transcript (Windows/macOS or the GitHub workflow)
 ada-audit tools | rules [--json]        list tools / the rule catalog
 ```
 Key options: `--urls file|a,b`, `-c config.json`, `-o dir`, `--journey "Name=url,url"` (repeat), `--journeys --goal buy|checkout|contact|donate|book --target "text"`, `--widths 390,1440`, `--tools` / `--skip`, `--platform wordpress|shopify|webflow|framer|squarespace|wix|react`, `--format json,md,html,sarif,csv`, `--concurrency n`, `--timeout ms`, `--job-timeout ms`, `--retries n`, `--fail-on serious` (CI gate). All options, the config file and exit codes: [docs/configuration.md](docs/configuration.md).
@@ -60,6 +61,8 @@ npx ada-audit -c ada-audit.config.json --format json,sarif --fail-on serious   #
 
 ## The tools
 `inventory`, `axe`, `tab-walk`, `forms`, `reflow`, `motion`, `sr-transcript`, `context-change`, `bypass-order`, `sample-compare` run by default; `journeys` (`--journeys`), `focus-state` (`--focus-selector`) and `menu-modal` (`--trigger`) on request. What each checks and how to run it on its own (the v4 commands such as `node axe-scan.mjs` still work unchanged): [docs/tools.md](docs/tools.md).
+
+**Real screen readers (4.3.0).** `ada-audit sr` drives real NVDA (Windows) or VoiceOver (macOS) with [Guidepup](https://www.guidepup.dev/) through headings, landmarks, form fields, buttons, links, graphics and Tab, records every spoken phrase, and turns problems into findings with method `real-screen-reader` (separate from the simulated `sr-transcript`). The *Real screen readers* GitHub workflow (`.github/workflows/screen-readers.yml`) runs both on GitHub-hosted Windows and macOS runners and merges the transcripts into one report. How to run it and what it can't do: [docs/real-screen-reader.md](docs/real-screen-reader.md).
 
 ## Read-only safety (`safePage`)
 Every tool opens pages through `safePage` in `src/core/lib.mjs`, also when it shares the run's browser. It blocks service workers and **aborts every request whose method is not GET, HEAD or OPTIONS** (form posts, `fetch` POST/PUT/DELETE, popups included) and logs them as "blocked writes". `--click` preparation refuses submit buttons. `forms.mjs --try-empty-submit` submits forms **empty**; a POST is blocked, so server-side validation is reported as *NOT TESTED*. `context-change.mjs` and `forms.mjs` also abort page navigations they trigger and log them instead of following them.
@@ -81,7 +84,8 @@ npm run sample-report  # regenerate docs/sample-report from test/data (no networ
 ## Limits
 - Outputs are candidates. Confirm each in the DOM and on a screenshot; heuristics (fake headings, images of text, colour-only links, CSS backgrounds, timeouts, reading order) produce false positives and misses.
 - `sr-transcript` and `journeys` are **simulations**: the Guidepup Virtual Screen Reader is not JAWS, NVDA, VoiceOver or TalkBack, and scripted personas are not disabled people. Report them as "Simulated SR" and "simulated persona journeys", never as screen-reader or user testing.
-- No real assistive technology, no human judgement of alt quality, meaningful sequence, captions or plain language; no native apps, PDFs or canvas content.
+- `ada-audit sr` is real NVDA/VoiceOver output, but navigation is scripted: no human listens, judges alt quality or tries to finish a task. It covers NVDA + Chromium and VoiceOver + WebKit (Playwright) only; JAWS, TalkBack, iOS VoiceOver, Narrator, Firefox/Edge and Safari itself are not tested. Error messages are never triggered (read-only), so 3.3.1/4.1.3 announcement stays *not tested*.
+- Apart from `ada-audit sr`, no real assistive technology; no human judgement of alt quality, meaningful sequence, captions or plain language; no native apps, PDFs or canvas content.
 - Server-side validation, logins, checkouts and payments are not exercised (read-only by design).
 - Pages behind bot protection may render differently in headless Chromium. Tools print `WARNING: … bot-challenge or block page`; discard that output.
 - Multi-page checks are only as good as the sample: pick ≥3 pages per template and every step of a process (WCAG-EM).
@@ -93,6 +97,8 @@ npm run sample-report  # regenerate docs/sample-report from test/data (no networ
 **Local fixtures (`test/fixtures`).** All 9 planted reading-order/bypass defects are flagged and the 3 clean controls stay clean. `journeys.mjs` finds all 7 planted journey traps (hover-only mega menu, cookie banner that keyboard users can't get past, focus behind an overlay, carousel that steals focus, unlabeled cart icon, 2.5.8 target spacing, timed redirect); the fixed twins reach the goal. The other tools miss the hover-only menu and the focus-stealing carousel outright, and show only symptoms (focus covered, generic clickable) for the cookie banner and overlay. They don't show that the goal is unreachable. On the separate form/checkout test site (15 seeded barriers), the scripts flagged 13/15; the 2 misses were server-side error handling, which needs a manual test on staging.
 
 **10 public sites** (2 Shopify, 1 WordPress, 2 Squarespace, 2 Wix, 1 Webflow, a city government site and a nonprofit; homepage + up to 1 key page each, read-only, not named here). We hand-checked a stratified sample of 106 candidates. Estimated precision (true / (true + false); advisories and unclear items left out): inventory 6/7, tab-walk 9/10, axe 4/6 (the 2 false ones were one button measured in a transient state at two widths), forms 9/10, reflow 12/12, sr-transcript 7/7, sample-compare 1/1. In 4.1.0-rc, `bypass-order` was 0/15 and `context-change` focus-removed/change-on-input was 0/9: nav dropdowns clipped by `overflow`, image/caption pairs, cookie banners taking the first Tab stops, slide-in skip links, focus refused by hidden elements, and analytics beacons on typing. These were fixed before release; on the same pages the fixed versions raise none of those 24 false candidates. The W3C and fixture results are unchanged. Because the tuning was done on this sample, expect more false positives elsewhere. Misses seen by hand include a keyboard-focusable spam honeypot field (found only by `journeys`) and colour or meaning problems that need human judgement.
+
+**Real screen readers (16 Nov 2026, 4.3.0).** On W3C BAD before/home, real NVDA evidence matched 8 of W3C's 18 A/AA failures and real VoiceOver 5 (simulated SR: 3; axe: 7), with no flags on the fixed after page. Added to the full suite, they corroborate findings (16/18 either way) rather than raise recall. Details and run link: [docs/real-screen-reader.md](docs/real-screen-reader.md#benchmark-w3c-bad-demo-16-nov-2026).
 
 Caveats: tuning was done with the W3C answers visible, and the fixtures were written by the same authors. Recall is per page/criterion, not per instance. None of this means the scripts find a fixed share of issues on any site; a clean run is not conformance.
 
