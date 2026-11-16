@@ -11,3 +11,5 @@ export { renderHtml } from './report/html.mjs';
 export { renderSarif } from './report/sarif.mjs';
 export { renderCsv } from './report/csv.mjs';
 export { writeReports, FORMATS } from './report/index.mjs';
+export { parsePhrase, analyzeTranscript } from './sr/analyze.mjs';
+export { realScreenReaderRuns } from './findings/document.mjs';

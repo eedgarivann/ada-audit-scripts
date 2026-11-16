@@ -24,6 +24,8 @@ Options:
   --sr <nvda|voiceover|auto>   default auto (NVDA on Windows, VoiceOver on macOS)
   --browser <name>       chromium (NVDA default) | webkit (VoiceOver default) | chrome | msedge | firefox
   --max <n>              cap steps per pass (default per pass, 20-60)
+  --pass-timeout <s>     stop a pass after this many seconds (default 240)
+  --page-timeout <s>     skip the rest of a page after this many seconds (default 900)
   -o, --out <dir>        output folder (default ./audit-output)
   --format <list>        report formats after the run (default json,md,html); --no-report to skip
   --dry-run              print the resolved plan as JSON and exit (works on any OS)
@@ -36,6 +38,8 @@ const OPTS = {
   sr: { type: 'string' },
   browser: { type: 'string' },
   max: { type: 'string' },
+  'pass-timeout': { type: 'string' },
+  'page-timeout': { type: 'string' },
   out: { type: 'string', short: 'o' },
   format: { type: 'string' },
   'no-report': { type: 'boolean' },
@@ -66,6 +70,14 @@ export async function srMain(argv, { stdout, log, EXIT, run } = {}) {
     if (values.browser && !['chromium', 'chrome', 'msedge', 'firefox', 'webkit'].includes(values.browser))
       throw new JourneyError(`--browser must be chromium, chrome, msedge, firefox or webkit`);
     if (values.sr && !['nvda', 'voiceover', 'auto'].includes(values.sr)) throw new JourneyError('--sr must be nvda, voiceover or auto');
+    const secs = (v, d, name) => {
+      if (v === undefined) return d * 1000;
+      const n = Number(v);
+      if (!Number.isFinite(n) || n < 10 || n > 7200) throw new JourneyError(`${name} must be 10-7200 seconds`);
+      return n * 1000;
+    };
+    const passTimeout = secs(values['pass-timeout'], 240, '--pass-timeout');
+    const pageTimeout = secs(values['page-timeout'], 900, '--page-timeout');
     const journey = loadJourney(values.journey, { urls: values.url || [], max: values.max !== undefined ? Number(values.max) : undefined });
     const out = values.out || './audit-output';
     if (values['dry-run']) {
@@ -85,6 +97,8 @@ export async function srMain(argv, { stdout, log, EXIT, run } = {}) {
       sr: values.sr || 'auto',
       browser: values.browser,
       out,
+      passTimeout,
+      pageTimeout,
       log: values.quiet ? () => {} : log,
     });
     const failed = r.transcripts.filter((t) => t.error || (t.passes || []).some((p) => p.error));

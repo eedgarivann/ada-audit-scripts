@@ -13,8 +13,11 @@ export interface WcagRef {
   since: string;
   url: string;
 }
+/** How evidence was gathered. 'real-screen-reader' = NVDA/VoiceOver via Guidepup; never the simulated one. */
+export type Method = 'automated-rules' | 'scripted-browser' | 'simulated-screen-reader' | 'simulated-persona' | 'real-screen-reader';
 export interface Evidence {
   tool: string;
+  method?: Method;
   rule: string;
   detail: string;
   file?: string;
@@ -59,6 +62,7 @@ export interface Finding {
   occurrences: number;
   impact: { who: string; personas: string[]; simulatedOutcomes: string[] };
   howFound: string[];
+  methods?: Method[];
   rules: string[];
   tools: string[];
   locations: Location[];
@@ -106,6 +110,21 @@ export interface ManualCheck {
   check: string;
   priority?: boolean;
 }
+export interface RealScreenReaderRun {
+  screenReader: string;
+  screenReaderVersion: string | null;
+  browser: string;
+  browserVersion: string | null;
+  os: string | null;
+  guidepup: string | null;
+  url: string;
+  journey: string | null;
+  /** path of the human-readable transcript, relative to the output folder */
+  transcript: string;
+  ok: boolean;
+  passes: { pass: string; steps: number; endReason: string | null; error: string | null }[];
+  stats: Record<string, number>;
+}
 export interface FindingsDocument {
   $schema: string;
   schemaVersion: string;
@@ -115,6 +134,7 @@ export interface FindingsDocument {
   journeysAssumed: boolean;
   summary: Summary;
   journeys: JourneyOutcome[];
+  realScreenReader?: RealScreenReaderRun[];
   findings: Finding[];
   suppressed: { ruleId: string; url: string | null; reason: string }[];
   errors: string[];
@@ -186,7 +206,7 @@ export function writeReports(
   opts?: { formats?: Format[]; platform?: Platform | null },
 ): Record<Format, string>;
 export const FORMATS: Record<Format, string>;
-export const SCHEMA_VERSION: '1.0.0';
+export const SCHEMA_VERSION: '1.1.0';
 export const RULES: Rule[];
 export const REMEDIES: Record<string, Remedy>;
 export const SC: Record<string, [string, 'A' | 'AA' | 'AAA', string]>;
@@ -196,3 +216,24 @@ export function scRef(num: string): WcagRef | null;
 export function scFromAxeTag(tag: string): string | null;
 export function normUrl(u: string | null): string | null;
 export function targetKey(t: string | null): string;
+/** Parse one spoken screen-reader announcement (NVDA or VoiceOver wording). */
+export function parsePhrase(
+  phrase: string,
+  expect?: string[],
+): {
+  raw: string;
+  role: string | null;
+  name: string;
+  states: string[];
+  level: number | null;
+  end: boolean;
+  unlabeled: boolean;
+  guess: string | null;
+};
+/** Turn a real screen-reader transcript (schema "ada-real-sr/1") into rule-coded flags. */
+export function analyzeTranscript(t: object): {
+  flags: { code: string; pass: string; step: number | null; target: string | null; detail: string; spoken?: string }[];
+  stats: Record<string, number>;
+  errors: string[];
+};
+export function realScreenReaderRuns(dir: string): RealScreenReaderRun[];

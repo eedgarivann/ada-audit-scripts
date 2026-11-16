@@ -281,6 +281,7 @@ export const ADAPTERS = {
           detail: f.detail,
           file: file.replace(/\.json$/, '.txt'),
           line: null,
+          toolConfidence: f.toolConfidence,
           sr,
           method: 'real-screen-reader',
         });

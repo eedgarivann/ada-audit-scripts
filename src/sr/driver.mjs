@@ -97,7 +97,7 @@ const FOCUS_INFO = `(() => {
     (el.querySelector && el.querySelector('img[alt]') ? el.querySelector('img[alt]').alt : '') || '').trim().replace(/\\s+/g, ' ').slice(0, 120);
   return { tag, type: el.getAttribute('type') || null, role: el.getAttribute('role') || null, id: el.id || null, selector: sel(el),
     name, hasLabel: /^(input|select|textarea)$/.test(tag) ? labelled : null, placeholder: el.getAttribute('placeholder') || null,
-    invalid: el.getAttribute('aria-invalid') === 'true', url: location.href };
+    invalid: el.getAttribute('aria-invalid') === 'true', href: el.href || null, url: location.href };
 })()`;
 
 async function readOnlyContext(browser) {
@@ -191,7 +191,8 @@ function adapterFor(name, gp) {
       buttons: () => sr.perform(C.FIND_NEXT_BUTTON),
       links: () => sr.perform(K.findNextLink),
       graphics: () => sr.perform(K.findNextGraphic),
-      tab: () => sr.press('Tab'),
+      // WebKit skips links on plain Tab (Safari's default); Option+Tab reaches every focusable item, like Safari users do.
+      tab: (browserName) => sr.press(browserName === 'webkit' ? 'Option+Tab' : 'Tab'),
     },
     async focusWeb(page, browserName) {
       await gp.macOSActivateId(APP_ID[browserName] || APP_ID.webkit);
@@ -241,12 +242,26 @@ function adapterFor(name, gp) {
   };
 }
 
-const END_RE = /^(no next|no previous|no more|not found)/i;
+// NVDA ends a quick-nav pass with "no next …". VoiceOver says "Last link …" or "Landmark not found", but not always
+// at the real end, so VoiceOver passes stop after several steps in a row that hear nothing new (a stall).
+const END_RE = /^(no next|no previous|no more)/i;
+const STALL_RE = /^(last (heading|link|image|form element|control|button|landmark|table|item|graphic)\b|\w+ not found$)/i;
 
-async function runPass(a, page, pass, max, browserName, log) {
+export function withTimeout(promise, ms, what) {
+  let t;
+  return Promise.race([
+    promise,
+    new Promise((_, rej) => {
+      t = setTimeout(() => rej(new Error(`${what} timed out after ${Math.round(ms / 1000)} s`)), ms);
+    }),
+  ]).finally(() => clearTimeout(t));
+}
+
+async function runPass(a, page, pass, max, browserName, log, { stallLimit, passTimeout }) {
   const steps = [];
   let endReason = 'max';
-  await a.toTop(page, browserName);
+  const deadline = Date.now() + passTimeout;
+  await withTimeout(a.toTop(page, browserName), 90000, 'moving to the top of the page');
   if (pass === 'tab') {
     // Start Tab from the top of the document, like a user who just loaded the page.
     await page.evaluate(() => {
@@ -255,11 +270,17 @@ async function runPass(a, page, pass, max, browserName, log) {
     });
   }
   const startUrl = page.url();
-  let same = 0;
+  const heard = new Set();
+  let stall = 0;
+  let firstSel = null;
   for (let i = 0; i < max; i++) {
+    if (Date.now() > deadline) {
+      endReason = 'time';
+      break;
+    }
     const before = (await a.sr.spokenPhraseLog()).length;
     const t0 = Date.now();
-    await a.cmd[pass]();
+    await withTimeout(a.cmd[pass](browserName), 30000, `${pass} step ${i + 1}`);
     await delay(150);
     const log2 = await a.sr.spokenPhraseLog();
     const phrases = log2
@@ -276,20 +297,31 @@ async function runPass(a, page, pass, max, browserName, log) {
       }
     }
     steps.push(step);
-    const spoken = phrases.join(' ') || last;
-    if (END_RE.test(spoken.trim())) {
+    const spoken = (phrases.join(' ') || last).trim();
+    if (END_RE.test(spoken)) {
       endReason = 'end';
       break;
     }
-    const prev = steps.at(-2);
-    same = prev && (prev.phrases.join('|') || prev.last) === (phrases.join('|') || last) ? same + 1 : 0;
-    // Quick-nav that stops moving repeats itself. Tab can legitimately repeat (focus trap), so Tab only stops on navigation.
-    if (pass !== 'tab' && same >= 2) {
-      endReason = 'repeat';
-      break;
+    if (pass === 'tab') {
+      if (step.dom?.navigated) {
+        endReason = 'navigated';
+        break;
+      }
+      // Back on the first focused element: the Tab order wrapped around.
+      if (step.dom?.selector && !firstSel) firstSel = step.dom.selector;
+      else if (step.dom?.selector && step.dom.selector === firstSel && i > 1) {
+        endReason = 'wrapped';
+        break;
+      }
+      continue;
     }
-    if (pass === 'tab' && step.dom?.navigated) {
-      endReason = 'navigated';
+    // Quick-nav stall: silence, a "Last …"/"… not found" message, or a phrase already heard in this pass.
+    const key = spoken.toLowerCase();
+    const isNew = key && !STALL_RE.test(spoken) && !heard.has(key);
+    if (key) heard.add(key);
+    stall = isNew ? 0 : stall + 1;
+    if (stall >= stallLimit) {
+      endReason = 'stall';
       break;
     }
   }
@@ -333,6 +365,8 @@ export async function runRealScreenReader({
   out,
   log = console.error,
   headless = false,
+  passTimeout = 240000,
+  pageTimeout = 900000,
 }) {
   const srName = resolveScreenReader(want);
   browserName = browserName || (srName === 'voiceover' ? 'webkit' : 'chromium');
@@ -372,18 +406,56 @@ export async function runRealScreenReader({
       };
       log(`${a.label} + ${browserName}: ${url}`);
       try {
+        const pageDeadline = Date.now() + pageTimeout;
         await page.goto(url, { waitUntil: 'load', timeout: 90000 });
         await delay(1500);
         t.title = await page.title();
-        await a.focusWeb(page, browserName);
+        // DOM fact, used only to tell whether links that sound the same go to different places (2.4.4).
+        t.links = await page
+          .evaluate(() =>
+            [...document.querySelectorAll('a[href]')].slice(0, 500).map((a) => ({
+              name: (
+                a.getAttribute('aria-label') ||
+                a.innerText ||
+                [...a.querySelectorAll('img[alt]')].map((i) => i.alt).join(' ') ||
+                a.title ||
+                ''
+              )
+                .replace(/\s+/g, ' ')
+                .trim()
+                .slice(0, 120),
+              href: a.href,
+            })),
+          )
+          .catch(() => []);
+        // DOM fact, used only to rule out screen-reader quirks: an "Unlabeled graphic" whose spoken guess is its real alt.
+        t.images = await page
+          .evaluate(() =>
+            [...document.images]
+              .slice(0, 500)
+              .map((i) => ({ alt: i.getAttribute('alt'), src: (i.currentSrc || i.src || '').slice(0, 200) })),
+          )
+          .catch(() => []);
+        await withTimeout(a.focusWeb(page, browserName), 120000, 'focusing the web page');
         for (const { pass, max } of journey.steps) {
           try {
-            t.passes.push(await runPass(a, page, pass, max, browserName, log));
+            if (Date.now() > pageDeadline) throw new Error(`page time budget (${Math.round(pageTimeout / 1000)} s) used up`);
+            // NVDA says "no next …" at the end, so identical neighbours ("news, link" ×3) are real items; VoiceOver stalls.
+            t.passes.push(
+              await withTimeout(
+                runPass(a, page, pass, max, browserName, log, { stallLimit: srName === 'nvda' ? 12 : 4, passTimeout }),
+                passTimeout + 120000,
+                `${pass} pass`,
+              ),
+            );
           } catch (e) {
             t.passes.push({ pass, label: PASS_LABEL[pass], command: pass, endReason: 'error', steps: [], error: e.message.split('\n')[0] });
             log(`  ${PASS_LABEL[pass]}: FAILED ${e.message.split('\n')[0]}`);
           }
-          if (page.url() !== url) await page.goto(url, { waitUntil: 'load', timeout: 90000 }).then(() => a.focusWeb(page, browserName));
+          if (page.url() !== url)
+            await page
+              .goto(url, { waitUntil: 'load', timeout: 90000 })
+              .then(() => withTimeout(a.focusWeb(page, browserName), 120000, 'refocusing'));
         }
       } catch (e) {
         t.error = e.message.split('\n')[0];

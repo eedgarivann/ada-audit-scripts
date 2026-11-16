@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { RULES } from '../src/findings/rules.mjs';
 
 const KEY = JSON.parse(fs.readFileSync(fileURLToPath(new URL('../bench/bad-home-answer-key.json', import.meta.url)), 'utf8'));
 const norm = (u) =>
@@ -18,6 +19,13 @@ export function score(doc, key = KEY) {
   const fails = doc.findings.filter((f) => f.kind === 'failure');
   // Evidence lines carry the screen reader: "[NVDA]" / "[VoiceOver]".
   const evOn = (f, url, pred) => f.locations.some((l) => norm(l.url) === url && l.evidence.some(pred));
+  // Credit only the criteria the method's own rules map to (a merged finding can carry criteria from other tools).
+  const ruleSc = new Map(RULES.map((r) => [r.id, r.sc]));
+  const scsOf = (f, url, pred) =>
+    f.locations
+      .filter((l) => norm(l.url) === url)
+      .flatMap((l) => l.evidence.filter(pred))
+      .flatMap((e) => (e.tool === 'axe' ? f.wcag.map((w) => w.sc) : ruleSc.get(e.rule) || []));
   const methods = {
     'real-screen-reader (any)': (e) => e.method === 'real-screen-reader' || e.tool === 'real-sr',
     'real NVDA': (e) => (e.method === 'real-screen-reader' || e.tool === 'real-sr') && /\[NVDA\]/.test(e.detail),
@@ -30,7 +38,7 @@ export function score(doc, key = KEY) {
   const rows = {};
   for (const [name, pred] of Object.entries(methods)) {
     const hit = new Set();
-    for (const f of fails) if (evOn(f, before, pred)) f.wcag.forEach((w) => key.fail.includes(w.sc) && hit.add(w.sc));
+    for (const f of fails) for (const sc of scsOf(f, before, pred)) if (key.fail.includes(sc)) hit.add(sc);
     const audible = key.screenReaderAudible.filter((s) => hit.has(s));
     const afterFlags = fails.filter((f) => evOn(f, after, pred)).map((f) => `${f.id} ${f.title} (${f.wcag.map((w) => w.sc).join(', ')})`);
     rows[name] = {
