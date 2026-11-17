@@ -30,7 +30,8 @@ test('usage errors exit 2', async () => {
   for (const argv of [
     [],
     ['not-a-url'],
-    ['https://a.test', '--format', 'pdf'],
+    ['https://a.test', '--format', 'docx'],
+    ['https://a.test', '--paper', 'a3'],
     ['https://a.test', '--platform', 'geocities'],
     ['https://a.test', '--fail-on', 'huge'],
     ['https://a.test', '--bogus'],
@@ -78,7 +79,8 @@ test('option validation rejects bad numbers and malformed journeys (exit 2 class
     [{ timeout: '10' }, /timeout/],
     [{ widths: '100' }, /widths/],
     [{ 'fail-on': 'fatal' }, /fail-on/],
-    [{ format: 'pdf' }, /format/],
+    [{ format: 'docx' }, /format/],
+    [{ paper: 'a3' }, /paper/],
     [{ journey: ['no-equals-sign'] }, /journey/],
   ];
   for (const [v, re] of bad)

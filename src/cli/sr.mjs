@@ -6,7 +6,7 @@ import { parseArgs } from 'node:util';
 import { loadJourney, JourneyError, PASSES } from '../sr/journey.mjs';
 import { resolveScreenReader, SrEnvironmentError } from '../sr/driver.mjs';
 import { buildDocument } from '../findings/document.mjs';
-import { writeReports, FORMATS } from '../report/index.mjs';
+import { writeAllReports, FORMATS } from '../report/index.mjs';
 
 export const SR_HELP = `ada-audit sr — record a REAL screen-reader transcript for a journey (read-only)
 
@@ -27,7 +27,7 @@ Options:
   --pass-timeout <s>     stop a pass after this many seconds (default 240)
   --page-timeout <s>     skip the rest of a page after this many seconds (default 900)
   -o, --out <dir>        output folder (default ./audit-output)
-  --format <list>        report formats after the run (default json,md,html); --no-report to skip
+  --format <list>        report formats after the run (default json,md,html; add pdf for the PDF report); --no-report to skip
   --dry-run              print the resolved plan as JSON and exit (works on any OS)
   -q, --quiet;  -h, --help
 `;
@@ -117,7 +117,7 @@ export async function srMain(argv, { stdout, log, EXIT, run } = {}) {
             },
         journeys: journeys || [],
       });
-      const written = writeReports(doc, out, { formats });
+      const written = await writeAllReports(doc, out, { formats });
       if (!values.quiet)
         log(
           `${r.files.filter((f) => f.endsWith('.txt')).length} transcript(s); ${doc.findings.filter((f) => f.methods?.includes('real-screen-reader')).length} finding(s) with real screen-reader evidence; wrote\n${[...r.files.filter((f) => f.endsWith('.txt')), ...Object.values(written)].map((x) => '  ' + x).join('\n')}`,

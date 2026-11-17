@@ -1,5 +1,17 @@
 # Changelog
 
+## 4.4.0 — 2026-11-16
+
+### Added
+- **PDF report** (`--format pdf`, now in the default `json,md,html,pdf`; `ada-audit report <dir> --format pdf` rebuilds it from an existing run). Headless Chromium renders the HTML report in print mode with `page.pdf`: a cover (site, date, standard, scope, result, methods, limits and disclaimer), the plain-language summary with screenshots of the top 3 barriers, the fix plan, the findings table (header row repeats), one card per finding with fix steps, effort and how to verify, then not-tested items, the manual checklist and the evaluation statement. Page numbers in the footer.
+- `--paper a4|letter` (config `paper`, default `a4`).
+- Accessible as far as Chromium allows: tagged PDF (structure tree from the HTML, `/Lang (en)`, title, headings, tables, figures with alt text) plus bookmarks from the headings. Rendering is local and read-only: JavaScript off, service workers blocked, every non-`file:` request aborted.
+- API: `writeAllReports()` (async, all formats) and `writePdf()`; `writeReports()` stays synchronous and rejects `pdf`. Types updated.
+- `docs/sample-report/report.pdf` (fictional checkout fixture); `test/e2e/pdf.test.mjs` (tagging, language, title, outline, A4/Letter, alt text, no temp files, axe-clean print HTML) and unit tests for the print HTML and `--paper`.
+
+### Changed
+- `ada-audit sr` keeps `json,md,html` by default; add `pdf` with `--format`.
+
 ## 4.3.0 — 2026-11-16
 
 ### Added

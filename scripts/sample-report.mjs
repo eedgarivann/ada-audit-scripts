@@ -1,4 +1,4 @@
-// Regenerate docs/sample-report from a LIVE run against the local fictional checkout fixture.
+// Regenerate docs/sample-report (all formats incl. report.pdf) from a LIVE run against the local fictional checkout fixture.
 // No network: serves test/fixtures on 127.0.0.1, runs the ada-audit CLI (read-only), then copies only the
 // screenshots the report references into docs/sample-report/screenshots/ and makes every path repo-relative.
 // `npm run sample-report` (needs `npx playwright install chromium`).
@@ -8,7 +8,7 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { buildDocument } from '../src/findings/document.mjs';
-import { writeReports } from '../src/report/index.mjs';
+import { writeReports, writePdf } from '../src/report/index.mjs';
 import { validateDocument } from '../src/findings/validate.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -81,6 +81,7 @@ try {
       for (const ev of l.evidence) if (ev.file) ev.file = path.relative(raw, ev.file).split(path.sep).join('/');
     }
   writeReports(doc, out, { formats: ['json', 'md', 'html', 'sarif', 'csv'], platform: 'shopify' });
+  await writePdf(doc, out, { platform: 'shopify' }); // the client-ready PDF report
   // findings.json: screenshot paths relative to the sample folder, not this machine.
   const j = path.join(out, 'findings.json');
   const d = JSON.parse(fs.readFileSync(j, 'utf8'));

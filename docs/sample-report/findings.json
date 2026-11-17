@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/eedgarivann/ada-audit-scripts/main/schema/findings.schema.json",
-  "schemaVersion": "1.0.0",
+  "schemaVersion": "1.1.0",
   "generator": {
     "name": "ada-audit-scripts",
-    "version": "4.2.1",
+    "version": "4.4.0",
     "url": "https://github.com/eedgarivann/ada-audit-scripts"
   },
   "run": {
@@ -29,7 +29,7 @@
       1440
     ],
     "versions": {
-      "tool": "4.2.1",
+      "tool": "4.4.0",
       "node": null,
       "playwright": "1.65.1",
       "axe": "4.14.0",
@@ -110,6 +110,7 @@
       "friction": "2.0x"
     }
   ],
+  "realScreenReader": [],
   "findings": [
     {
       "id": "F-001",
@@ -164,6 +165,10 @@
         "Automated (axe-core 4.14.0)",
         "Accessibility tree + DOM inspection (scripted)"
       ],
+      "methods": [
+        "automated-rules",
+        "scripted-browser"
+      ],
       "rules": [
         "axe/label",
         "forms/no-label",
@@ -189,6 +194,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/label",
               "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -197,6 +203,7 @@
             },
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-label",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -220,6 +227,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/label",
               "detail": "Form elements must have labels: Fix any of the following:   Element does not have an implicit (wrapped) <label>",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -228,6 +236,7 @@
             },
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-label",
               "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -247,6 +256,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/placeholder-only",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -325,6 +335,11 @@
         "DOM inspection (scripted)",
         "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
       ],
+      "methods": [
+        "automated-rules",
+        "scripted-browser",
+        "simulated-screen-reader"
+      ],
       "rules": [
         "axe/image-alt",
         "inventory/alt-missing",
@@ -351,6 +366,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/image-alt",
               "detail": "Images must have alternative text: Fix any of the following:   Element does not have an alt attribute",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -369,6 +385,7 @@
           "evidence": [
             {
               "tool": "inventory",
+              "method": "scripted-browser",
               "rule": "inventory/alt-missing",
               "detail": "ALT-MISSING\timg svg%3E alt=(none)",
               "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
@@ -388,6 +405,7 @@
           "evidence": [
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/img-filename",
               "detail": "-\tIMG-FILENAME(?)\tno alt; real SR may say \"svg%3E\"",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -462,6 +480,9 @@
       "howFound": [
         "Keyboard/DOM test (scripted, navigations aborted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "context-change/change-on-input",
         "context-change/onchange-nav"
@@ -481,6 +502,7 @@
           "evidence": [
             {
               "tool": "context-change",
+              "method": "scripted-browser",
               "rule": "context-change/change-on-input",
               "detail": "CHANGE-ON-INPUT\tselect 0 \"Shipping speed\" ArrowDown -> GET http://127.0.0.1:4177/checkout-bad.html?ship=exp (3.2.2; aborted, not followed)",
               "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
@@ -500,6 +522,7 @@
           "evidence": [
             {
               "tool": "context-change",
+              "method": "scripted-browser",
               "rule": "context-change/onchange-nav",
               "detail": "ONCHANGE-NAV?\tselect#ship \"Standard Express Overnight\" location.href='checkout-bad.html?ship='+this.value\t(3.2.2 candidate; confirm below)",
               "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
@@ -564,6 +587,10 @@
         "Automated (axe-core 4.14.0)",
         "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
       ],
+      "methods": [
+        "automated-rules",
+        "simulated-screen-reader"
+      ],
       "rules": [
         "axe/button-name",
         "sr-transcript/no-name"
@@ -584,6 +611,7 @@
           "evidence": [
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/no-name",
               "detail": "10\tNO-NAME\tbutton",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -607,6 +635,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/button-name",
               "detail": "Buttons must have discernible text: Fix any of the following:   Element does not have inner text that is visible to screen readers",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -627,6 +656,7 @@
           "evidence": [
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/no-name",
               "detail": "2\tNO-NAME\timage",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -698,6 +728,9 @@
       "howFound": [
         "Automated (axe-core 4.14.0)"
       ],
+      "methods": [
+        "automated-rules"
+      ],
       "rules": [
         "axe/color-contrast"
       ],
@@ -720,6 +753,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/color-contrast",
               "detail": "Elements must meet minimum color contrast ratio thresholds: Fix any of the following:   Element has insufficient color contrast of 2.16 (foreground color: #b0b0b0, background color: #ffffff, font size: 12.0pt (16px), font weight: normal). Expected contrast ratio of 4.5:1",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -795,6 +829,10 @@
         "Automated (axe-core 4.14.0)",
         "DOM inspection (scripted)"
       ],
+      "methods": [
+        "automated-rules",
+        "scripted-browser"
+      ],
       "rules": [
         "axe/html-has-lang",
         "inventory/no-lang"
@@ -819,6 +857,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/html-has-lang",
               "detail": "<html> element must have a lang attribute: Fix any of the following:   The <html> element does not have a lang attribute",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -837,6 +876,7 @@
           "evidence": [
             {
               "tool": "inventory",
+              "method": "scripted-browser",
               "rule": "inventory/no-lang",
               "detail": "lang: null xml:lang: null  NO-LANG (3.1.1 candidate)",
               "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
@@ -908,6 +948,9 @@
       "howFound": [
         "Keyboard + layout test (scripted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "bypass-order/bypass-none"
       ],
@@ -927,6 +970,7 @@
           "evidence": [
             {
               "tool": "bypass-order",
+              "method": "scripted-browser",
               "rule": "bypass-order/bypass-none",
               "detail": "BYPASS-NONE(2.4.1,high)\t14 focusable(s) before the content and no working skip link, main landmark or headings",
               "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -999,6 +1043,9 @@
       "howFound": [
         "Keyboard test (scripted, Chromium via Playwright 1.65.1)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "tab-walk/no-ring"
       ],
@@ -1021,6 +1068,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "2\ta\t\"About\"\tabout.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1044,6 +1092,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "5\ta\t\"Help\"\thelp.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1067,6 +1116,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "1\ta\t\"Home\"\tindex-good.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1090,6 +1140,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "4\ta\t\"Journal\"\tblog.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1113,6 +1164,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "14\ta\t\"Privacy\"\tprivacy.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1136,6 +1188,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "13\ta\t\"Read more\"\tabout.html#returns\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1159,6 +1212,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "3\ta\t\"Stores\"\tstores.html\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1181,6 +1235,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? TEXT 1.66:1",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1188,6 +1243,7 @@
             },
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_390.tsv",
@@ -1211,6 +1267,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/no-ring",
               "detail": "12\tbutton\t\"Place order\"\t\tring=NONE\tNO-RING?",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_1440.tsv",
@@ -1291,6 +1348,10 @@
         "DOM inspection (scripted)",
         "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
       ],
+      "methods": [
+        "scripted-browser",
+        "simulated-screen-reader"
+      ],
       "rules": [
         "bypass-order/no-headings",
         "inventory/no-real-headings",
@@ -1311,6 +1372,7 @@
           "evidence": [
             {
               "tool": "inventory",
+              "method": "scripted-browser",
               "rule": "inventory/no-real-headings",
               "detail": "NO-REAL-HEADINGS\tcontent sections use styled text, not headings (1.3.1, 2.4.6 \"headings not programmatically determined\")",
               "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
@@ -1331,6 +1393,7 @@
           "evidence": [
             {
               "tool": "bypass-order",
+              "method": "scripted-browser",
               "rule": "bypass-order/no-headings",
               "detail": "NO-HEADINGS(2.4.1/1.3.1,medium)\tno headings to navigate by",
               "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -1338,6 +1401,7 @@
             },
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/no-headings",
               "detail": "-\tNO-HEADINGS",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1410,6 +1474,9 @@
       "howFound": [
         "Accessibility tree + DOM inspection (scripted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "forms/no-autocomplete"
       ],
@@ -1428,6 +1495,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-autocomplete",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1447,6 +1515,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-autocomplete",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1466,6 +1535,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-autocomplete",
               "detail": "input[tel] id=phone name=phone label=\"\" placeholder=\"\" required=false autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(tel; 1.3.5)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1485,6 +1555,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/no-autocomplete",
               "detail": "input[text] id=zip name=zip label=\"ZIP code\" placeholder=\"\" required=false autocomplete=\"off\" NO-AUTOCOMPLETE(postal-code; 1.3.5)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1557,6 +1628,9 @@
       "howFound": [
         "Accessibility tree + DOM inspection (scripted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "forms/required-not-shown"
       ],
@@ -1575,6 +1649,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/required-not-shown",
               "detail": "input[email] id=email name=email label=\"\" placeholder=\"Email\" required=true autocomplete=\"\" PLACEHOLDER-ONLY NO-AUTOCOMPLETE(email; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1594,6 +1669,7 @@
           "evidence": [
             {
               "tool": "forms",
+              "method": "scripted-browser",
               "rule": "forms/required-not-shown",
               "detail": "input[text] id=name name=name label=\"\" placeholder=\"\" required=true autocomplete=\"\" NO-LABEL NO-AUTOCOMPLETE(name; 1.3.5) REQUIRED-NOT-SHOWN?(3.3.2: check visible cue)",
               "file": "forms/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -1665,6 +1741,9 @@
       "howFound": [
         "Keyboard/DOM test (scripted, navigations aborted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "context-change/mouse-only"
       ],
@@ -1683,6 +1762,7 @@
           "evidence": [
             {
               "tool": "context-change",
+              "method": "scripted-browser",
               "rule": "context-change/mouse-only",
               "detail": "MOUSE-ONLY\tdiv.icon \"\" role=presentation\t(2.1.1/4.1.2 candidate: not keyboard reachable)",
               "file": "context-change/127_0_0_1_4177_checkout_bad_html_1440.txt",
@@ -1755,6 +1835,9 @@
       "howFound": [
         "Keyboard test (scripted, Chromium via Playwright 1.65.1)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "tab-walk/offscreen"
       ],
@@ -1773,6 +1856,7 @@
           "evidence": [
             {
               "tool": "tab-walk",
+              "method": "scripted-browser",
               "rule": "tab-walk/offscreen",
               "detail": "6\tbutton\t\"\"\t\tring=NONE\tNO-RING? OFFSCREEN TEXT 1.66:1",
               "file": "tab-walk/127_0_0_1_4177_checkout_bad_html_390.tsv",
@@ -1843,6 +1927,9 @@
       "howFound": [
         "DOM inspection (scripted)"
       ],
+      "methods": [
+        "scripted-browser"
+      ],
       "rules": [
         "inventory/fake-heading"
       ],
@@ -1859,6 +1946,7 @@
           "evidence": [
             {
               "tool": "inventory",
+              "method": "scripted-browser",
               "rule": "inventory/fake-heading",
               "detail": "FAKE-HEADING?\tdiv \"Checkout\" 26px bold (1.3.1 + 2.4.6: looks like a heading, is not one)",
               "file": "inventory/127_0_0_1_4177_checkout_bad_html.txt",
@@ -1923,6 +2011,9 @@
       "howFound": [
         "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
       ],
+      "methods": [
+        "simulated-screen-reader"
+      ],
       "rules": [
         "sr-transcript/vague-link"
       ],
@@ -1941,6 +2032,7 @@
           "evidence": [
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/vague-link",
               "detail": "33\tVAGUE-LINK\tlink, Read more",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -2009,6 +2101,10 @@
         "Simulated persona journey (scripted; not user testing)",
         "Zoom/reflow (scripted 320 px + text spacing)"
       ],
+      "methods": [
+        "scripted-browser",
+        "simulated-persona"
+      ],
       "rules": [
         "journeys/zoom-hscroll",
         "reflow/h-overflow"
@@ -2031,6 +2127,7 @@
           "evidence": [
             {
               "tool": "journeys",
+              "method": "simulated-persona",
               "rule": "journeys/zoom-hscroll",
               "detail": "page is 916px wide at 320 CSS px (= 400% zoom): two-direction scrolling",
               "file": "journeys/127_0_0_1_4177_checkout_bad_html/journeys.json",
@@ -2038,6 +2135,7 @@
             },
             {
               "tool": "reflow",
+              "method": "scripted-browser",
               "rule": "reflow/h-overflow",
               "detail": "320px: scrollWidth=916 H-OVERFLOW (1.4.10 candidate at 320) offenders=3",
               "file": "reflow/127_0_0_1_4177_checkout_bad_html.txt",
@@ -2093,6 +2191,9 @@
       "howFound": [
         "Automated (axe-core 4.14.0)"
       ],
+      "methods": [
+        "automated-rules"
+      ],
       "rules": [
         "axe/page-has-heading-one"
       ],
@@ -2115,6 +2216,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/page-has-heading-one",
               "detail": "Page should contain a level-one heading: Fix all of the following:   Page must have a level-one heading",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2181,6 +2283,11 @@
         "Keyboard + layout test (scripted)",
         "Simulated SR (Guidepup Virtual Screen Reader 0.33.0)"
       ],
+      "methods": [
+        "automated-rules",
+        "scripted-browser",
+        "simulated-screen-reader"
+      ],
       "rules": [
         "axe/landmark-one-main",
         "axe/region",
@@ -2208,6 +2315,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2232,6 +2340,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2256,6 +2365,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2280,6 +2390,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2304,6 +2415,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2328,6 +2440,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2352,6 +2465,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2376,6 +2490,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2400,6 +2515,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2424,6 +2540,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/landmark-one-main",
               "detail": "Document should have one main landmark: Fix all of the following:   Document does not have a main landmark",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2448,6 +2565,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2472,6 +2590,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2493,6 +2612,7 @@
           "evidence": [
             {
               "tool": "bypass-order",
+              "method": "scripted-browser",
               "rule": "bypass-order/no-main-landmark",
               "detail": "NO-MAIN-LANDMARK(2.4.1/1.3.1 advisory,low)\tno <main> or role=main",
               "file": "bypass-order/127_0_0_1_4177_checkout_bad_html_1440.json",
@@ -2500,6 +2620,7 @@
             },
             {
               "tool": "sr-transcript",
+              "method": "simulated-screen-reader",
               "rule": "sr-transcript/no-main",
               "detail": "-\tNO-MAIN",
               "file": "sr-transcript/127_0_0_1_4177_checkout_bad_html_390.txt",
@@ -2523,6 +2644,7 @@
           "evidence": [
             {
               "tool": "axe",
+              "method": "automated-rules",
               "rule": "axe/region",
               "detail": "All page content should be contained by landmarks: Fix any of the following:   Some page content is not contained by landmarks",
               "file": "axe/127_0_0_1_4177_checkout_bad_html_1440.json",

@@ -8,7 +8,7 @@ import { createRequire } from 'node:module';
 import { TOOLS, toolByName } from '../tools/registry.mjs';
 import { startBrowser, pool, runJob, mergeShard, defaultConcurrency } from '../core/runner.mjs';
 import { buildDocument } from '../findings/document.mjs';
-import { writeReports, FORMATS } from '../report/index.mjs';
+import { writeAllReports, FORMATS, PAPER } from '../report/index.mjs';
 import { validateDocument } from '../findings/validate.mjs';
 import { RULES } from '../findings/rules.mjs';
 import { slug } from '../core/lib.mjs';
@@ -48,7 +48,8 @@ Options:
   --focus-selector <css>   run focus-state on these selectors;  --trigger <css>  run menu-modal on this trigger
   --try-empty-submit       forms: press submit on empty forms (navigations and non-GET requests are blocked)
   --platform <name>        put fix hints for wordpress|shopify|webflow|framer|squarespace|wix|react first
-  --format <list>          json,md,html,sarif,csv (default json,md,html)
+  --format <list>          json,md,html,pdf,sarif,csv (default json,md,html,pdf)
+  --paper <a4|letter>      PDF page size (default a4)
   --concurrency <n>        parallel tool jobs (default ${defaultConcurrency()})
   --timeout <ms>           per navigation (default 90000);  --job-timeout <ms> per tool job (default 600000)
   --retries <n>            navigation retries (default 2); a crashed job is retried once
@@ -74,6 +75,7 @@ const OPTIONS = {
   'try-empty-submit': { type: 'boolean' },
   platform: { type: 'string' },
   format: { type: 'string' },
+  paper: { type: 'string' },
   concurrency: { type: 'string' },
   timeout: { type: 'string' },
   'job-timeout': { type: 'string' },
@@ -141,7 +143,8 @@ export function resolveOptions(values, positionals) {
     trigger: values.trigger || cfg.trigger,
     tryEmptySubmit: !!(values['try-empty-submit'] ?? cfg.tryEmptySubmit),
     platform: (values.platform || cfg.platform || '').toLowerCase() || null,
-    formats: list(values.format || cfg.formats || 'json,md,html'),
+    formats: list(values.format || cfg.formats || 'json,md,html,pdf'),
+    paper: String(values.paper || cfg.paper || 'a4').toLowerCase(),
     concurrency: Number(values.concurrency || cfg.concurrency || defaultConcurrency()),
     navTimeout: Number(values.timeout || cfg.timeouts?.navigation || 90000),
     jobTimeout: Number(values['job-timeout'] || cfg.timeouts?.job || 600000),
@@ -154,6 +157,7 @@ export function resolveOptions(values, positionals) {
     throw new UsageError('--widths must be numbers between 200 and 4000');
   if (o.platform && !PLATFORMS.includes(o.platform)) throw new UsageError(`--platform must be one of ${PLATFORMS.join(', ')}`);
   for (const f of o.formats) if (!FORMATS[f]) throw new UsageError(`unknown format "${f}" (use ${Object.keys(FORMATS).join(',')})`);
+  if (!PAPER[o.paper]) throw new UsageError('--paper must be a4 or letter');
   if (o.failOn && !SEV.includes(o.failOn)) throw new UsageError(`--fail-on must be one of ${SEV.join(', ')}`);
   const int = (v, lo, hi, name) => {
     if (!Number.isInteger(v) || v < lo || v > hi) throw new UsageError(`${name} must be a whole number from ${lo} to ${hi}`);
@@ -304,7 +308,7 @@ export async function run(o, log = console.error) {
     ...skipped.map((n) => `Tool ${n} was not run (it needs at least ${toolByName(n).minUrls || 1} pages).`),
   ];
   const doc = buildDocument(o.out, { run: runMeta, journeys: o.journeys, errors });
-  const written = writeReports(doc, o.out, { formats: o.formats, platform: o.platform });
+  const written = await writeAllReports(doc, o.out, { formats: o.formats, platform: o.platform, paper: o.paper });
   if (!o.quiet)
     log(
       `done in ${((Date.now() - t0) / 1000).toFixed(1)}s: ${doc.summary.failures} candidate failure(s) (${doc.summary.byPlan['fix-now']} fix now), ${doc.summary.total - doc.summary.failures} other item(s)\n${Object.values(
@@ -380,7 +384,7 @@ export async function main(argv = process.argv.slice(2), { stdout = (s) => proce
         : { startedAt: nowIso(), finishedAt: nowIso(), versions: versions() };
       const { jobs, wallMs, concurrency, journeys, ...runMeta } = meta;
       const doc = buildDocument(dir, { run: runMeta, journeys: o.journeys.length ? o.journeys : journeys || [] });
-      const written = writeReports(doc, dir, { formats: o.formats, platform: o.platform || meta.platform });
+      const written = await writeAllReports(doc, dir, { formats: o.formats, platform: o.platform || meta.platform, paper: o.paper });
       if (!o.quiet)
         log(
           `${doc.summary.failures} candidate failure(s); wrote\n${Object.values(written)

@@ -6,7 +6,7 @@
       "tool": {
         "driver": {
           "name": "ada-audit-scripts",
-          "version": "4.2.1",
+          "version": "4.4.0",
           "informationUri": "https://github.com/eedgarivann/ada-audit-scripts",
           "rules": [
             {

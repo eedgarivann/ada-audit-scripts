@@ -131,3 +131,19 @@ test('keyScreenshot prefers element crops, then the narrowest width, and writes 
   assert.match(s.alt, /^Cropped screenshot of the focused control on \/a at 390 px wide, element a "Home"/);
   assert.equal(keyScreenshot({ ...f, locations: [{ ...f.locations[0], screenshots: [] }] }), null);
 });
+
+test('pdf-mode HTML: cover with date, scope, methods and limits; eager images; open details; one h1', () => {
+  const h = renderHtml(doc, { outDir: DATA, pdf: true });
+  assert.match(h, /<header class="cover">/);
+  for (const k of ['Date', 'Standard', 'Scope', 'Result', 'Methods']) assert.match(h, new RegExp(`<dt>${k}</dt>`));
+  assert.match(h, /Not legal advice\. Not a certification or conformance claim\./);
+  assert.doesNotMatch(h, /loading="lazy"/);
+  assert.doesNotMatch(h, /<details>/);
+  assert.equal((h.match(/<h1[ >]/g) || []).length, 1);
+  assert.doesNotMatch(h, /<nav aria-label="Contents">/);
+  assert.match(h, /<h2 id="table">3\. Findings at a glance<\/h2>/);
+  assert.match(renderHtml(doc, { outDir: DATA }), /<nav aria-label="Contents">/, 'screen HTML unchanged');
+});
+test('writeReports refuses pdf (async writeAllReports renders it)', () => {
+  assert.throws(() => writeReports(doc, os.tmpdir(), { formats: ['pdf'] }), /writeAllReports/);
+});

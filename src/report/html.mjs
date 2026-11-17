@@ -26,8 +26,20 @@ pre{background:#f6f6f6;border:1px solid var(--line);padding:.5rem;overflow-x:aut
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9em}blockquote{margin:1rem 0;padding:.5rem 1rem;border-left:4px solid var(--line)}
 ul.check{list-style:none;padding-left:0}ul.check li::before{content:"☐ ";font-weight:700}
 @media print{.skip,nav{display:none}.card{break-inside:avoid}a{color:#000}}`;
+// Extra print rules for the PDF deliverable (page.pdf): cover page, compact type, no split rows/figures.
+const PDF_CSS = `body{font-size:10.5pt;line-height:1.45}header,main,footer{max-width:none;padding:0}
+.cover{min-height:240mm;display:flex;flex-direction:column;justify-content:center;break-after:page;border-bottom:none}
+.cover .kicker{font-size:11pt;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.cover h1{font-size:26pt;line-height:1.15;margin:.3em 0 .6em}.cover dl{display:grid;grid-template-columns:9em 1fr;gap:.35em 1em;margin:0 0 1.5em}
+.cover dt{font-weight:600}.cover dd{margin:0}.cover .note{border-top:2px solid var(--line);padding-top:.75em}
+h2{break-after:avoid;border-bottom:2px solid var(--line);padding-bottom:.15em;margin-top:1.4em}h3{break-after:avoid}
+section#summary-sec{break-after:page}tr,figure,.top-shot{break-inside:avoid}thead{display:table-header-group}
+.tbl{overflow:visible}figure img{max-height:9cm}.card{break-inside:auto}.card>h3{break-after:avoid}
+pre{white-space:pre-wrap;font-size:8.5pt;max-height:none}details>summary{list-style:none;font-weight:600}
+.top-shot{margin:.5em 0 1em}.top-shot img{max-height:6.5cm}
+table{font-size:9pt}th,td{padding:.3em .4em}tbody th[scope=row],tbody th[scope=row] a{white-space:nowrap}`;
 
-export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 8 } = {}) {
+export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 8, pdf = false } = {}) {
   const site = doc.run.pages[0] ? new URL(doc.run.pages[0]).host : 'site';
   const date = (doc.run.finishedAt || doc.run.startedAt || '').slice(0, 10);
   const failures = doc.findings.filter((f) => f.kind === 'failure');
@@ -36,26 +48,43 @@ export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 
   const ex = executiveSummary(doc);
   const H = [];
   H.push(
-    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Accessibility audit report: ${e(site)} (${e(date)})</title><style>${CSS}</style></head><body>`,
+    `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Accessibility audit report: ${e(site)} (${e(date)})</title><style>${CSS}${pdf ? PDF_CSS : ''}</style></head><body>`,
   );
   H.push('<a class="skip" href="#main">Skip to report</a>');
-  H.push(
-    `<header><h1>Accessibility audit report: ${e(site)}</h1><p>${e(date)} · WCAG 2.2 AA · ${doc.run.pages.length} page(s) · ada-audit-scripts ${e(doc.generator.version || '')}</p><p class="note">Every finding is a candidate: confirm it in the DOM and on a screenshot before reporting it. Not legal advice. Not a conformance claim.</p>`,
-  );
-  H.push(
-    '<nav aria-label="Contents"><h2>Contents</h2><ol><li><a href="#summary">Executive summary</a></li><li><a href="#plan">Fix plan</a></li><li><a href="#table">Findings at a glance</a></li><li><a href="#details">Findings and how to fix them</a></li>' +
-      (doc.journeys?.length ? '<li><a href="#journeys">Simulated persona journeys</a></li>' : '') +
-      '<li><a href="#other">Best practices and advisories</a></li><li><a href="#manual">Not tested and manual checks</a></li><li><a href="#scope">Scope, methods and statement</a></li></ol></nav></header>',
-  );
+  if (pdf) H.push(cover(doc, { site, date, failures }));
+  else
+    H.push(
+      `<header><h1>Accessibility audit report: ${e(site)}</h1><p>${e(date)} · WCAG 2.2 AA · ${doc.run.pages.length} page(s) · ada-audit-scripts ${e(doc.generator.version || '')}</p><p class="note">Every finding is a candidate: confirm it in the DOM and on a screenshot before reporting it. Not legal advice. Not a conformance claim.</p>`,
+    );
+  if (!pdf)
+    H.push(
+      '<nav aria-label="Contents"><h2>Contents</h2><ol><li><a href="#summary">Executive summary</a></li><li><a href="#plan">Fix plan</a></li><li><a href="#table">Findings at a glance</a></li><li><a href="#details">Findings and how to fix them</a></li>' +
+        (doc.journeys?.length ? '<li><a href="#journeys">Simulated persona journeys</a></li>' : '') +
+        '<li><a href="#other">Best practices and advisories</a></li><li><a href="#manual">Not tested and manual checks</a></li><li><a href="#scope">Scope, methods and statement</a></li></ol></nav></header>',
+    );
   H.push('<main id="main">');
-  H.push(`<section aria-labelledby="summary"><h2 id="summary">1. Executive summary</h2>${ex.lead.map((p) => `<p>${e(p)}</p>`).join('')}`);
+  H.push(
+    `<section aria-labelledby="summary"${pdf ? ' id="summary-sec"' : ''}><h2 id="summary">1. Executive summary</h2>${ex.lead.map((p) => `<p>${e(p)}</p>`).join('')}`,
+  );
   if (doc.errors.length)
     H.push(
       `<p class="warn" role="note"><strong>Incomplete run:</strong> ${doc.errors.length} tool problem(s), listed under Tool notes. Checks from those tools are missing, so absence of a finding there means nothing.</p>`,
     );
   if (ex.top.length)
     H.push(
-      `<h3>Top barriers</h3><ol>${ex.top.map((t) => `<li><a href="#${t.id}"><strong>${t.id} ${e(t.title)}</strong></a>. ${e(t.who)} It ${e(t.effect)}. <em>${PLAN_LABEL[t.plan]} · effort ${t.effort} · WCAG ${e(t.sc || '—')}${t.pages > 1 ? ` · ${t.pages} pages` : ''}${t.confidence !== 'automated-certain' ? ' · confirm first' : ''}</em></li>`).join('')}</ol>`,
+      `<h3>Top barriers</h3><ol>${ex.top
+        .map(
+          (t, i) =>
+            `<li><a href="#${t.id}"><strong>${t.id} ${e(t.title)}</strong></a>. ${e(t.who)} It ${e(t.effect)}. <em>${PLAN_LABEL[t.plan]} · effort ${t.effort} · WCAG ${e(t.sc || '—')}${t.pages > 1 ? ` · ${t.pages} pages` : ''}${t.confidence !== 'automated-certain' ? ' · confirm first' : ''}</em>${
+              pdf && i < 3
+                ? topShot(
+                    failures.find((f) => f.id === t.id),
+                    outDir,
+                  )
+                : ''
+            }</li>`,
+        )
+        .join('')}</ol>`,
     );
   if (doc.journeysAssumed)
     H.push('<p class="note">Critical journeys were not named, so every audited page is treated as part of a critical journey.</p>');
@@ -179,8 +208,11 @@ export function renderHtml(doc, { outDir = '.', platform = null, maxLocations = 
     '</section></main><footer><p class="note">Generated by <a href="https://github.com/eedgarivann/ada-audit-scripts">ada-audit-scripts</a>. General information, not legal advice.</p></footer></body></html>',
   );
   // Each scrollable table region is named after its caption (unique landmarks; keyboard-scrollable at 320 px).
+  let out = H.join('\n');
+  // PDF: images load eagerly and collapsed platform hints print expanded.
+  if (pdf) out = out.replace(/ loading="lazy"/g, '').replace(/<details>/g, '<details open>');
   return (
-    H.join('\n').replace(
+    out.replace(
       /aria-label="TBL_LABEL"><table><caption>([^<]*)<\/caption>/g,
       (_, c) => `aria-label="${c} (scrollable)"><table><caption>${c}</caption>`,
     ) + '\n'
@@ -256,4 +288,23 @@ function card(f, { outDir, platform, maxLocations }) {
     );
   H.push('</article>');
   return H.join('\n');
+}
+
+// PDF cover: what was audited, when, how, and what the report is not.
+function cover(doc, { site, date, failures }) {
+  const pages = doc.run.pages;
+  const s = doc.summary;
+  const list =
+    pages
+      .slice(0, 6)
+      .map((p) => e(shortUrl(p) || p))
+      .join('<br>') + (pages.length > 6 ? `<br>…and ${pages.length - 6} more (section 8)` : '');
+  return `<header class="cover"><p class="kicker">Accessibility audit report</p><h1>${e(site)}</h1><dl><dt>Date</dt><dd>${e(date)}</dd><dt>Standard</dt><dd>WCAG 2.2 Level AA (candidate failures)</dd><dt>Scope</dt><dd>${pages.length} page(s)${doc.journeysAssumed ? '' : ', critical journeys named'}<br>${list}</dd><dt>Result</dt><dd>${failures.length} candidate failure(s): ${s.byPlan['fix-now']} fix now, ${s.byPlan['fix-next']} fix next, ${s.byPlan.monitor} monitor</dd><dt>Methods</dt><dd>${e(methodsSentence(doc.run))}</dd><dt>Generated by</dt><dd>ada-audit-scripts ${e(doc.generator.version || '')}</dd></dl><p class="note">Every finding is a candidate to confirm on the live page. Automated and simulated checks cover only part of WCAG; manual checks are listed in section 7. Not legal advice. Not a certification or conformance claim.</p></header>`;
+}
+
+function topShot(f, outDir) {
+  const shot = f && keyScreenshot(f);
+  return shot
+    ? `<figure class="top-shot"><img src="${e(rel(outDir, shot.file))}" alt="${e(shot.alt)}"><figcaption>${e(shot.caption)}</figcaption></figure>`
+    : '';
 }

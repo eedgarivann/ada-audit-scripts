@@ -18,20 +18,21 @@ npx playwright install chromium            # add --with-deps on a fresh Linux ma
 # Audit 3+ pages of one site (home, a content page, every step of a key journey):
 npx ada-audit https://example.org/ https://example.org/about https://example.org/contact \
   --journey "Contact=https://example.org/contact" --journeys --goal contact \
-  --platform wordpress --format json,md,html,sarif,csv
+  --platform wordpress --format json,md,html,pdf,sarif,csv
 ```
 **Without cloning** (installs this tagged release from GitHub; the package is not on the npm registry):
 ```sh
 npx -y playwright@1.65.1 install chromium       # once; same Playwright version the tools pin
-npx -y github:eedgarivann/ada-audit-scripts#v4.3.0 https://example.org/ https://example.org/contact --format json,md,html
+npx -y github:eedgarivann/ada-audit-scripts#v4.4.0 https://example.org/ https://example.org/contact --format json,md,html,pdf
 ```
-Pin the tag (`#v4.3.0`) so audits are reproducible.
+Pin the tag (`#v4.4.0`) so audits are reproducible.
 
-Open `audit-output/report.html` (or `report.md`). See a full [sample report](docs/sample-report/report.md) ([HTML](docs/sample-report/report.html), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
+Hand over `audit-output/report.pdf` (or open `report.html` / `report.md`). See a full [sample report](docs/sample-report/report.pdf) ([HTML](docs/sample-report/report.html), [Markdown](docs/sample-report/report.md), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
 
 ## What you get
 | File | For |
 |---|---|
+| `report.pdf` | clients and owners (default): a print-ready report with a cover (site, date, scope, standard, result, methods, limits), the plain-language summary, top barriers with screenshots, the fix plan, the findings table, one card per finding (fix steps, effort, how to verify) and the not-tested list. A4 or `--paper letter`; tagged PDF (language, title, headings, tables, image alt) and bookmarks, as far as Chromium supports them |
 | `report.html` / `report.md` | people: executive summary, **fix plan** (quick wins → fix now → fix next → monitor), a findings table, then one card per finding: what is wrong, who it hurts and how badly, WCAG criteria, how it was found and how sure we are, every location with evidence and screenshots, **numbered fix steps, before/after code, your platform's steps, how to verify the fix**, references; simulated journey results; non-WCAG items kept separate; a manual-testing checklist; scope, methods and the evaluation statement to use |
 | `findings.json` | machines: [schema v1](docs/findings-schema.md) (`npx ada-audit validate`) |
 | `findings.sarif` | GitHub code scanning and IDEs (SARIF 2.1.0) |
@@ -52,7 +53,7 @@ ada-audit validate <findings.json>      check a findings file against schema v1
 ada-audit sr --url <url> [--journey f]  REAL NVDA/VoiceOver transcript (Windows/macOS or the GitHub workflow)
 ada-audit tools | rules [--json]        list tools / the rule catalog
 ```
-Key options: `--urls file|a,b`, `-c config.json`, `-o dir`, `--journey "Name=url,url"` (repeat), `--journeys --goal buy|checkout|contact|donate|book --target "text"`, `--widths 390,1440`, `--tools` / `--skip`, `--platform wordpress|shopify|webflow|framer|squarespace|wix|react`, `--format json,md,html,sarif,csv`, `--concurrency n`, `--timeout ms`, `--job-timeout ms`, `--retries n`, `--fail-on serious` (CI gate). All options, the config file and exit codes: [docs/configuration.md](docs/configuration.md).
+Key options: `--urls file|a,b`, `-c config.json`, `-o dir`, `--journey "Name=url,url"` (repeat), `--journeys --goal buy|checkout|contact|donate|book --target "text"`, `--widths 390,1440`, `--tools` / `--skip`, `--platform wordpress|shopify|webflow|framer|squarespace|wix|react`, `--format json,md,html,pdf,sarif,csv` (default `json,md,html,pdf`), `--paper a4|letter`, `--concurrency n`, `--timeout ms`, `--job-timeout ms`, `--retries n`, `--fail-on serious` (CI gate). All options, the config file and exit codes: [docs/configuration.md](docs/configuration.md).
 
 Use it in CI to stop regressions on a staging build:
 ```sh

@@ -19,7 +19,8 @@ The report is built to be worked through top to bottom. This guide is the proces
 1. **Confirm it.** Open the URL, find the element (the selector in *Where*), look at the screenshot and the evidence line. `needs-review` and `inferred` items must be confirmed by a person before you report or fix them; `automated-certain` items are deterministic but still worth a glance (a tool can catch a transient state).
 2. **Fix the cause, not the instance.** If it is multi-page, fix the template, theme section or component once. Use the numbered steps and the before/after code; the platform section names where that setting usually lives.
 3. **Verify** with the card's *How to verify* step: the same keyboard, zoom, contrast or screen-reader check a person would do. Then re-run the tool (`npx ada-audit … --tools axe,forms`) to see the candidate disappear.
-4. **Track it.** Use the `fingerprint` (stable across runs) or import `findings.csv` into your tracker; SARIF goes straight into GitHub code scanning.
+4. **Share it.** `report.pdf` is the deliverable for owners and clients (cover, summary, top barriers with screenshots, fix plan, findings table, fix cards, limits). Use `--paper letter` for US Letter.
+5. **Track it.** Use the `fingerprint` (stable across runs) or import `findings.csv` into your tracker; SARIF goes straight into GitHub code scanning.
 
 ## 4. Do the manual checks
 Section 7 lists what automation cannot judge, priority items first (for example, server-side errors on journey forms, a real screen-reader pass with NVDA/JAWS, VoiceOver and TalkBack, keyboard-only journeys, alt text quality, zoom to 400 %). Record assistive technology, browser, OS and versions. Simulated screen-reader output and simulated persona journeys point you to where to look; they are not testing with assistive technology or with disabled people.

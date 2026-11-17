@@ -4,7 +4,8 @@ export type Confidence = 'automated-certain' | 'needs-review' | 'inferred';
 export type Kind = 'failure' | 'best-practice' | 'aaa' | 'advisory' | 'not-tested' | 'other-risk';
 export type Plan = 'fix-now' | 'fix-next' | 'monitor';
 export type Effort = 'low' | 'medium' | 'high';
-export type Format = 'json' | 'md' | 'html' | 'sarif' | 'csv';
+export type Format = 'json' | 'md' | 'html' | 'pdf' | 'sarif' | 'csv';
+export type Paper = 'a4' | 'letter';
 export type Platform = 'wordpress' | 'shopify' | 'webflow' | 'framer' | 'squarespace' | 'wix' | 'react';
 export interface WcagRef {
   sc: string;
@@ -203,8 +204,20 @@ export function renderCsv(doc: FindingsDocument): string;
 export function writeReports(
   doc: FindingsDocument,
   outDir: string,
-  opts?: { formats?: Format[]; platform?: Platform | null },
-): Record<Format, string>;
+  opts?: { formats?: Exclude<Format, 'pdf'>[]; platform?: Platform | null },
+): Partial<Record<Format, string>>;
+/** Every format including the PDF report (needs Playwright Chromium). */
+export function writeAllReports(
+  doc: FindingsDocument,
+  outDir: string,
+  opts?: { formats?: Format[]; platform?: Platform | null; paper?: Paper },
+): Promise<Partial<Record<Format, string>>>;
+/** Render the PDF report (cover, summary, top issues with screenshots, table, fix cards, limits). Returns the file path. */
+export function writePdf(
+  doc: FindingsDocument,
+  outDir: string,
+  opts?: { platform?: Platform | null; paper?: Paper; file?: string },
+): Promise<string>;
 export const FORMATS: Record<Format, string>;
 export const SCHEMA_VERSION: '1.1.0';
 export const RULES: Rule[];

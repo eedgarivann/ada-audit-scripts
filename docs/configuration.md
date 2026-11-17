@@ -12,7 +12,8 @@ Everything can be set by flags; a JSON config file (`-c ada-audit.config.json`) 
 | `focusSelector`, `trigger` | `--focus-selector`, `--trigger` | — | enable focus-state / menu-modal |
 | `tryEmptySubmit` | `--try-empty-submit` | off | press submit on empty forms (writes are blocked) |
 | `platform` | `--platform` | — | fix hints for that platform first |
-| `formats` | `--format` | `json,md,html` | add `sarif,csv` for dev tools and trackers |
+| `formats` | `--format` | `json,md,html,pdf` | `pdf` = the client-ready PDF report; add `sarif,csv` for dev tools and trackers |
+| `paper` | `--paper` | `a4` | PDF page size: `a4` or `letter` |
 | `concurrency` | `--concurrency` | half the CPU cores (1–6) | parallel tool jobs on one shared browser |
 | `timeouts.navigation`, `timeouts.job` | `--timeout`, `--job-timeout` | 90 000, 600 000 ms | |
 | `retries` | `--retries` | 2 | navigation retries; crashed jobs retry once |
