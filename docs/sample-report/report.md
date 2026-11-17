@@ -1,6 +1,6 @@
 # Accessibility audit report: 127.0.0.1:4177
 
-> 2026-11-15 · WCAG 2.2 AA · 1 page(s) · ada-audit-scripts 4.4.0  
+> 2026-11-15 · WCAG 2.2 AA · 1 page(s) · ada-audit-scripts 4.4.1  
 > Every finding is a candidate: confirm it in the DOM and on a screenshot before reporting it. Not legal advice. Not a conformance claim.
 
 ## 1. Executive summary
@@ -751,7 +751,7 @@ _Scripted models of how some disabled people browse. Not real users and not assi
 - **Target:** WCAG 2.2 Level AA
 - **Pages (1):** <http://127.0.0.1:4177/checkout-bad.html>
 - **Methods:** DOM inventory (language, headings, landmarks, images); automated rules (axe-core 4.14.0); a scripted keyboard Tab walk; form inspection (labels, autocomplete, required, client-side errors); reflow at 320 px and text-spacing checks; motion and reduced-motion checks; a simulated screen reader (Guidepup Virtual Screen Reader 0.33.0); context-change tests (focus and input); skip-link and reading-order checks; simulated persona journeys (scripted models, not real users), in headless Chromium (Playwright 1.65.1) at 390 and 1440 px. No real screen reader (JAWS, NVDA, VoiceOver, TalkBack) and no testing with disabled users.
-- **Tools:** tool 4.4.0, node null, playwright 1.65.1, axe 4.14.0, vsr 0.33.0
+- **Tools:** tool 4.4.1, node null, playwright 1.65.1, axe 4.14.0, vsr 0.33.0
 - **Critical journeys:** Checkout (checkout)
 
 **Evaluation statement** (use this wording; never write "compliant" or "conformant"):

@@ -117,3 +117,16 @@ test('summary counts add up', () => {
   );
   assert.ok(s.failuresConfirmedByRules <= s.failures);
 });
+
+test('summarize counts a page once despite trailing slash or ":" suffix', () => {
+  const f = (urls) => ({
+    kind: 'failure',
+    confidence: 'needs-review',
+    severity: 'serious',
+    effort: 'low',
+    priority: { plan: 'fix-next' },
+    locations: urls.map((url) => ({ url })),
+  });
+  const s = summarize([f(['https://a.test', 'https://a.test/:', 'https://a.test/']), f(['https://a.test/b', 'https://a.test/b/:12'])]);
+  assert.equal(s.pagesWithFindings, 2);
+});

@@ -1,6 +1,6 @@
 {
   "name": "ada-audit-scripts",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "Read-only accessibility audit toolkit (WCAG 2.2 AA candidates): one CLI, parallel Playwright + axe-core + simulated screen reader + persona journeys, a versioned findings schema and prioritized fix reports (Markdown, HTML, SARIF, CSV). Not a compliance certification.",
   "license": "MIT",
   "type": "module",

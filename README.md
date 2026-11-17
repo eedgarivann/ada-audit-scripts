@@ -23,9 +23,9 @@ npx ada-audit https://example.org/ https://example.org/about https://example.org
 **Without cloning** (installs this tagged release from GitHub; the package is not on the npm registry):
 ```sh
 npx -y playwright@1.65.1 install chromium       # once; same Playwright version the tools pin
-npx -y github:eedgarivann/ada-audit-scripts#v4.4.0 https://example.org/ https://example.org/contact --format json,md,html,pdf
+npx -y github:eedgarivann/ada-audit-scripts#v4.4.1 https://example.org/ https://example.org/contact --format json,md,html,pdf
 ```
-Pin the tag (`#v4.4.0`) so audits are reproducible.
+Pin the tag (`#v4.4.1`) so audits are reproducible.
 
 Hand over `audit-output/report.pdf` (or open `report.html` / `report.md`). See a full [sample report](docs/sample-report/report.pdf) ([HTML](docs/sample-report/report.html), [Markdown](docs/sample-report/report.md), [JSON](docs/sample-report/findings.json)) made from the fictional checkout fixture.
 

@@ -290,7 +290,14 @@ export function summarize(findings, suppressed = []) {
   const by = (field, values, pred = () => true) =>
     Object.fromEntries(values.map((v) => [v, count((f) => pred(f) && (field === 'plan' ? f.priority.plan : f[field]) === v)]));
   const fail = (f) => f.kind === 'failure';
-  const pages = new Set(findings.flatMap((f) => f.locations.map((l) => l.url)).filter(Boolean));
+  // Count each page once: ignore a trailing slash and a stray ":" or ":<line>" suffix some tools append.
+  const pageKey = (u) => String(u).replace(/:\d*$/, '').replace(/\/+$/, '');
+  const pages = new Set(
+    findings
+      .flatMap((f) => f.locations.map((l) => l.url))
+      .filter(Boolean)
+      .map(pageKey),
+  );
   return {
     total: findings.length,
     failures: count(fail),

@@ -3,7 +3,7 @@
   "schemaVersion": "1.1.0",
   "generator": {
     "name": "ada-audit-scripts",
-    "version": "4.4.0",
+    "version": "4.4.1",
     "url": "https://github.com/eedgarivann/ada-audit-scripts"
   },
   "run": {
@@ -29,7 +29,7 @@
       1440
     ],
     "versions": {
-      "tool": "4.4.0",
+      "tool": "4.4.1",
       "node": null,
       "playwright": "1.65.1",
       "axe": "4.14.0",
